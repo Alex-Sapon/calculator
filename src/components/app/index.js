@@ -4,9 +4,9 @@ import { PATH } from '@constants/path';
 
 import { Container } from '@components/app/styles';
 import { Header } from '@components/header';
-// import { HomeFC } from '@pages/homeFC';
-// import { HomeCC } from '@pages/homeCC';
-// import { Settings } from '@pages/settings';
+import { HomeFC } from '@pages/homeFC';
+import { HomeCC } from '@pages/homeCC';
+import { Settings } from '@pages/settings';
 
 import { theme } from '@styles/theme';
 import { ThemeProvider } from 'styled-components';
@@ -19,10 +19,10 @@ export const App = () => {
       <Container>
         <Header/>
         <Routes>
-          {/*<Route path={'/'} element={<Navigate to={PATH.HOME_FC}/>}/>*/}
-          {/*<Route path={PATH.HOME_FC} element={<HomeFC/>}/>*/}
-          {/*<Route path={PATH.HOME_CC} element={<HomeCC/>}/>*/}
-          {/*<Route path={PATH.SETTINGS} element={<Settings theme={currentTheme} onThemeChange={setCurrentTheme}/>}/>*/}
+          <Route path={PATH.HOME} element={<Navigate to={PATH.HOME_FC}/>}/>
+          <Route path={PATH.HOME_FC} element={<HomeFC/>}/>
+          <Route path={PATH.HOME_CC} element={<HomeCC/>}/>
+          <Route path={PATH.SETTINGS} element={<Settings theme={currentTheme} onThemeChange={setCurrentTheme}/>}/>
         </Routes>
       </Container>
     </ThemeProvider>
