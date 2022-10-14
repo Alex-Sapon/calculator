@@ -3,6 +3,7 @@ import { Button, Display, Keyboard, LeftSide, DisplayHistory } from '@components
 import { History, RightSide, Title } from '@components/calculator/rightSide';
 import { Wrapper } from '@components/calculator/wrapper';
 import { operations } from '@constants/operations';
+import { connect } from 'react-redux';
 
 const h = ['100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2']
 
@@ -15,7 +16,7 @@ export class HomeCC extends React.Component {
           <DisplayHistory>{'7'}</DisplayHistory>
           <Display>{'7'}</Display>
           <Keyboard>
-            {operations.map((option, i) => <Button key={i} >{option}</Button>)}
+            {operations.map(({id, value}) => <Button key={id} >{value}</Button>)}
           </Keyboard>
         </LeftSide>
         <RightSide>
@@ -26,3 +27,5 @@ export class HomeCC extends React.Component {
     )
   }
 }
+
+export default connect({}, {})(HomeCC);

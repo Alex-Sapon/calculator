@@ -7,14 +7,13 @@ const h = ['100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '100 * 2', '10
 
 export const HomeFC = () => {
 
-
   return (
     <Wrapper>
       <LeftSide>
-        <DisplayHistory>{'9'}</DisplayHistory>
-        <Display>{'9'}</Display>
+        <DisplayHistory>{'0'}</DisplayHistory>
+        <Display>{'0'}</Display>
         <Keyboard>
-          {operations.map((option, i) => <Button key={i}>{option}</Button>)}
+          {operations.map(({id, value}) => <Button key={id}>{value}</Button>)}
         </Keyboard>
       </LeftSide>
       <RightSide>
