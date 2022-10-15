@@ -10,6 +10,6 @@ export const actions = {
   setPrevValue: () => ({type: SET_PREV_VALUE}),
   setResultCalculation: (resultCalculation) => ({type: SET_RESULT_CALCULATION, payload: {resultCalculation}}),
   clearDisplay: () => ({type: CLEAR_DISPLAY}),
-  setCurrentOperand: (currentOperand) => ({type: SET_CURRENT_OPERAND, payload: {currentOperand}}),
+  setCurrentOperation: (currentOperation) => ({type: SET_CURRENT_OPERAND, payload: {currentOperation}}),
   updateDisplay: () => ({type: UPDATE_DISPLAY}),
 }

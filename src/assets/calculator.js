@@ -3,7 +3,7 @@ const EMPTY_STRING = '';
 
 class Calculator {
   constructor() {
-    this.value = '';
+    this.value = 0;
     this.history = [];
   }
 
@@ -19,8 +19,9 @@ class Calculator {
     this.value = lastCommand.undo(this.value);
   }
 
-  getValue() {
-    return this.value;
+  reset() {
+    this.value = 0;
+    this.history = [];
   }
 }
 
@@ -97,22 +98,21 @@ const chooseCommand = (value, operation) => {
   }
 }
 
-export const calculation = (previousValue, currentValue, operation) => {
-  let computation;
-  const prev = parseFloat(previousValue);
-  const current = parseFloat(currentValue);
+export const calculation = (currentValue, operation, reset) => {
+  const value = parseFloat(currentValue);
 
-  if (isNaN(prev) || isNaN(current)) return;
-
-  try {
-    console.log(chooseCommand(currentValue, operation))
-    // computation = calculator.execute(chooseCommand(currentValue, operation));
-  } catch (e) {
-    console.log('Some error into calculator core')
-  } finally {
-    return computation;
+  if (reset) {
+    calculator.reset();
   }
 
+  if (isNaN(value)) return;
+
+  try {
+    calculator.execute(chooseCommand(value, operation));
+    return calculator.value;
+  } catch (e) {
+    console.log('Some error into core of calculator: ', e.message);
+  }
 }
 
 

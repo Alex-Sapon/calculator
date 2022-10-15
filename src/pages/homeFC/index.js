@@ -8,40 +8,61 @@ import { useActions } from '@store/hooks/useActions';
 import { calculation } from '../../assets/calculator';
 
 export const digits = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-export const operation = ['+', '-', '*', '/'];
+export const operands = ['+', '-', '*', '/'];
+
+export const EMPTY_STRING = '';
 
 export const HomeFC = () => {
-  const {setCurrentValue, setPrevValue, updateDisplay, setCurrentOperand, setResultCalculation} = useActions(actions);
+  const {
+    setCurrentValue,
+    setPrevValue,
+    updateDisplay,
+    setCurrentOperation,
+    setResultCalculation,
+    clearDisplay
+  } = useActions(actions);
 
   const previousValue = useSelector(state => state.app.previousValue);
   const currentValue = useSelector(state => state.app.currentValue);
-  const previousOperand = useSelector(state => state.app.previousOperand);
-  const currentOperand = useSelector(state => state.app.currentOperand);
+  const previousOperation = useSelector(state => state.app.previousOperation);
+  const currentOperation = useSelector(state => state.app.currentOperation);
+  const result = useSelector(state => state.app.result);
   const history = useSelector(state => state.app.history);
 
   const onSetValueClick = (e) => {
     const innerValue = e.currentTarget.innerText;
     try {
+
+
       if (digits.includes(innerValue)) {
         if (innerValue === '.' && currentValue.includes('.')) return;
         setCurrentValue(innerValue);
       } else {
-        if (innerValue === '=' && previousValue && currentValue) {
-          setResultCalculation('34')
+        if (innerValue === 'C') {
+          clearDisplay();
+          calculation(null, null, true);
         }
 
-        if (operation.includes(innerValue)) {
-          setCurrentOperand(innerValue);
+        if (currentValue === EMPTY_STRING) return;
+
+        let calculationValue;
+
+        if (innerValue === '=' && previousValue) {
+          calculationValue = calculation(currentValue, previousOperation);
+          setResultCalculation(calculationValue);
+          calculation(null, null, true);
         }
 
-        // if (innerValue === 'CE') {
-        //   setPrevValue();
-        // }
-        //console.log(calculation(previousValue, currentValue, currentOperand))
+        if (operands.includes(innerValue)) {
+          setCurrentOperation(innerValue);
+        }
 
+        if (innerValue === 'CE') {
+
+        }
       }
     } catch (e) {
-      console.log('Error into homeFC')
+      console.log('Some error into homeFC: ', e.message);
     }
   }
 
@@ -49,7 +70,7 @@ export const HomeFC = () => {
     <Wrapper>
       <LeftSide>
         <DisplayHistory>{previousValue}</DisplayHistory>
-        <Display>{currentValue}</Display>
+        <Display>{currentValue || result}</Display>
         <Keyboard>
           {operations.map(({id, value}) => <Button key={id} onClick={onSetValueClick}>{value}</Button>)}
         </Keyboard>

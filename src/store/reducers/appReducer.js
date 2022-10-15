@@ -10,8 +10,8 @@ import {
 const initialState = {
   previousValue: '',
   currentValue: '',
-  previousOperand: '',
-  currentOperand: '',
+  previousOperation: '',
+  currentOperation: '',
   operation: '',
   result: '',
   history: [],
@@ -29,18 +29,12 @@ export const appReducer = (state = initialState, {type, payload}) => {
         ...state,
         currentValue: state.currentValue.slice(0, -1),
       }
-    case CLEAR_DISPLAY:
-      return {
-        ...state,
-        previousValue: '',
-        currentValue: '',
-      }
     case SET_CURRENT_OPERAND:
       return {
         ...state,
-        currentOperand: payload.currentOperand,
-        previousOperand: payload.currentOperand,
-        previousValue: `${state.previousValue} ${state.currentValue} ${payload.currentOperand} `,
+        currentOperation: payload.currentOperation,
+        previousOperation: payload.currentOperation,
+        previousValue: `${state.previousValue} ${state.currentValue} ${payload.currentOperation} `,
         currentValue: '',
       }
     case SET_RESULT_CALCULATION:
@@ -50,11 +44,22 @@ export const appReducer = (state = initialState, {type, payload}) => {
           state.previousValue + state.currentValue + ' = ' + payload.resultCalculation,
           ...state.history,
         ],
-        currentValue: payload.resultCalculation,
+        result: payload.resultCalculation,
+        currentValue: '',
         previousValue: '',
       }
     case UPDATE_DISPLAY:
       return {...state}
+    case CLEAR_DISPLAY:
+      return {
+        ...state,
+        previousValue: '',
+        currentValue: '',
+        previousOperation: '',
+        currentOperation: '',
+        operation: '',
+        result: '',
+      }
     default:
       return state;
   }
