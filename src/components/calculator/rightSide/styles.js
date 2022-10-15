@@ -4,7 +4,6 @@ export const RightSide = styled.div`
   padding: 20px;
   border-left: ${({theme}) => `2px solid ${theme.border}`};
   overflow: auto;
-  margin-bottom: 20px;
 
   &::-webkit-scrollbar {
     width: 7px;

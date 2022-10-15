@@ -7,8 +7,11 @@ export const LeftSide = styled.div`
 
 export const Keyboard = styled.div`
   display: grid;
-  gap: 20px;
+  gap: 10px;
+  justify-content: center;
+  align-content: center;
   grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: minmax(60px, auto) repeat(3, 60px);
 `;
 
 export const Display = styled.div`
@@ -27,22 +30,23 @@ export const DisplayHistory = styled.div`
   right: 35px;
   top: 5px;
   font-size: 14px;
+  word-wrap: break-word;
+  word-break: break-all;
   color: ${({theme}) => theme.text};
 `;
 
 export const Button = styled.div`
   font-size: 26px;
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
   border: 1px solid #cacaca;
-  background-color: #f2f2f2;
+  background-color: rgba(229, 229, 229, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  align-self: center;
-  justify-self: center;
+
+  &:hover {
+    background-color: rgba(242, 242, 242, 1);
+  }
 
   &:active {
     scale: 0.93;

@@ -1,3 +1,6 @@
+const LENGTH_ZERO = 0;
+const EMPTY_STRING = '';
+
 class Calculator {
   constructor() {
     this.value = '';
@@ -5,19 +8,19 @@ class Calculator {
   }
 
   execute(command) {
-    this.currentValue = command.execute(this.currentValue);
+    this.value = command.execute(this.value);
     this.history.push(command);
   }
 
   undo() {
-    if (this.history.length === 0) return;
+    if (this.history.length === LENGTH_ZERO) return;
 
     const lastCommand = this.history.pop();
-    this.currentValue = lastCommand.undo(this.currentValue);
+    this.value = lastCommand.undo(this.value);
   }
 
-  getCurrentValue() {
-    return this.currentValue;
+  getValue() {
+    return this.value;
   }
 }
 
@@ -27,7 +30,7 @@ class AddCommand {
   }
 
   execute(currentValue) {
-    return this.value + currentValue;
+    return currentValue + this.value;
   }
 
   undo(currentValue) {
@@ -77,29 +80,39 @@ class DivideCommand {
   }
 }
 
-class ResetCommand {
-  constructor(value) {
-    this.value = value;
-  }
+const calculator = new Calculator();
 
-  execute() {
-    return this.value;
+const chooseCommand = (value, operation) => {
+  switch (operation) {
+    case '+':
+      return new AddCommand(value);
+    case '-':
+      return new SubtractCommand(value);
+    case '/':
+      return new DivideCommand(value);
+    case '*':
+      return new MultiplyCommand(value);
+    default:
+      return 0;
   }
 }
 
-export {
-  Calculator,
-  AddCommand,
-  MultiplyCommand,
-  DivideCommand,
-  ResetCommand,
-};
+export const calculation = (previousValue, currentValue, operation) => {
+  let computation;
+  const prev = parseFloat(previousValue);
+  const current = parseFloat(currentValue);
 
-const calculator = new Calculator();
+  if (isNaN(prev) || isNaN(current)) return;
 
-function add(x, y) { return x + y; }
-function sub(x, y) { return x - y; }
-function mul(x, y) { return x * y; }
-function div(x, y) { return x / y; }
+  try {
+    console.log(chooseCommand(currentValue, operation))
+    // computation = calculator.execute(chooseCommand(currentValue, operation));
+  } catch (e) {
+    console.log('Some error into calculator core')
+  } finally {
+    return computation;
+  }
+
+}
 
 

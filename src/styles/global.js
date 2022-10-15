@@ -1,17 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     margin: 0;
     padding: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: normal;
     box-sizing: border-box;
     text-decoration: none;
   }
 
   body {
-    font-family: "Roboto", sans-serif;
     background-color: #fafafa;
     height: 100vh;
     display: flex;
