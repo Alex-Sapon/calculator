@@ -31,30 +31,28 @@ export const HomeFC = () => {
 
   const onSetValueClick = (e) => {
     const innerValue = e.currentTarget.innerText;
+
     try {
-
-
       if (digits.includes(innerValue)) {
         if (innerValue === '.' && currentValue.includes('.')) return;
         setCurrentValue(innerValue);
       } else {
         if (innerValue === 'C') {
           clearDisplay();
-          calculation(null, null, true);
+          calculation(null, null);
         }
 
+        // if field for current value empty, don't input operation
         if (currentValue === EMPTY_STRING) return;
-
-        let calculationValue;
-
-        if (innerValue === '=' && previousValue) {
-          calculationValue = calculation(currentValue, previousOperation);
-          setResultCalculation(calculationValue);
-          calculation(null, null, true);
-        }
 
         if (operands.includes(innerValue)) {
           setCurrentOperation(innerValue);
+          calculation(currentValue, innerValue);
+        }
+
+        if (innerValue === '=' && previousValue) {
+          const calculationValue = calculation(currentValue, previousOperation);
+          setResultCalculation(calculationValue);
         }
 
         if (innerValue === 'CE') {

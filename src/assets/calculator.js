@@ -1,5 +1,5 @@
-const LENGTH_ZERO = 0;
-const EMPTY_STRING = '';
+const EMPTY_ARRAY = 0;
+const EMPTY_VALUE = null;
 
 class Calculator {
   constructor() {
@@ -13,7 +13,7 @@ class Calculator {
   }
 
   undo() {
-    if (this.history.length === LENGTH_ZERO) return;
+    if (this.history.length === EMPTY_ARRAY) return;
 
     const lastCommand = this.history.pop();
     this.value = lastCommand.undo(this.value);
@@ -45,7 +45,9 @@ class SubtractCommand {
   }
 
   execute(currentValue) {
-    return this.value - currentValue;
+    if (currentValue === 0) return this.value;
+
+    return currentValue - this.value;
   }
 
   undo(currentValue) {
@@ -63,7 +65,7 @@ class MultiplyCommand {
   }
 
   undo(currentValue) {
-    return this.value / currentValue;
+    return currentValue / this.value;
   }
 }
 
@@ -73,11 +75,11 @@ class DivideCommand {
   }
 
   execute(currentValue) {
-    return this.value / currentValue;
+    return currentValue / this.value;
   }
 
   undo(currentValue) {
-    return this.value * currentValue;
+    return currentValue * this.value;
   }
 }
 
@@ -91,17 +93,18 @@ const chooseCommand = (value, operation) => {
       return new SubtractCommand(value);
     case '/':
       return new DivideCommand(value);
-    case '*':
+    case '*': {
       return new MultiplyCommand(value);
+    }
     default:
       return 0;
   }
 }
 
-export const calculation = (currentValue, operation, reset) => {
+export const calculation = (currentValue, operation) => {
   const value = parseFloat(currentValue);
 
-  if (reset) {
+  if (currentValue === EMPTY_VALUE && operation === EMPTY_VALUE) {
     calculator.reset();
   }
 
@@ -109,10 +112,9 @@ export const calculation = (currentValue, operation, reset) => {
 
   try {
     calculator.execute(chooseCommand(value, operation));
+    console.log(calculator)
     return calculator.value;
   } catch (e) {
     console.log('Some error into core of calculator: ', e.message);
   }
 }
-
-
