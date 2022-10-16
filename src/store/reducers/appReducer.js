@@ -2,7 +2,6 @@ import {
   CLEAR_DISPLAY,
   SET_PREV_VALUE,
   SET_CURRENT_VALUE,
-  UPDATE_DISPLAY,
   SET_CURRENT_OPERATION,
   SET_RESULT_CALCULATION
 } from '@store/actions';
@@ -22,6 +21,7 @@ export const appReducer = (state = initialState, {type, payload}) => {
     case SET_CURRENT_VALUE:
       return {
         ...state,
+        result: '',
         currentValue: state.currentValue + payload.value,
       }
     case SET_PREV_VALUE:

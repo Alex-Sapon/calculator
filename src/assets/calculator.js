@@ -1,5 +1,4 @@
-const EMPTY_ARRAY = 0;
-const EMPTY_VALUE = null;
+import { EMPTY_VALUE, VALUE_ZERO } from '@constants/empty';
 
 class Calculator {
   constructor() {
@@ -13,7 +12,7 @@ class Calculator {
   }
 
   undo() {
-    if (this.history.length === EMPTY_ARRAY) return;
+    if (this.history.length === VALUE_ZERO) return;
 
     const lastCommand = this.history.pop();
     this.value = lastCommand.undo(this.value);
@@ -45,8 +44,7 @@ class SubtractCommand {
   }
 
   execute(currentValue) {
-    if (currentValue === 0) return this.value;
-
+    if (currentValue === VALUE_ZERO) return this.value;
     return currentValue - this.value;
   }
 
@@ -61,6 +59,7 @@ class MultiplyCommand {
   }
 
   execute(currentValue) {
+    if (currentValue === VALUE_ZERO) return this.value;
     return this.value * currentValue;
   }
 
@@ -75,6 +74,7 @@ class DivideCommand {
   }
 
   execute(currentValue) {
+    if (currentValue === VALUE_ZERO) return this.value;
     return currentValue / this.value;
   }
 
@@ -93,28 +93,31 @@ const chooseCommand = (value, operation) => {
       return new SubtractCommand(value);
     case '/':
       return new DivideCommand(value);
-    case '*': {
+    case '*':
       return new MultiplyCommand(value);
-    }
     default:
       return 0;
   }
 }
 
 export const calculation = (currentValue, operation) => {
-  const value = parseFloat(currentValue);
-
   if (currentValue === EMPTY_VALUE && operation === EMPTY_VALUE) {
     calculator.reset();
+    return;
   }
 
-  if (isNaN(value)) return;
+  if (isNaN(currentValue)) return;
 
   try {
-    calculator.execute(chooseCommand(value, operation));
-    console.log(calculator)
+    calculator.execute(chooseCommand(currentValue, operation));
+
+    // if value with dot, return value with 3 digits after dot
+    if (calculator.value % 2 !== VALUE_ZERO) {
+      return +calculator.value.toFixed(3);
+    }
+
     return calculator.value;
   } catch (e) {
-    console.log('Some error into core of calculator: ', e.message);
+    console.log('Error into core of calculator: ', e.message);
   }
 }

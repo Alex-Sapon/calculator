@@ -6,17 +6,15 @@ import { useSelector } from 'react-redux';
 import { actions } from '@store/actions';
 import { useActions } from '@store/hooks/useActions';
 import { calculation } from '../../assets/calculator';
+import { EMPTY_STRING } from '@constants/empty';
 
 export const digits = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 export const operands = ['+', '-', '*', '/'];
-
-export const EMPTY_STRING = '';
 
 export const HomeFC = () => {
   const {
     setCurrentValue,
     setPrevValue,
-    updateDisplay,
     setCurrentOperation,
     setResultCalculation,
     clearDisplay
@@ -45,22 +43,25 @@ export const HomeFC = () => {
         // if field for current value empty, don't input operation
         if (currentValue === EMPTY_STRING) return;
 
+        const digitValue = +Number.parseFloat(currentValue).toFixed(3);
+
         if (operands.includes(innerValue)) {
           setCurrentOperation(innerValue);
-          calculation(currentValue, innerValue);
+          calculation(digitValue, innerValue);
         }
 
         if (innerValue === '=' && previousValue) {
-          const calculationValue = calculation(currentValue, previousOperation);
+          const calculationValue = calculation(digitValue, previousOperation);
           setResultCalculation(calculationValue);
+          calculation(null, null);
         }
 
         if (innerValue === 'CE') {
-
+          setPrevValue();
         }
       }
     } catch (e) {
-      console.log('Some error into homeFC: ', e.message);
+      console.log('Error into homeFC: ', e.message);
     }
   }
 
