@@ -1,4 +1,4 @@
-import { EMPTY_VALUE, VALUE_ZERO } from '@constants/empty';
+import { VALUE_NULL, VALUE_ZERO } from '@constants/empty';
 
 class Calculator {
   constructor() {
@@ -85,7 +85,7 @@ class DivideCommand {
 
 const calculator = new Calculator();
 
-const chooseCommand = (value, operation) => {
+const getCommand = (value, operation) => {
   switch (operation) {
     case '+':
       return new AddCommand(value);
@@ -101,7 +101,7 @@ const chooseCommand = (value, operation) => {
 }
 
 export const calculation = (currentValue, operation) => {
-  if (currentValue === EMPTY_VALUE && operation === EMPTY_VALUE) {
+  if (currentValue === VALUE_NULL && operation === VALUE_NULL) {
     calculator.reset();
     return;
   }
@@ -109,14 +109,18 @@ export const calculation = (currentValue, operation) => {
   if (isNaN(currentValue)) return;
 
   try {
-    calculator.execute(chooseCommand(currentValue, operation));
+    calculator.execute(getCommand(currentValue, operation));
 
-    // if value with dot, return value with 3 digits after dot
-    if (calculator.value % 2 !== VALUE_ZERO) {
-      return +calculator.value.toFixed(3);
+    if (Number.isFinite(calculator.value)) {
+      // if value with dot, return value with 3 digits after dot
+      if (!Number.isInteger(calculator.value)) {
+        return calculator.value.toFixed(3);
+      }
+
+      return calculator.value;
+    } else {
+      return 'Error';
     }
-
-    return calculator.value;
   } catch (e) {
     console.log('Error into core of calculator: ', e.message);
   }

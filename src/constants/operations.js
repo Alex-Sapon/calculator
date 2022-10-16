@@ -20,3 +20,7 @@ export const operations = [
   {id: 19, value: ')'},
   {id: 20, value: 'CE'},
 ];
+
+export const digits = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+export const mathOperators = ['+', '-', '*', '/', '(', ')'];
