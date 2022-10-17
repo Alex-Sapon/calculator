@@ -83,8 +83,6 @@ class DivideCommand {
   }
 }
 
-const calculator = new Calculator();
-
 const getCommand = (value, operation) => {
   switch (operation) {
     case '+':
@@ -99,6 +97,8 @@ const getCommand = (value, operation) => {
       return 0;
   }
 }
+
+const calculator = new Calculator();
 
 export const calculation = (currentValue, operation) => {
   if (currentValue === VALUE_NULL && operation === VALUE_NULL) {
@@ -117,9 +117,10 @@ export const calculation = (currentValue, operation) => {
         return calculator.value.toFixed(3);
       }
 
+      console.log(calculator)
       return calculator.value;
     } else {
-      return 'Error';
+      return 'Can\'t divide with 0';
     }
   } catch (e) {
     console.log('Error into core of calculator: ', e.message);

@@ -10,8 +10,8 @@ export const Keyboard = styled.div`
   gap: 10px;
   justify-content: center;
   align-content: center;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: minmax(60px, auto) repeat(3, 60px);
+  grid-template-columns: repeat(5, 60px);
+  grid-template-rows: repeat(5, 50px);
 `;
 
 export const Display = styled.div`
@@ -43,6 +43,7 @@ export const Button = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 4px;
 
   &:hover {
     background-color: rgba(242, 242, 242, 1);

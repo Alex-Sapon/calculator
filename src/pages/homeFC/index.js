@@ -22,54 +22,69 @@ export const HomeFC = () => {
     setCurrentOperation,
     setResultCalculation,
     clearDisplay,
+    setPlusOrMinus,
   } = useActions(actions);
 
   const previousValue = useSelector(selectPreviousValue);
   const currentValue = useSelector(selectCurrentValue);
   const previousOperation = useSelector(selectPreviousOperation);
+  const currentOperation = useSelector(state => state.app.currentOperation);
   const result = useSelector(selectResult);
   const history = useSelector(selectHistory);
 
-  const onSetValueClick = (e) => {
-    const innerValue = e.currentTarget.innerText;
+  const onSetValueClick = event => {
+    const innerValue = event.currentTarget.innerText;
+
+    const numbers = /[0-9]/g;
+    const digitValue = +Number.parseFloat(currentValue).toFixed(3);
 
     try {
-      if (digits.includes(innerValue)) {
-        if (innerValue === '.' && currentValue.includes('.')) return;
-        setCurrentValue(innerValue);
-      } else {
-        const numbers = /[0-9]/g;
-        const digitValue = +Number.parseFloat(currentValue).toFixed(3);
-
-        if (innerValue === 'C') {
+      switch (innerValue) {
+        case 'C': {
+          setPrevValue(currentValue.slice(0, currentValue.length -1));
+          break;
+        }
+        case 'CE': {
           clearDisplay();
-
-          // reset value and history of calculator
           calculation(null, null);
+          break;
         }
-
-        // if field with current value empty, don't input operation
-        if (currentValue === EMPTY_STRING) return;
-
-        if (mathOperators.includes(innerValue) && currentValue.match(numbers)) {
-          setCurrentOperation(innerValue);
-          calculation(digitValue, innerValue);
+        case '-/+': {
+          setPlusOrMinus(currentValue.indexOf('-') === 0 ? currentValue.slice(1, currentValue.length) : '-' + currentValue);
+          break;
         }
+        case '(': {
 
-        if (innerValue === '=' && previousValue !== EMPTY_STRING) {
-          const calculationValue = calculation(digitValue, previousOperation);
-          setResultCalculation(calculationValue);
-
-          // reset value and history of calculator
-          calculation(null, null);
+          break;
         }
+        case ')': {
 
-        if (innerValue === 'CE') {
-          setPrevValue();
+          break;
+        }
+        case '=': {
+          if (previousValue !== EMPTY_STRING) {
+            const calculationValue = calculation(digitValue, previousOperation);
+            setResultCalculation(calculationValue, `${previousValue} ${currentValue} = ${calculationValue}`);
+
+            // reset value and history of calculator
+            calculation(null, null);
+          }
+          break;
+        }
+        default: {
+          if (digits.includes(innerValue)) {
+            if (innerValue === '.' && currentValue.includes('.')) return;
+            setCurrentValue(innerValue);
+          }
+
+          if (mathOperators.includes(innerValue) && currentValue.match(numbers)) {
+            setCurrentOperation(innerValue);
+            calculation(digitValue, innerValue);
+          }
         }
       }
-    } catch (e) {
-      setCurrentValue('Error into homeFC')
+    } catch (error) {
+      setCurrentValue(error.message)
     }
   }
 
@@ -79,7 +94,9 @@ export const HomeFC = () => {
         <DisplayHistory>{previousValue}</DisplayHistory>
         <Display>{currentValue || result}</Display>
         <Keyboard>
-          {operations.map(({id, value}) => <Button key={id} onClick={onSetValueClick}>{value}</Button>)}
+          {operations.map(({id, value}) =>
+            <Button key={id} onClick={onSetValueClick}>{value}</Button>
+          )}
         </Keyboard>
       </LeftSide>
       <RightSide>

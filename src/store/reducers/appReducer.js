@@ -2,8 +2,9 @@ import {
   CLEAR_DISPLAY,
   SET_PREV_VALUE,
   SET_CURRENT_VALUE,
+  SET_PLUS_OR_MINUS,
   SET_CURRENT_OPERATION,
-  SET_RESULT_CALCULATION, CLEAR_ALL
+  SET_RESULT_CALCULATION, CLEAR_ALL,
 } from '@store/actions';
 
 const initialState = {
@@ -27,7 +28,7 @@ export const appReducer = (state = initialState, {type, payload}) => {
     case SET_PREV_VALUE:
       return {
         ...state,
-        currentValue: state.currentValue.slice(0, -1),
+        currentValue: payload.value,
       }
     case SET_CURRENT_OPERATION:
       return {
@@ -37,14 +38,20 @@ export const appReducer = (state = initialState, {type, payload}) => {
         previousValue: `${state.previousValue} ${state.currentValue} ${payload.currentOperation}`,
         currentValue: '',
       }
+    case SET_PLUS_OR_MINUS: {
+      return {
+        ...state,
+        currentValue: payload.value,
+      }
+    }
     case SET_RESULT_CALCULATION:
       return {
         ...state,
         history: [
-          `${state.previousValue} ${state.currentValue} = ${payload.resultCalculation}`,
+          payload.history,
           ...state.history,
         ],
-        result: payload.resultCalculation,
+        result: payload.value,
         currentValue: '',
         previousValue: '',
       }
