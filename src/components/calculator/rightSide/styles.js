@@ -26,7 +26,7 @@ export const Title = styled.h2`
 `;
 
 export const History = styled.div`
-  font-size: 18px;
+  font-size: 16px;
 
   div {
     margin-bottom: 5px;

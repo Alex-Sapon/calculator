@@ -25,7 +25,9 @@
       "@constants/*": ["constants/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
-      "@store/*": ["store/*"]
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"],
+      "@helpers/*": ["helpers/*"]
     }
   },
   "include": [

@@ -1,14 +1,14 @@
 import { SettingsGroup, Title, Wrapper, Select, ButtonClear } from '@pages/settings/styles';
 import { themeOptions } from '@constants/themeOptions';
-import { useActions } from '@store/hooks/useActions';
-import { actions } from '@store/actions';
-import { calculation } from '../../assets/calculator';
+import { clearAll } from '@store/actions';
+import { useDispatch } from 'react-redux';
+import { calculation } from '@utils/calculator';
 
 export const Settings = ({theme, onThemeChange}) => {
-  const {clearAll} = useActions(actions);
+  const dispatch = useDispatch();
 
   const onButtonClick = () => {
-    clearAll();
+    dispatch(clearAll());
     calculation(null, null);
   }
 
@@ -23,4 +23,4 @@ export const Settings = ({theme, onThemeChange}) => {
       </SettingsGroup>
     </Wrapper>
   )
-};
+}

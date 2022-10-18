@@ -16,12 +16,12 @@ export const Keyboard = styled.div`
 
 export const Display = styled.div`
   position: relative;
-  padding: 15px;
+  padding: 10px;
   margin-bottom: 20px;
   border-bottom: ${({theme}) => `2px solid ${theme.border}`};
   text-align: right;
   font-size: 26px;
-  height: 70px;
+  height: 50px;
   color: ${({theme}) => theme.text};
 `;
 
