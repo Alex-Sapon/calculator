@@ -32,7 +32,7 @@ export const HomeFC = () => {
         <DisplayHistory>{previousValue}</DisplayHistory>
         <Display>{currentValue || result}</Display>
         <Keyboard>
-          {operations.map(({id, value}) =>
+          {operations.map(({ id, value }) =>
             <Button key={id} onClick={onKeyboardClick}>{value}</Button>
           )}
         </Keyboard>

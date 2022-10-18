@@ -5,13 +5,16 @@ import { App } from '@components/app';
 import { GlobalStyles } from '@styles/global';
 import { Provider } from 'react-redux';
 import { store } from '@store/index';
+import { ErrorBoundary } from '@components/errorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HashRouter>
     <GlobalStyles/>
     <Provider store={store}>
-      <App/>
+      <ErrorBoundary>
+        <App/>
+      </ErrorBoundary>
     </Provider>
   </HashRouter>
 )

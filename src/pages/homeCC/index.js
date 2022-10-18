@@ -24,13 +24,13 @@ class Calculator extends React.Component {
           <DisplayHistory>{this.props.previousValue}</DisplayHistory>
           <Display>{this.props.currentValue || this.props.result}</Display>
           <Keyboard>
-            {operations.map(({id, value}) => <Button key={id} onClick={this.onButtonClick}>{value}</Button>)}
+            {operations.map(({ id, value }) => <Button key={id} onClick={this.onButtonClick}>{value}</Button>)}
           </Keyboard>
         </LeftSide>
         <RightSide>
           <Title>History</Title>
           <History>
-            {this.props.history?.map((expression, index) => <div key={index}>{expression}</div>)}
+            {this.props.history.map((expression, index) => <div key={index}>{expression}</div>)}
           </History>
         </RightSide>
       </Wrapper>

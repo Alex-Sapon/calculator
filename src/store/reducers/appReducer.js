@@ -17,7 +17,7 @@ const initialState = {
   history: [],
 }
 
-export const appReducer = (state = initialState, {type, payload}) => {
+export const appReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_CURRENT_VALUE:
       return {

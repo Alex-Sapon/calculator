@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { PATH } from '@constants/path';
 
 import { Container } from '@components/app/styles';
