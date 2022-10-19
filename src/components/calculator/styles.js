@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 
+export const Calculator = styled.div`
+  padding: 20px;
+  height: 435px;
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  gap: 30px;
+`;
+
 export const RightSide = styled.div`
   padding: 20px;
-  border-left: ${({theme}) => `2px solid ${theme.border}`};
+  border-left: ${({ theme }) => `2px solid ${theme.border}`};
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -14,7 +22,7 @@ export const RightSide = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${({theme}) => theme.secondaryBackground};
+    background: ${({ theme }) => theme.secondaryBackground};
     border-radius: 6px;
   }
 `;
@@ -23,12 +31,10 @@ export const Title = styled.h2`
   text-align: center;
   font-size: 20px;
   margin-bottom: 20px;
+  color: ${({theme}) => theme.text};
 `;
 
-export const History = styled.div`
-  font-size: 16px;
-
-  div {
-    margin-bottom: 5px;
-  }
+export const LeftSide = styled.div`
+  position: relative;
+  padding: 20px;
 `;

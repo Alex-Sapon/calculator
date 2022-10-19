@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { PATH } from '@constants/path';
-
+import { Route, Routes } from 'react-router-dom';
 import { Container } from '@components/app/styles';
 import { Header } from '@components/header';
-import { HomeFC } from '@pages/homeFC';
-import { HomeCC } from '@pages/homeCC';
-import { Settings } from '@pages/settings';
-
+import { routes } from '@constants/routes';
 import { theme } from '@styles/theme';
 import { ThemeProvider } from 'styled-components';
 
@@ -19,12 +14,11 @@ export const App = () => {
       <Container>
         <Header/>
         <Routes>
-          <Route path={PATH.HOME} element={<Navigate to={PATH.HOME_FC}/>}/>
-          <Route path={PATH.HOME_FC} element={<HomeFC/>}/>
-          <Route path={PATH.HOME_CC} element={<HomeCC/>}/>
-          <Route path={PATH.SETTINGS} element={<Settings theme={currentTheme} onThemeChange={setCurrentTheme}/>}/>
+          {routes.map(({ id, path, page }) => 
+            <Route key={id} path={path} element={(page(currentTheme, setCurrentTheme))}/>
+          )}
         </Routes>
       </Container>
     </ThemeProvider>
-  );
+  )
 }

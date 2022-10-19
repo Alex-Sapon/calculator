@@ -27,7 +27,7 @@
       "@styles/*": ["styles/*"],
       "@store/*": ["store/*"],
       "@utils/*": ["utils/*"],
-      "@helpers/*": ["helpers/*"]
+      "@helpers*": ["helpers/*"]
     }
   },
   "include": [

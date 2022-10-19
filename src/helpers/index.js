@@ -1,16 +1,15 @@
 import {
   setCurrentValue,
-  setPrevValue,
-  setCurrentOperation,
+  setExpression,
   setResultCalculation,
   clearDisplay,
-  setPlusOrMinus,
+  setPlusOrMinus, sliceLastLetter,
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
-import { EMPTY_STRING } from '@constants/empty';
+import { EMPTY_STRING, VALUE_ZERO } from '@constants/empty';
 
-export const keyboardHandler = (event, currentValue, previousValue, previousOperation, dispatch) => {
+export const keypadHandler = (event, currentValue, expression, operation, dispatch) => {
   const innerValue = event.currentTarget.innerText;
 
   const numbers = /[0-9]/g;
@@ -19,7 +18,7 @@ export const keyboardHandler = (event, currentValue, previousValue, previousOper
   try {
     switch (innerValue) {
       case 'C': {
-        dispatch(setPrevValue(currentValue.slice(0, currentValue.length -1)));
+        dispatch(sliceLastLetter(currentValue.slice(0, currentValue.length - 1)));
         break;
       }
       case 'CE': {
@@ -28,7 +27,7 @@ export const keyboardHandler = (event, currentValue, previousValue, previousOper
         break;
       }
       case '-/+': {
-        dispatch(setPlusOrMinus(currentValue.indexOf('-') === 0 ? currentValue.slice(1, currentValue.length) : '-' + currentValue));
+        dispatch(setPlusOrMinus(currentValue.indexOf('-') === VALUE_ZERO ? currentValue.slice(1, currentValue.length) : '-' + currentValue));
         break;
       }
       case '(': {
@@ -40,9 +39,9 @@ export const keyboardHandler = (event, currentValue, previousValue, previousOper
         break;
       }
       case '=': {
-        if (previousValue !== EMPTY_STRING) {
-          const calculationValue = calculation(digitValue, previousOperation);
-          dispatch(setResultCalculation(calculationValue, `${previousValue} ${currentValue} = ${calculationValue}`));
+        if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
+          const calculationValue = calculation(digitValue, operation);
+          dispatch(setResultCalculation(calculationValue.toString(), `${expression} ${currentValue} = ${calculationValue}`));
 
           calculation(null, null);
         }
@@ -51,11 +50,21 @@ export const keyboardHandler = (event, currentValue, previousValue, previousOper
       default: {
         if (digits.includes(innerValue)) {
           if (innerValue === '.' && currentValue.includes('.')) return;
+
+          // if (innerValue.indexOf('.') === 0) {
+          //   console.log(innerValue)
+          //   dispatch(setCurrentValue(innerValue));
+          // }
+
           dispatch(setCurrentValue(innerValue));
         }
 
         if (mathOperators.includes(innerValue) && currentValue.match(numbers)) {
-          dispatch(setCurrentOperation(innerValue));
+          if (innerValue.indexOf('.') === 0) {
+            console.log('lll')
+          }
+
+          dispatch(setExpression(innerValue, `${currentValue} ${innerValue}`));
           calculation(digitValue, innerValue);
         }
       }

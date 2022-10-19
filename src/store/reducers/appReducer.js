@@ -1,17 +1,15 @@
 import {
   CLEAR_DISPLAY,
-  SET_PREV_VALUE,
   SET_CURRENT_VALUE,
   SET_PLUS_OR_MINUS,
-  SET_CURRENT_OPERATION,
+  SLICE_LAST_LETTER,
+  SET_EXPRESSION,
   SET_RESULT_CALCULATION, CLEAR_ALL,
 } from '@store/actions';
 
 const initialState = {
-  previousValue: '',
+  expression: '',
   currentValue: '',
-  previousOperation: '',
-  currentOperation: '',
   operation: '',
   result: '',
   history: [],
@@ -25,17 +23,16 @@ export const appReducer = (state = initialState, { type, payload }) => {
         result: '',
         currentValue: state.currentValue + payload.value,
       }
-    case SET_PREV_VALUE:
+    case SLICE_LAST_LETTER:
       return {
         ...state,
         currentValue: payload.value,
       }
-    case SET_CURRENT_OPERATION:
+    case SET_EXPRESSION:
       return {
         ...state,
-        currentOperation: payload.currentOperation,
-        previousOperation: payload.currentOperation,
-        previousValue: `${state.previousValue} ${state.currentValue} ${payload.currentOperation}`,
+        operation: payload.operation,
+        expression: payload.expression,
         currentValue: '',
       }
     case SET_PLUS_OR_MINUS: {
@@ -51,27 +48,23 @@ export const appReducer = (state = initialState, { type, payload }) => {
           payload.history,
           ...state.history,
         ],
-        result: payload.value,
-        currentValue: '',
-        previousValue: '',
+        // result: payload.value,
+        currentValue: payload.value,
+        expression: '',
       }
     case CLEAR_DISPLAY:
       return {
         ...state,
-        previousValue: '',
+        expression: '',
         currentValue: '',
-        previousOperation: '',
-        currentOperation: '',
         operation: '',
         result: '',
       }
     case CLEAR_ALL:
       return {
         ...state,
-        previousValue: '',
+        expression: '',
         currentValue: '',
-        previousOperation: '',
-        currentOperation: '',
         operation: '',
         result: '',
         history: [],

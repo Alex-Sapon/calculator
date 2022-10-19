@@ -1,1 +1,0 @@
-export { History, Title, RightSide } from '@components/calculator/rightSide/styles';

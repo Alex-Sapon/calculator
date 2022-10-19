@@ -1,0 +1,1 @@
+export { Calculator, LeftSide, RightSide, Title } from '@components/calculator/styles'
