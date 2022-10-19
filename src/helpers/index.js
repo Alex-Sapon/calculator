@@ -3,11 +3,13 @@ import {
   setExpression,
   setResultCalculation,
   clearDisplay,
-  setPlusOrMinus, sliceLastLetter,
+  setError,
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
 import { EMPTY_STRING, VALUE_ZERO } from '@constants/empty';
+
+const setZeroBeforeDot = value => value.indexOf('.') === 0 ? '0' + value : value;
 
 export const keypadHandler = (event, currentValue, expression, operation, dispatch) => {
   const innerValue = event.currentTarget.innerText;
@@ -18,7 +20,7 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
   try {
     switch (innerValue) {
       case 'C': {
-        dispatch(sliceLastLetter(currentValue.slice(0, currentValue.length - 1)));
+        dispatch(setCurrentValue(currentValue.slice(0, currentValue.length - 1)));
         break;
       }
       case 'CE': {
@@ -27,7 +29,7 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
         break;
       }
       case '-/+': {
-        dispatch(setPlusOrMinus(currentValue.indexOf('-') === VALUE_ZERO ? currentValue.slice(1, currentValue.length) : '-' + currentValue));
+        dispatch(setCurrentValue(currentValue.indexOf('-') === VALUE_ZERO ? currentValue.slice(1, currentValue.length) : '-' + currentValue));
         break;
       }
       case '(': {
@@ -41,7 +43,7 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
       case '=': {
         if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
           const calculationValue = calculation(digitValue, operation);
-          dispatch(setResultCalculation(calculationValue.toString(), `${expression} ${currentValue} = ${calculationValue}`));
+          dispatch(setResultCalculation(calculationValue.toString(), `${expression}  ${currentValue} = ${calculationValue}`));
 
           calculation(null, null);
         }
@@ -50,26 +52,16 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
       default: {
         if (digits.includes(innerValue)) {
           if (innerValue === '.' && currentValue.includes('.')) return;
-
-          // if (innerValue.indexOf('.') === 0) {
-          //   console.log(innerValue)
-          //   dispatch(setCurrentValue(innerValue));
-          // }
-
-          dispatch(setCurrentValue(innerValue));
+          dispatch(setCurrentValue(setZeroBeforeDot(currentValue) + innerValue));
         }
 
         if (mathOperators.includes(innerValue) && currentValue.match(numbers)) {
-          if (innerValue.indexOf('.') === 0) {
-            console.log('lll')
-          }
-
-          dispatch(setExpression(innerValue, `${currentValue} ${innerValue}`));
+          dispatch(setExpression(innerValue, `${expression} ${setZeroBeforeDot(currentValue)} ${innerValue}`));
           calculation(digitValue, innerValue);
         }
       }
     }
   } catch (error) {
-    dispatch(setCurrentValue(error.message));
+    dispatch(setError(error.message));
   }
 }

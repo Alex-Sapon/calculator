@@ -1,15 +1,13 @@
 import {
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
-  SET_PLUS_OR_MINUS,
-  SLICE_LAST_LETTER,
   SET_EXPRESSION,
   SET_RESULT_CALCULATION, CLEAR_ALL,
 } from '@store/actions';
 
 const initialState = {
-  expression: '',
   currentValue: '',
+  expression: '',
   operation: '',
   result: '',
   history: [],
@@ -21,11 +19,6 @@ export const appReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         result: '',
-        currentValue: state.currentValue + payload.value,
-      }
-    case SLICE_LAST_LETTER:
-      return {
-        ...state,
         currentValue: payload.value,
       }
     case SET_EXPRESSION:
@@ -35,12 +28,6 @@ export const appReducer = (state = initialState, { type, payload }) => {
         expression: payload.expression,
         currentValue: '',
       }
-    case SET_PLUS_OR_MINUS: {
-      return {
-        ...state,
-        currentValue: payload.value,
-      }
-    }
     case SET_RESULT_CALCULATION:
       return {
         ...state,
@@ -48,23 +35,23 @@ export const appReducer = (state = initialState, { type, payload }) => {
           payload.history,
           ...state.history,
         ],
-        // result: payload.value,
-        currentValue: payload.value,
+        result: payload.value,
+        currentValue: '',
         expression: '',
       }
     case CLEAR_DISPLAY:
       return {
         ...state,
-        expression: '',
         currentValue: '',
+        expression: '',
         operation: '',
         result: '',
       }
     case CLEAR_ALL:
       return {
         ...state,
-        expression: '',
         currentValue: '',
+        expression: '',
         operation: '',
         result: '',
         history: [],

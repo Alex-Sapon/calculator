@@ -1,5 +1,5 @@
 import { HeaderStyled, Logo, NavList, NavLinkStyled } from '@components/header/styles';
-import { links } from '@components/header/links';
+import { links } from '@constants/links';
 
 export const Header = () => (
   <HeaderStyled>
