@@ -1,6 +1,6 @@
 export const PATH = {
   HOME: '/',
-  CALCULATOR_FC: '/calculator-fc',
-  CALCULATOR_CC: '/calculator-cc',
+  HOME_FC: '/home-fc',
+  HOME_CC: '/home-cc',
   SETTINGS: '/settings',
 }

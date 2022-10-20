@@ -100,173 +100,22 @@ const getCommand = (value, operation) => {
 
 const calculator = new Calculator();
 
-// function evaluation(expression) {
-//   expression = expression.replace(/\s/g, '');
-//   return helper(Array.from(expression), 0);
-// }
-
-// function helper(stack, index) {
-//   var stk = [];
-//   let sign = '+';
-//   let num = 0;
-
-//   for (let i = index; i < stack.length; i++) {
-//     let c = stack[i];
-//     if (c >= '0' && c <= '9') {
-//       num = num * 10 + (c - '0');
-//     }
-
-//     if (!(c >= '0' && c <= '9') || i === stack.length-1) {
-//       if (c === '(') {
-//         num = helper(stack, i + 1);
-//         let l = 1;
-//         let r = 0;
-
-//         for (let j = i+1; j < stack.length; j++) {
-//           if (stack[j] === ')') {
-//             r++;
-//             if (r === l) {
-//               i = j; break;
-//             }
-//           }
-//           else if (stack[j] === '(') l++;
-//         }
-//       }
-
-//       let pre = -1;
-
-//       switch (sign) {
-//         case '+':
-//           stk.push(num);
-//           calculator.execute(getCommand(num, sign));
-//           break;
-//         case '-':
-//           stk.push(num * -1);
-//           calculator.execute(getCommand(num, sign));
-//           break;
-//         case '*':
-//           pre = stk.pop();
-//           stk.push(pre * num);
-//           // console.log('num', num)
-//           // console.log('pre', pre)
-//           // console.log('sign', sign)
-//           calculator.execute(getCommand(num, sign));
-//           break;
-//         case '/':
-//           pre = stk.pop();
-//           stk.push(pre / num);
-//           //calculator.execute(getCommand(currentValue, operation));
-//           break;
-//       }
-
-//       sign = c;
-//       num = 0;
-
-//       if (c === ')') break;
-//     }
-//   }
-
-//   let answer = 0;
-
-//   while (stk.length > 0) {
-//     answer += stk.pop();
-//   }
-//   console.log(calculator.value)
-
-//   return answer;
-// }
-
-// console.log(evaluation('2+2-2*2'))
-
-export const calculation = (currentValue, operation) => {
-  if (currentValue === VALUE_NULL && operation === VALUE_NULL) {
+export const calculation = (expression, operation) => {
+  if (expression === VALUE_NULL && operation === VALUE_NULL) {
     calculator.reset();
     return;
   }
 
-  if (isNaN(currentValue)) return;
-
-  function evaluation(expression) {
-    expression = expression.replace(/\s/g, '');
-    return helper(Array.from(expression), 0);
-  }
-  
-  function helper(stack, index) {
-    var stk = [];
-    let sign = '+';
-    let num = 0;
-
-    for (let i = index; i < stack.length; i++) {
-      let c = stack[i];
-      if (c >= '0' && c <= '9') {
-        num = num * 10 + (c - '0');
-      }
-
-      if (!(c >= '0' && c <= '9') || i === stack.length-1) {
-        if (c === '(') {
-          num = helper(stack, i+1);
-          let l = 1;
-          let r = 0;
-
-          for (let j = i+1; j < stack.length; j++) {
-            if (stack[j] === ')') {
-              r++;
-              if (r === l) {
-                i = j; break;
-              }
-            }
-            else if (stack[j] === '(') l++;
-          }
-        }
-
-        let pre = -1;
-
-        switch (sign) {
-          case '+':
-            stk.push(num);
-            calculator.execute(getCommand(currentValue, operation));
-            break;
-          case '-':
-            stk.push(num * -1);
-            calculator.execute(getCommand(currentValue, operation));
-            break;
-          case '*':
-            pre = stk.pop();
-            stk.push(pre * num);
-            calculator.execute(getCommand(currentValue, operation));
-            break;
-          case '/':
-            pre = stk.pop();
-            stk.push(pre / num);
-            calculator.execute(getCommand(currentValue, operation));
-            break;
-        }
-        sign = c;
-        num = 0;
-        if (c === ')') break;
-      }
-    }
-
-    let answer = 0;
-
-    while (stk.length > 0) {
-      answer += stk.pop();
-      console.log(answer)
-    }
-    console.log(calculator)
-
-    return answer;
-  }
+  if (isNaN(expression)) return;
 
   try {
-    calculator.execute(getCommand(currentValue, operation));
+    calculator.execute(getCommand(expression, operation));
 
     if (Number.isFinite(calculator.value)) {
       if (!Number.isInteger(calculator.value)) {
         return calculator.value.toFixed(3);
       }
 
-      console.log(calculator)
       return calculator.value;
     } else {
       return 'Can\'t divide with 0';
@@ -275,3 +124,74 @@ export const calculation = (currentValue, operation) => {
     console.log('Error into core of calculator: ', e.message);
   }
 }
+
+
+function evaluation(expression) {
+  expression = expression.replace(/\s/g, '');
+  return helper(Array.from(expression), 0);
+}
+
+function helper(stack, index) {
+  const stk = [];
+  let sign = '+';
+  let num = 0;
+
+  for (let i = index; i < stack.length; i++) {
+    let c = stack[i];
+    if (c >= '0' && c <= '9') {
+      num = num * 10 + (c - '0');
+    }
+
+    if (!(c >= '0' && c <= '9') || i === stack.length - 1) {
+      if (c === '(') {
+        num = helper(stack, i + 1);
+        let l = 1;
+        let r = 0;
+
+        for (let j = i + 1; j < stack.length; j++) {
+          if (stack[j] === ')') {
+            r++;
+            if (r === l) {
+              i = j;
+              break;
+            }
+          } else if (stack[j] === '(') l++;
+        }
+      }
+
+      let pre = -1;
+
+      switch (sign) {
+        case '+':
+          stk.push(num);
+          //calculator.execute(new AddCommand(num));
+          break;
+        case '-':
+          stk.push(num * -1);
+          calculator.execute(new SubtractCommand(num));
+          break;
+        case '*':
+          pre = stk.pop();
+          stk.push(pre * num);
+          calculator.execute(new MultiplyCommand(num));
+          //calculator.execute(new MultiplyCommand(num));
+          break;
+        case '/':
+          pre = stk.pop();
+          stk.push(pre / num);
+          calculator.execute(new DivideCommand(pre));
+          //calculator.execute(new DivideCommand(num));
+          break;
+      }
+
+      sign = c;
+      num = 0;
+      if (c === ')') break;
+    }
+  }
+
+  console.log(calculator.history);
+  return calculator.value;
+}
+
+console.log(evaluation('2*2-2'))

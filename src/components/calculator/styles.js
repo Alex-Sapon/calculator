@@ -27,14 +27,14 @@ export const RightSide = styled.div`
   }
 `;
 
+export const LeftSide = styled.div`
+  position: relative;
+  padding: 20px;
+`;
+
 export const Title = styled.h2`
   text-align: center;
   font-size: 20px;
   margin-bottom: 20px;
   color: ${({ theme }) => theme.text};
-`;
-
-export const LeftSide = styled.div`
-  position: relative;
-  padding: 20px;
 `;

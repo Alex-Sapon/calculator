@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <HashRouter>
-    <GlobalStyles/>
     <Provider store={store}>
       <ErrorBoundary>
+        <GlobalStyles/>
         <App/>
       </ErrorBoundary>
     </Provider>

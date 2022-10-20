@@ -2,7 +2,8 @@ import {
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
   SET_EXPRESSION,
-  SET_RESULT_CALCULATION, CLEAR_ALL,
+  SET_RESULT_CALCULATION,
+  CLEAR_ALL,
 } from '@store/actions';
 
 const initialState = {
