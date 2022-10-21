@@ -7,7 +7,7 @@ import {
 } from '@store/actions';
 
 const initialState = {
-  currentValue: '',
+  currentValue: '0',
   expression: '',
   operation: '',
   result: '',
@@ -27,7 +27,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        currentValue: '',
+        currentValue: '0',
       }
     case SET_RESULT_CALCULATION:
       return {
@@ -43,7 +43,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
     case CLEAR_DISPLAY:
       return {
         ...state,
-        currentValue: '',
+        currentValue: '0',
         expression: '',
         operation: '',
         result: '',
@@ -51,7 +51,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
     case CLEAR_ALL:
       return {
         ...state,
-        currentValue: '',
+        currentValue: '0',
         expression: '',
         operation: '',
         result: '',
