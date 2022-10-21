@@ -18,22 +18,17 @@ export const SettingsGroup = styled.div`
 `;
 
 export const Select = styled.select`
-  width: 250px;
-  height: 50px;
+  width: 180px;
   border: ${({ theme }) => `2px solid ${theme.border}`};
   border-radius: 5px;
   margin-right: 40px;
-  font-size: 18px;
-  padding: 10px;
-
-  option {
-    font-size: 16px;
-  }
+  font-size: 16px;
+  padding: 7px;
 `;
 
 export const ButtonClear = styled.div`
-  width: 250px;
-  height: 50px;
+  width: 180px;
+  padding: 8px;
   background-color: #f2f2f2;
   border: ${({ theme }) => `2px solid ${theme.border}`};
   display: flex;

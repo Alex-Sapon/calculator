@@ -87,20 +87,20 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
           calculation(null, null);
         }
       } catch (error) {
-        dispatch(setError(error.message))
+        dispatch(setError(error.message));
       }
       break;
     }
     default: {
       try {
-        // если ввожу числа и точку
+        // ввожу числа и точку
         if (digits.includes(key)) {
           // если в currentValue введена точка и текущая значение точка - return
           if (key === '.' && currentValue.includes('.')) return;
           dispatch(setCurrentValue(getCorrectlyExpression(currentValue + key)));
         }
 
-        // если ввожу знаки операции
+        // ввожу знаки операции
         if (mathOperators.includes(key) && currentValue.match(numbers)) {
           dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
           dispatch(setCurrentValue('0'));
