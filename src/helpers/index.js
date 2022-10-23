@@ -26,7 +26,7 @@ const getCorrectlyExpression = value => {
 const getResultExpression = (result, ...operands) => operands.join(' ') + ' = ' + result;
 
 const checkBracketBalanced = expression => {
-  let stack = [];
+  const stack = [];
 
   for (let i = 0; i < expression.length; i++) {
     let temp = expression[i];
@@ -68,7 +68,6 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
       break;
     }
     case '(': {
-      // dispatch(setCurrentValue(innerValue));
       dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + key)));
       break;
     }
@@ -80,6 +79,8 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
     case '=': {
       try {
         if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
+          if (currentValue === '0') currentValue = '';
+
           const result = calculation((expression.slice(1, -1) + operation + ' ' + currentValue).split(' '));
           dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
           calculation(null);
@@ -95,17 +96,21 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
         if (digits.includes(key)) {
           if (currentValue.length > 12) return;
           if (key === '.' && currentValue.includes('.')) return;
+
           dispatch(setCurrentValue(getCorrectlyExpression(currentValue + key)));
         }
 
         // input operations
-        if (mathOperators.includes(key) && currentValue.match(numbers) && currentValue !== '0') {
-          dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
-          dispatch(setCurrentValue('0'));
-        }
+        if (mathOperators.includes(key)) {
+          if (currentValue.match(numbers) && currentValue !== '0') {
+            dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
+            dispatch(setCurrentValue('0'));
+          }
 
-        if (!checkBracketBalanced(expression + currentValue)) {
-          console.log('Brackets are not balanced!');
+          if (!checkBracketBalanced(expression + currentValue)) {
+            console.log('Brackets are not balanced!');
+          }
+
         }
       } catch (error) {
         dispatch(setError(error.message));

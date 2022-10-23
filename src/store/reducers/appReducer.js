@@ -1,9 +1,10 @@
 import {
+  CLEAR_ALL,
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
+  SET_ERROR,
   SET_EXPRESSION,
-  SET_RESULT_CALCULATION,
-  CLEAR_ALL,
+  SET_RESULT_CALCULATION
 } from '@store/actions';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   operation: '',
   result: '',
   history: [],
+  error: null,
 }
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -21,6 +23,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         result: '',
         currentValue: payload.value,
+        error: null,
       }
     case SET_EXPRESSION:
       return {
@@ -47,6 +50,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         expression: '',
         operation: '',
         result: '',
+        error: null,
       }
     case CLEAR_ALL:
       return {
@@ -56,6 +60,16 @@ export const appReducer = (state = initialState, { type, payload }) => {
         operation: '',
         result: '',
         history: [],
+        error: null,
+      }
+    case SET_ERROR:
+      return {
+        ...state,
+        currentValue: '0',
+        expression: '',
+        operation: '',
+        result: '',
+        error: payload.value,
       }
     default:
       return state;

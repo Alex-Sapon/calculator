@@ -128,11 +128,8 @@ export const calculation = expression => {
               tempStack.push(number);
               break;
             case '-':
-
               tempStack.push(number);
               calculator.execute(new SubtractCommand(number));
-              console.log(number * -1)
-              console.log(calculator.previousValue)
               break;
             case '*':
               pre = tempStack.pop();
@@ -158,9 +155,6 @@ export const calculation = expression => {
         calculator.execute(new AddCommand(tempStack.pop()))
       }
     }
-
-    console.log(calculator.currentValue)
-    console.log(calculator.history)
 
     if (Number.isFinite(calculator.currentValue)) {
       if (!Number.isInteger(calculator.currentValue)) return calculator.currentValue.toFixed(3);

@@ -10,4 +10,4 @@ export const setResultCalculation = (value, history) => ({ type: SET_RESULT_CALC
 export const clearDisplay = () => ({ type: CLEAR_DISPLAY });
 export const clearAll = () => ({ type: CLEAR_ALL });
 export const setExpression = (operation, expression) => ({ type: SET_EXPRESSION, payload: { operation, expression } });
-export const setError = (errorMessage) => ({ type: SET_ERROR, payload: { errorMessage } });
+export const setError = (error) => ({ type: SET_ERROR, payload: { error } });
