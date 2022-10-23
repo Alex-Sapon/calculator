@@ -8,7 +8,7 @@ export const DisplayMain = styled.div`
   text-align: right;
   font-size: 26px;
   height: 50px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.primary};
 `;
 
 export const DisplayHistory = styled.div`
@@ -18,5 +18,5 @@ export const DisplayHistory = styled.div`
   font-size: 14px;
   word-wrap: break-word;
   word-break: break-all;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.secondary};
 `;

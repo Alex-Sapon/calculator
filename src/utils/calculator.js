@@ -2,12 +2,14 @@ import { VALUE_NULL, VALUE_ZERO } from '@constants/empty';
 
 class Calculator {
   constructor() {
-    this.value = 0;
+    this.previousValue = 0;
+    this.currentValue = 0;
     this.history = [];
   }
 
   execute(command) {
-    this.value = command.execute(this.value);
+    this.previousValue = this.currentValue;
+    this.currentValue = command.execute(this.previousValue);
     this.history.push(command);
   }
 
@@ -19,107 +21,154 @@ class Calculator {
   }
 
   reset() {
-    this.value = 0;
+    this.previousValue = 0;
+    this.currentValue = 0;
     this.history = [];
   }
 }
 
 class AddCommand {
-  constructor(value) {
-    this.value = value;
+  constructor(currentValue) {
+    this.currentValue = currentValue;
   }
 
-  execute(currentValue) {
-    return currentValue + this.value;
+  execute(previousValue) {
+    return previousValue + this.currentValue;
   }
 
   undo(currentValue) {
-    return currentValue - this.value;
+    return currentValue - this.currentValue;
   }
 }
 
 class SubtractCommand {
-  constructor(value) {
-    this.value = value;
+  constructor(currentValue) {
+    this.currentValue = currentValue;
   }
 
-  execute(currentValue) {
-    if (currentValue === VALUE_ZERO) return this.value;
-    return currentValue - this.value;
+  execute(previousValue) {
+    return previousValue - this.currentValue;
   }
 
-  undo(currentValue) {
-    return this.value + currentValue;
+  undo(previousValue) {
+    return this.currentValue + previousValue;
   }
 }
 
 class MultiplyCommand {
-  constructor(value) {
-    this.value = value;
+  constructor(currentValue) {
+    this.currentValue = currentValue;
   }
 
-  execute(currentValue) {
-    if (currentValue === VALUE_ZERO) return this.value;
-    return this.value * currentValue;
+  execute(previousValue) {
+    return previousValue * this.currentValue;
   }
 
-  undo(currentValue) {
-    return currentValue / this.value;
+  undo(previousValue) {
+    return previousValue / this.currentValue;
   }
 }
 
 class DivideCommand {
-  constructor(value) {
-    this.value = value;
+  constructor(currentValue) {
+    this.currentValue = currentValue;
   }
 
-  execute(currentValue) {
-    if (currentValue === VALUE_ZERO) return this.value;
-    return currentValue / this.value;
+  execute(previousValue) {
+    return previousValue / this.currentValue;
   }
 
-  undo(currentValue) {
-    return currentValue * this.value;
-  }
-}
-
-const getCommand = (value, operation) => {
-  switch (operation) {
-    case '+':
-      return new AddCommand(value);
-    case '-':
-      return new SubtractCommand(value);
-    case '/':
-      return new DivideCommand(value);
-    case '*':
-      return new MultiplyCommand(value);
-    default:
-      return 0;
+  undo(previousValue) {
+    return previousValue * this.currentValue;
   }
 }
 
 const calculator = new Calculator();
 
-export const calculation = (expression, operation) => {
-  if (expression === VALUE_NULL && operation === VALUE_NULL) {
+export const calculation = expression => {
+  if (expression === VALUE_NULL) {
     calculator.reset();
     return;
   }
 
   try {
-    calculator.execute(getCommand(expression, operation));
+    helper(expression, 0);
 
-    if (Number.isFinite(calculator.value)) {
-      if (!Number.isInteger(calculator.value)) {
-        return calculator.value.toFixed(3);
+    function helper(stack, index) {
+      const tempStack = [];
+      let operator = '+';
+      let number = 0;
+
+      for (let i = index; i < stack.length; i++) {
+        let currentValue = stack[i];
+        if (currentValue >= '0' && currentValue <= '9') {
+          number = number * 10 + (currentValue - '0');
+        }
+
+        if (!(currentValue >= '0' && currentValue <= '9') || i === stack.length - 1) {
+          if (currentValue === '(') {
+            number = helper(stack, i + 1);
+            let l = 1, r = 0;
+
+            for (let j = i + 1; j < stack.length; j++) {
+              if (stack[j] === ')') {
+                r++;
+                if (r === l) {
+                  i = j;
+                  break;
+                }
+              } else if (stack[j] === '(') l++;
+            }
+          }
+
+          let pre = -1;
+
+          switch (operator) {
+            case '+':
+              tempStack.push(number);
+              break;
+            case '-':
+
+              tempStack.push(number);
+              calculator.execute(new SubtractCommand(number));
+              console.log(number * -1)
+              console.log(calculator.previousValue)
+              break;
+            case '*':
+              pre = tempStack.pop();
+              tempStack.push(pre * number);
+              calculator.execute(new MultiplyCommand(number));
+              break;
+            case '/':
+              pre = tempStack.pop();
+              tempStack.push(pre / number);
+              calculator.execute(new DivideCommand(number));
+              break;
+            default:
+              return 0;
+          }
+
+          operator = currentValue;
+          number = 0;
+          if (currentValue === ')') break;
+        }
       }
-      console.log(calculator)
 
-      return calculator.value;
-    } else {
-      return 'Can\'t divide with 0';
+      while (tempStack.length > 0) {
+        calculator.execute(new AddCommand(tempStack.pop()))
+      }
     }
-  } catch (e) {
-    console.log('Error into core of calculator: ', e.message);
+
+    console.log(calculator.currentValue)
+    console.log(calculator.history)
+
+    if (Number.isFinite(calculator.currentValue)) {
+      if (!Number.isInteger(calculator.currentValue)) return calculator.currentValue.toFixed(3);
+      return calculator.currentValue;
+    } else {
+      return 'Error';
+    }
+  } catch (error) {
+    console.log('Error into core of calculator: ', error.message);
   }
 }

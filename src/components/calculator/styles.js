@@ -36,5 +36,5 @@ export const Title = styled.h2`
   text-align: center;
   font-size: 20px;
   margin-bottom: 20px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.primary};
 `;

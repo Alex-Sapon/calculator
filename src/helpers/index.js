@@ -15,6 +15,7 @@ const getCorrectlyExpression = value => {
   if (value.indexOf('-') === 0 && value.indexOf('0') === 1 && !value.includes('.')) {
     return '-' + value.slice(2, value.length);
   }
+
   if (value.indexOf('-') === 0 && value.indexOf('.') === 1 && value.length === 2) {
     return '-0.';
   }
@@ -47,7 +48,6 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
   const key = event.currentTarget.textContent;
 
   const numbers = /[0-9]/g;
-  const digitValue = +Number.parseFloat(currentValue).toFixed(3);
 
   switch (key) {
     case 'C': {
@@ -60,7 +60,7 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
     }
     case 'CE': {
       dispatch(clearDisplay());
-      calculation(null, null);
+      calculation(null);
       break;
     }
     case '-/+': {
@@ -69,22 +69,20 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
     }
     case '(': {
       // dispatch(setCurrentValue(innerValue));
-      dispatch(setExpression(key, expression + getCorrectlyExpression(currentValue + key)));
+      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + key)));
       break;
     }
     case ')': {
       if (!expression.includes('(') || !currentValue.match(numbers)) return;
-
-      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + key)));
+      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
       break;
     }
     case '=': {
       try {
         if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
-          const result = calculation(digitValue, operation);
-          dispatch(setResultCalculation(result.toString(), getResultExpression(result, expression, currentValue)));
-
-          calculation(null, null);
+          const result = calculation((expression.slice(1, -1) + operation + ' ' + currentValue).split(' '));
+          dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
+          calculation(null);
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -93,18 +91,17 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
     }
     default: {
       try {
-        // ввожу числа и точку
+        // input numbers and dot
         if (digits.includes(key)) {
-          // если в currentValue введена точка и текущая значение точка - return
+          if (currentValue.length > 12) return;
           if (key === '.' && currentValue.includes('.')) return;
           dispatch(setCurrentValue(getCorrectlyExpression(currentValue + key)));
         }
 
-        // ввожу знаки операции
-        if (mathOperators.includes(key) && currentValue.match(numbers)) {
+        // input operations
+        if (mathOperators.includes(key) && currentValue.match(numbers) && currentValue !== '0') {
           dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
           dispatch(setCurrentValue('0'));
-          calculation(digitValue, key);
         }
 
         if (!checkBracketBalanced(expression + currentValue)) {

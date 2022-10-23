@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const HeaderStyled = styled.header`
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.primary};
   font-size: 18px;
   height: 70px;
   background-color: ${({ theme }) => theme.secondaryBackground};
@@ -24,7 +24,7 @@ export const NavList = styled.ul`
 export const NavLinkStyled = styled(NavLink)`
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.primary};
 
   &:hover {
     border-bottom: 2px solid #fff;
