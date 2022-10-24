@@ -1,4 +1,4 @@
-import { VALUE_NULL, VALUE_ZERO } from '@constants/empty';
+import { VALUE_NULL } from '@constants/empty';
 
 class Calculator {
   constructor() {
@@ -11,13 +11,6 @@ class Calculator {
     this.previousValue = this.currentValue;
     this.currentValue = command.execute(this.previousValue);
     this.history.push(command);
-  }
-
-  undo() {
-    if (this.history.length === VALUE_ZERO) return;
-
-    const lastCommand = this.history.pop();
-    this.value = lastCommand.undo(this.value);
   }
 
   reset() {
@@ -35,10 +28,6 @@ class AddCommand {
   execute(previousValue) {
     return previousValue + this.currentValue;
   }
-
-  undo(currentValue) {
-    return currentValue - this.currentValue;
-  }
 }
 
 class SubtractCommand {
@@ -48,10 +37,6 @@ class SubtractCommand {
 
   execute(previousValue) {
     return previousValue - this.currentValue;
-  }
-
-  undo(previousValue) {
-    return this.currentValue + previousValue;
   }
 }
 
@@ -63,10 +48,6 @@ class MultiplyCommand {
   execute(previousValue) {
     return previousValue * this.currentValue;
   }
-
-  undo(previousValue) {
-    return previousValue / this.currentValue;
-  }
 }
 
 class DivideCommand {
@@ -76,10 +57,6 @@ class DivideCommand {
 
   execute(previousValue) {
     return previousValue / this.currentValue;
-  }
-
-  undo(previousValue) {
-    return previousValue * this.currentValue;
   }
 }
 
@@ -108,37 +85,39 @@ export const calculation = expression => {
         if (!(currentValue >= '0' && currentValue <= '9') || i === stack.length - 1) {
           if (currentValue === '(') {
             number = helper(stack, i + 1);
-            let l = 1, r = 0;
+            let left = 1;
+            let right = 0;
 
             for (let j = i + 1; j < stack.length; j++) {
               if (stack[j] === ')') {
-                r++;
-                if (r === l) {
+                right++;
+                if (right === left) {
                   i = j;
                   break;
                 }
-              } else if (stack[j] === '(') l++;
+              } else if (stack[j] === '(') left++;
             }
           }
 
-          let pre = -1;
+          let previous = -1;
 
           switch (operator) {
             case '+':
               tempStack.push(number);
+              //calculator.execute(new AddCommand(tempStack.pop()));
               break;
             case '-':
-              tempStack.push(number);
+              //tempStack.push(number * -1);
               calculator.execute(new SubtractCommand(number));
               break;
             case '*':
-              pre = tempStack.pop();
-              tempStack.push(pre * number);
+              previous = tempStack.pop();
+              tempStack.push(previous * number);
               calculator.execute(new MultiplyCommand(number));
               break;
             case '/':
-              pre = tempStack.pop();
-              tempStack.push(pre / number);
+              previous = tempStack.pop();
+              tempStack.push(previous / number);
               calculator.execute(new DivideCommand(number));
               break;
             default:
@@ -152,12 +131,13 @@ export const calculation = expression => {
       }
 
       while (tempStack.length > 0) {
-        calculator.execute(new AddCommand(tempStack.pop()))
+        calculator.execute(new AddCommand(tempStack.pop()));
       }
     }
 
     if (Number.isFinite(calculator.currentValue)) {
       if (!Number.isInteger(calculator.currentValue)) return calculator.currentValue.toFixed(3);
+
       return calculator.currentValue;
     } else {
       return 'Error';
