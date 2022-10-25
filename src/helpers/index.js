@@ -60,7 +60,6 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
     }
     case 'CE': {
       dispatch(clearDisplay());
-      calculation(null);
       break;
     }
     case '-/+': {
@@ -81,9 +80,12 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
         if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
           if (currentValue === '0') currentValue = '';
 
-          const result = calculation((expression.slice(1, -1) + operation + ' ' + currentValue).split(' '));
+          const value = (expression.slice(1, -1) + operation + ' ' + currentValue).split(' ').map(item => {
+            return isNaN(parseFloat(item)) ? item : +item;
+          });
+          const { result } = calculation(value);
+
           dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
-          calculation(null);
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -110,7 +112,6 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
           if (!checkBracketBalanced(expression + currentValue)) {
             console.log('Brackets are not balanced!');
           }
-
         }
       } catch (error) {
         dispatch(setError(error.message));

@@ -1,146 +1,157 @@
-import { VALUE_NULL } from '@constants/empty';
-
 class Calculator {
   constructor() {
-    this.previousValue = 0;
-    this.currentValue = 0;
+    this.value = 0;
     this.history = [];
   }
 
   execute(command) {
-    this.previousValue = this.currentValue;
-    this.currentValue = command.execute(this.previousValue);
+    this.value = command.execute();
     this.history.push(command);
   }
 
+  getState() {
+    return {
+      value: this.value,
+      history: this.history,
+    }
+  }
+
   reset() {
-    this.previousValue = 0;
-    this.currentValue = 0;
+    this.value = 0;
     this.history = [];
   }
 }
 
 class AddCommand {
-  constructor(currentValue) {
-    this.currentValue = currentValue;
+  constructor(prevValue, nextValue) {
+    this.prevValue = prevValue;
+    this.nextValue = nextValue;
   }
 
-  execute(previousValue) {
-    return previousValue + this.currentValue;
+  execute() {
+    return this.prevValue + this.nextValue;
   }
 }
 
 class SubtractCommand {
-  constructor(currentValue) {
-    this.currentValue = currentValue;
+  constructor(prevValue, nextValue) {
+    this.prevValue = prevValue;
+    this.nextValue = nextValue;
   }
 
-  execute(previousValue) {
-    return previousValue - this.currentValue;
+  execute() {
+    return this.prevValue - this.nextValue;
   }
 }
 
 class MultiplyCommand {
-  constructor(currentValue) {
-    this.currentValue = currentValue;
+  constructor(prevValue, nextValue) {
+    this.prevValue = prevValue;
+    this.nextValue = nextValue;
   }
 
-  execute(previousValue) {
-    return previousValue * this.currentValue;
+  execute() {
+    return this.prevValue * this.nextValue;
   }
 }
 
 class DivideCommand {
-  constructor(currentValue) {
-    this.currentValue = currentValue;
+  constructor(prevValue, nextValue) {
+    this.prevValue = prevValue;
+    this.nextValue = nextValue;
   }
 
-  execute(previousValue) {
-    return previousValue / this.currentValue;
+  execute() {
+    return this.prevValue / this.nextValue;
   }
 }
 
 const calculator = new Calculator();
 
 export const calculation = expression => {
-  if (expression === VALUE_NULL) {
-    calculator.reset();
-    return;
-  }
+  const tempStack = [...expression];
+  const numberStack = [];
+  const operatorStack = [];
+
+  const priority = { '*': 2, '/': 2, '+': 1, '-': 1 };
 
   try {
-    helper(expression, 0);
+    // создать команду со значениями из стека
+    const createCommand = () => {
+      const nextNumber = numberStack.pop();
+      const prevNumber = numberStack.pop();
+      const operator = operatorStack.pop();
 
-    function helper(stack, index) {
-      const tempStack = [];
-      let operator = '+';
-      let number = 0;
-
-      for (let i = index; i < stack.length; i++) {
-        let currentValue = stack[i];
-        if (currentValue >= '0' && currentValue <= '9') {
-          number = number * 10 + (currentValue - '0');
-        }
-
-        if (!(currentValue >= '0' && currentValue <= '9') || i === stack.length - 1) {
-          if (currentValue === '(') {
-            number = helper(stack, i + 1);
-            let left = 1;
-            let right = 0;
-
-            for (let j = i + 1; j < stack.length; j++) {
-              if (stack[j] === ')') {
-                right++;
-                if (right === left) {
-                  i = j;
-                  break;
-                }
-              } else if (stack[j] === '(') left++;
-            }
-          }
-
-          let previous = -1;
-
-          switch (operator) {
-            case '+':
-              tempStack.push(number);
-              //calculator.execute(new AddCommand(tempStack.pop()));
-              break;
-            case '-':
-              //tempStack.push(number * -1);
-              calculator.execute(new SubtractCommand(number));
-              break;
-            case '*':
-              previous = tempStack.pop();
-              tempStack.push(previous * number);
-              calculator.execute(new MultiplyCommand(number));
-              break;
-            case '/':
-              previous = tempStack.pop();
-              tempStack.push(previous / number);
-              calculator.execute(new DivideCommand(number));
-              break;
-            default:
-              return 0;
-          }
-
-          operator = currentValue;
-          number = 0;
-          if (currentValue === ')') break;
-        }
+      switch (operator) {
+        case '+':
+          calculator.execute(new AddCommand(prevNumber, nextNumber));
+          break;
+        case '-':
+          calculator.execute(new SubtractCommand(prevNumber, nextNumber));
+          break;
+        case '*':
+          calculator.execute(new MultiplyCommand(prevNumber, nextNumber));
+          break;
+        case '/':
+          calculator.execute(new DivideCommand(prevNumber, nextNumber));
       }
 
-      while (tempStack.length > 0) {
-        calculator.execute(new AddCommand(tempStack.pop()));
-      }
+      numberStack.push(calculator.getState().value);
     }
 
-    if (Number.isFinite(calculator.currentValue)) {
-      if (!Number.isInteger(calculator.currentValue)) return calculator.currentValue.toFixed(3);
+    // если оператор не равен последнему оператору из operatorStack, то создать команду
+    const runCommand = operator => {
+      while (operatorStack[operatorStack.length - 1] !== operator) {
+        createCommand();
+      }
+      operatorStack.pop();
+    }
 
-      return calculator.currentValue;
-    } else {
-      return 'Error';
+    const runCalculation = () => {
+      let i = 0;
+
+      while (i !== tempStack.length) {
+        // если value не число
+        while (isNaN(tempStack[i])) {
+          if (tempStack[i] === ')') {
+            runCommand('(');
+            i++;
+            // проверить приоритет операции
+            // если приоритет текущего оператора меньше последнего оператора в operatorStack, то выполнить команду
+            while (priority[tempStack[i]] < priority[operatorStack[operatorStack.length - 1]]) {
+              createCommand();
+            }
+          } else {
+            operatorStack.push(tempStack[i]);
+            i++;
+          }
+        }
+        // иначе value number
+        numberStack.push(tempStack[i]);
+        i++;
+
+        // если последний оператор в operatorStack не равен '('
+        if (operatorStack[operatorStack.length - 1] !== '(') {
+          // пока приоритет текущего оператора меньше последнего оператора в operatorStack, создавать команду
+          while (priority[tempStack[i]] < priority[operatorStack[operatorStack.length - 1]]) {
+            createCommand();
+          }
+        } else if (tempStack[i] !== ')') {
+          operatorStack.push(tempStack[i]);
+          i++;
+        }
+      }
+
+      // остановить создание команд и извлечь результат выражения из numberStack
+      runCommand(undefined);
+      numberStack.pop();
+    }
+
+    runCalculation();
+    const value = calculator.getState().value;
+
+    return {
+      result: Number.isInteger(value) ? value : value.toFixed(3),
     }
   } catch (error) {
     console.log('Error into core of calculator: ', error.message);
