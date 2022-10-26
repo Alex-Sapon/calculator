@@ -4,14 +4,15 @@ import {
   SET_CURRENT_VALUE,
   SET_ERROR,
   SET_EXPRESSION,
-  SET_RESULT_CALCULATION
+  SET_RESULT_CALCULATION, SET_TEMP_RESULT
 } from '@store/actions';
 
 const initialState = {
-  currentValue: '0',
+  value: '0',
   expression: '',
   operation: '',
   result: '',
+  tempResult: '',
   history: [],
   error: null,
 }
@@ -22,7 +23,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         result: '',
-        currentValue: payload.value,
+        value: payload.value,
         error: null,
       }
     case SET_EXPRESSION:
@@ -30,7 +31,15 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        currentValue: '0',
+        result: payload.result,
+        value: '',
+      }
+    case SET_TEMP_RESULT:
+      return {
+        ...state,
+        value: '',
+        result: payload.value,
+        tempResult: payload.value,
       }
     case SET_RESULT_CALCULATION:
       return {
@@ -40,13 +49,13 @@ export const appReducer = (state = initialState, { type, payload }) => {
           ...state.history,
         ],
         result: payload.value,
-        currentValue: '',
+        value: '',
         expression: '',
       }
     case CLEAR_DISPLAY:
       return {
         ...state,
-        currentValue: '0',
+        value: '0',
         expression: '',
         operation: '',
         result: '',
@@ -55,7 +64,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
     case CLEAR_ALL:
       return {
         ...state,
-        currentValue: '0',
+        value: '0',
         expression: '',
         operation: '',
         result: '',
@@ -65,7 +74,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
     case SET_ERROR:
       return {
         ...state,
-        currentValue: '0',
+        value: '0',
         expression: '',
         operation: '',
         result: '',

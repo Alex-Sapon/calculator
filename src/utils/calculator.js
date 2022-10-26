@@ -164,7 +164,7 @@ export const calculation = expression => {
     const value = calculator.getState().value;
 
     return {
-      result: Number.isInteger(value) ? value : value.toFixed(3),
+      result: Number.isInteger(value) ? value.toString() : value.toFixed(3),
     }
   } catch (error) {
     console.log('Error into core of calculator: ', error.message);

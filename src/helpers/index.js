@@ -1,4 +1,11 @@
-import { clearDisplay, setCurrentValue, setError, setExpression, setResultCalculation } from '@store/actions';
+import {
+  clearDisplay,
+  setCurrentValue,
+  setError,
+  setExpression,
+  setResultCalculation,
+  setTempResult
+} from '@store/actions';
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
@@ -52,15 +59,14 @@ function trimExpression(...expression) {
 }
 
 
-export const keypadHandler = (event, currentValue, expression, operation, dispatch) => {
+export const keypadHandler = (event, value, expression, operation, tempResult, dispatch) => {
   const key = event.currentTarget.textContent;
-
   const numbers = /[0-9]/g;
 
   switch (key) {
     case 'C': {
-      if (currentValue !== '0' && currentValue.length !== VALUE_ONE && currentValue !== EMPTY_STRING) {
-        dispatch(setCurrentValue(currentValue.slice(0, currentValue.length - 1)));
+      if (value !== '0' && value.length !== VALUE_ONE && value !== EMPTY_STRING) {
+        dispatch(setCurrentValue(value.slice(0, value.length - 1)));
       } else {
         dispatch(setCurrentValue('0'));
       }
@@ -71,29 +77,27 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
       break;
     }
     case '-/+': {
-      dispatch(setCurrentValue(currentValue.indexOf('-') === VALUE_ZERO ? currentValue.slice(1, currentValue.length) : '-' + currentValue));
+      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO ? value.slice(1, value.length) : '-' + value));
       break;
     }
     case '(': {
-      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + key)));
+      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(value + key)));
       break;
     }
     case ')': {
-      if (!expression.includes('(') || !currentValue.match(numbers)) return;
-      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
+      if (!expression.includes('(') || !value.match(numbers)) return;
+      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(value + ' ' + key)));
       break;
     }
     case '=': {
       try {
-        if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
-          if (currentValue === '0') currentValue = '';
+        if (expression !== EMPTY_STRING && value.match(numbers)) {
+          if (value === '0') value = '';
 
-          const calculationValue = trimExpression(expression.slice(0, expression.length - 1), operation, currentValue);
+          const calculationValue = trimExpression(expression.slice(0, expression.length - 1), operation, value);
           const { result } = calculation(calculationValue);
 
-          dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
-
-          //dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
+          dispatch(setResultCalculation(result, getResultExpression(result, expression, value)));
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -104,19 +108,23 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
       try {
         // input numbers and dot
         if (digits.includes(key)) {
-          if (currentValue.length > 12) return;
-          if (key === '.' && currentValue.includes('.')) return;
+          if (value.length > 12) return;
+          if (key === '.' && value.includes('.')) return;
 
-          dispatch(setCurrentValue(getCorrectlyExpression(currentValue + key)));
+          dispatch(setCurrentValue(getCorrectlyExpression(value + key)));
         }
         // input operations
         if (mathOperators.includes(key)) {
-          if (currentValue.match(numbers) && currentValue !== '0') {
+          if (value.match(numbers) && value !== '0') {
 
-            dispatch(setExpression(key, trimExpression(expression, currentValue, key).join(' ')));
+            const calculationValue = trimExpression(expression.slice(0, expression.length - 1), operation, value);
+            const { result } = calculation(calculationValue);
+
+            dispatch(setExpression(key, trimExpression(expression, value, key).join(' ')));
+            dispatch(setTempResult(result));
           }
 
-          if (!checkBracketBalanced(expression + currentValue)) {
+          if (!checkBracketBalanced(expression + value)) {
             console.log('Brackets are not balanced!');
           }
         }
