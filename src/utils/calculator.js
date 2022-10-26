@@ -66,6 +66,17 @@ class DivideCommand {
   }
 }
 
+class RemainderDivideCommand {
+  constructor(prevValue, nextValue) {
+    this.prevValue = prevValue;
+    this.nextValue = nextValue;
+  }
+
+  execute() {
+    return this.prevValue % this.nextValue;
+  }
+}
+
 const calculator = new Calculator();
 
 export const calculation = expression => {
@@ -73,7 +84,7 @@ export const calculation = expression => {
   const numberStack = [];
   const operatorStack = [];
 
-  const priority = { '*': 2, '/': 2, '+': 1, '-': 1 };
+  const priority = { '*': 2, '/': 2, '%': 2, '+': 1, '-': 1 };
 
   try {
     // создать команду со значениями из стека
@@ -94,6 +105,8 @@ export const calculation = expression => {
           break;
         case '/':
           calculator.execute(new DivideCommand(prevNumber, nextNumber));
+        case '%':
+          calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
       }
 
       numberStack.push(calculator.getState().value);

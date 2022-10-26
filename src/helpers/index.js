@@ -1,7 +1,7 @@
 import { clearDisplay, setCurrentValue, setError, setExpression, setResultCalculation } from '@store/actions';
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
-import { EMPTY_STRING, VALUE_ZERO } from '@constants/empty';
+import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 
 const getCorrectlyExpression = value => {
   if (value.indexOf('.') === 0) {
@@ -44,6 +44,14 @@ const checkBracketBalanced = expression => {
   return stack.length === VALUE_ZERO;
 };
 
+function trimExpression(...expression) {
+  let result = expression.filter(item => item !== '');
+  result = result.map(item => isNaN(item) ? item : parseFloat(item));
+
+  return result;
+}
+
+
 export const keypadHandler = (event, currentValue, expression, operation, dispatch) => {
   const key = event.currentTarget.textContent;
 
@@ -51,7 +59,7 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
 
   switch (key) {
     case 'C': {
-      if (currentValue !== '0' && currentValue.length !== 1) {
+      if (currentValue !== '0' && currentValue.length !== VALUE_ONE && currentValue !== EMPTY_STRING) {
         dispatch(setCurrentValue(currentValue.slice(0, currentValue.length - 1)));
       } else {
         dispatch(setCurrentValue('0'));
@@ -80,12 +88,12 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
         if (expression !== EMPTY_STRING && currentValue.match(numbers)) {
           if (currentValue === '0') currentValue = '';
 
-          const value = (expression.slice(1, -1) + operation + ' ' + currentValue).split(' ').map(item => {
-            return isNaN(parseFloat(item)) ? item : +item;
-          });
-          const { result } = calculation(value);
+          const calculationValue = trimExpression(expression.slice(0, expression.length - 1), operation, currentValue);
+          const { result } = calculation(calculationValue);
 
           dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
+
+          //dispatch(setResultCalculation(result, getResultExpression(result, expression, currentValue)));
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -101,12 +109,11 @@ export const keypadHandler = (event, currentValue, expression, operation, dispat
 
           dispatch(setCurrentValue(getCorrectlyExpression(currentValue + key)));
         }
-
         // input operations
         if (mathOperators.includes(key)) {
           if (currentValue.match(numbers) && currentValue !== '0') {
-            dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(currentValue + ' ' + key)));
-            dispatch(setCurrentValue('0'));
+
+            dispatch(setExpression(key, trimExpression(expression, currentValue, key).join(' ')));
           }
 
           if (!checkBracketBalanced(expression + currentValue)) {
