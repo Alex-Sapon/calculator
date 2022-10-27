@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Calculator = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 200px;
   gap: 10px;
 
   @media (max-width: 767.98px) {

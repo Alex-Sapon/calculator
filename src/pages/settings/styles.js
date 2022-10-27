@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SettingsContainer = styled.div`
-  width: 580px;
+  width: 590px;
   padding: 20px;
   height: 420px;
   background-color: ${({ theme }) => theme.background};
