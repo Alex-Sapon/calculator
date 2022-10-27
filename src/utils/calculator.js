@@ -105,6 +105,7 @@ export const calculation = expression => {
           break;
         case '/':
           calculator.execute(new DivideCommand(prevNumber, nextNumber));
+          break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
       }

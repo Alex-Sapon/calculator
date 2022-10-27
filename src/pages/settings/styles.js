@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const SettingsContainer = styled.div`
+  width: 580px;
   padding: 20px;
-  height: 490px;
+  height: 420px;
   background-color: ${({ theme }) => theme.background};
+
+  @media (max-width: 767.98px) {
+    width: 380px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -15,6 +20,10 @@ export const Title = styled.h2`
 export const SettingsGroup = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 767.98px) {
+    justify-content: space-between;
+  }
 `;
 
 export const Select = styled.select`
@@ -24,22 +33,15 @@ export const Select = styled.select`
   margin-right: 40px;
   font-size: 16px;
   padding: 7px;
-`;
 
-export const ButtonClear = styled.div`
-  width: 180px;
-  padding: 8px;
-  background-color: #f2f2f2;
-  border: ${({ theme }) => `2px solid ${theme.border}`};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all ease 0.3s;
+  @media (max-width: 767.98px) {
+    width: 160px;
+    margin-right: 20px;
+  }
 
-  &:hover {
-    background-color: #959595;
-    color: #fff;
+  @media (max-width: 767.98px) {
+    option {
+      font-size: 16px;
+    }
   }
 `;

@@ -17,5 +17,5 @@ root.render(
         <App/>
       </ErrorBoundary>
     </Provider>
-  </HashRouter>
+  </HashRouter>,
 )

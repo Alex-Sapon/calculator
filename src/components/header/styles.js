@@ -10,10 +10,19 @@ export const HeaderStyled = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 767.98px) {
+    justify-content: center;
+    height: 60px;
+  }
 `;
 
 export const Logo = styled.span`
   margin-right: 30px;
+
+  @media (max-width: 767.98px) {
+    display: none;
+  }
 `;
 
 export const NavList = styled.ul`
@@ -22,6 +31,7 @@ export const NavList = styled.ul`
 `;
 
 export const NavLinkStyled = styled(NavLink)`
+  padding: 3px 0;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   color: ${({ theme }) => theme.primary};

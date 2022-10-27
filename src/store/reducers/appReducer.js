@@ -2,6 +2,7 @@ import {
   CLEAR_ALL,
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
+  CHANGE_OPERATOR,
   SET_ERROR,
   SET_EXPRESSION,
   SET_RESULT_CALCULATION, SET_TEMP_RESULT
@@ -31,7 +32,6 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        result: payload.result,
         value: '',
       }
     case SET_TEMP_RESULT:
@@ -41,6 +41,11 @@ export const appReducer = (state = initialState, { type, payload }) => {
         result: payload.value,
         tempResult: payload.value,
       }
+    case CHANGE_OPERATOR:
+      return {
+        ...state,
+        operation: payload.value,
+      }
     case SET_RESULT_CALCULATION:
       return {
         ...state,
@@ -49,6 +54,8 @@ export const appReducer = (state = initialState, { type, payload }) => {
           ...state.history,
         ],
         result: payload.value,
+        operation: '',
+        tempResult: '',
         value: '',
         expression: '',
       }
@@ -57,6 +64,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         value: '0',
         expression: '',
+        tempResult: '',
         operation: '',
         result: '',
         error: null,
@@ -68,6 +76,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         expression: '',
         operation: '',
         result: '',
+        tempResult: '',
         history: [],
         error: null,
       }

@@ -7,6 +7,11 @@ export const KeypadContainer = styled.div`
   align-content: center;
   grid-template-columns: repeat(5, 60px);
   grid-template-rows: repeat(5, 50px);
+
+  @media (max-width: 767.98px) {
+    padding-bottom: 20px;
+    border-bottom: ${({ theme }) => `2px solid ${theme.border}`};
+  }
 `;
 
 export const Button = styled.div`

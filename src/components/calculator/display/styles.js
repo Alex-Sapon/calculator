@@ -12,9 +12,9 @@ export const DisplayMain = styled.div`
 `;
 
 export const DisplayHistory = styled.div`
-  position: absolute;
-  right: 35px;
-  top: 5px;
+  padding: 0 10px;
+  height: 20px;
+  text-align: right;
   font-size: 14px;
   word-wrap: break-word;
   word-break: break-all;
