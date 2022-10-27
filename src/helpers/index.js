@@ -11,7 +11,7 @@ import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 
-const getCorrectlyExpression = value => {
+const convertExpression = value => {
   if (value.indexOf('.') === 0) {
     return '0' + value;
   }
@@ -31,7 +31,17 @@ const getCorrectlyExpression = value => {
   return value;
 };
 
-const getResultExpression = (result, ...operands) => operands.join(' ') + ' = ' + result;
+export const numberWithCommas = string => {
+  if (string) {
+    return string.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
+  }
+  return '';
+}
+
+const getResultExpression = (result, ...operands) => {
+  let expression = operands.map(item => !isNaN(item) ? numberWithCommas(item) : item);
+  return expression.join(' ') + ' = ' + numberWithCommas(result);
+}
 
 const checkBracketBalanced = expression => {
   const stack = [];
@@ -96,12 +106,12 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
       break;
     }
     case '(': {
-      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(value + key)));
+      dispatch(setExpression(key, expression + ' ' + convertExpression(value + key)));
       break;
     }
     case ')': {
       if (!expression.includes('(') || !value.match(numbers)) return;
-      dispatch(setExpression(key, expression + ' ' + getCorrectlyExpression(value + ' ' + key)));
+      dispatch(setExpression(key, expression + ' ' + convertExpression(value + ' ' + key)));
       break;
     }
     case '=': {
@@ -124,7 +134,7 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
         if (digits.includes(key)) {
           if (value.length > 12) return;
           if (key === '.' && value.includes('.')) return;
-          dispatch(setCurrentValue(getCorrectlyExpression(value + key)));
+          dispatch(setCurrentValue(convertExpression(value + key)));
         }
         // input operations
         if (mathOperators.includes(key)) {
