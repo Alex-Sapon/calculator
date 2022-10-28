@@ -32,12 +32,11 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        value: '',
+        value: '0',
       }
     case SET_TEMP_RESULT:
       return {
         ...state,
-        value: '',
         result: payload.value,
         tempResult: payload.value,
       }

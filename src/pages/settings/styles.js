@@ -8,6 +8,7 @@ export const SettingsContainer = styled.div`
 
   @media (max-width: 767.98px) {
     width: 380px;
+    min-height: 553px;
   }
 `;
 

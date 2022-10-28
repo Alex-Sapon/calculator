@@ -1,11 +1,11 @@
 import {
+  changeOperator,
   clearDisplay,
   setCurrentValue,
   setError,
   setExpression,
   setResultCalculation,
   setTempResult,
-  changeOperator,
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
@@ -116,11 +116,8 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
     }
     case '=': {
       try {
-        if (expression !== EMPTY_STRING && value.match(numbers)) {
-          if (value === '0') value = '';
+        if (expression !== EMPTY_STRING && value !== EMPTY_STRING && value.match(numbers)) {
           const result = getResult(tempResult, expression, operation, value);
-          // предыдущий расчет плюс текущий математический знак и текущиее value
-          //dispatch(setResultCalculation(result, getResultExpression(result, result, operation, value))); 
           dispatch(setResultCalculation(result, getResultExpression(result, expression, operation, value)));
         }
       } catch (error) {
@@ -138,17 +135,13 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
         }
         // input operations
         if (mathOperators.includes(key)) {
-          if (value.match(numbers)) {
+          if (value.match(numbers) && value !== '0') {
             const result = getResult(tempResult, expression, operation, value);
-
             dispatch(setExpression(operation, trimExpression(expression, operation, value).join(' ')));
             dispatch(setTempResult(result));
           }
 
           dispatch(changeOperator(key));
-          if (!checkBracketBalanced(expression + value)) {
-            console.log('Brackets are not balanced!');
-          }
         }
       } catch (error) {
         dispatch(setError(error.message));
