@@ -24,8 +24,8 @@
     "test": "craco test",
     "cypress": "start-server-and-test start http://localhost:3000 cypress:open",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
     "cypress:test": "start-server-and-test start http://localhost:3000 cypress:run",
+    "cypress:run": "cypress run",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"

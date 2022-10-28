@@ -5,6 +5,7 @@ export const HeaderStyled = styled.header`
   color: ${({ theme }) => theme.primary};
   font-size: 18px;
   height: 70px;
+  min-width: 380px;
   background-color: ${({ theme }) => theme.secondaryBackground};
   padding: 20px;
   display: flex;
