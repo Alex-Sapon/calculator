@@ -5,7 +5,7 @@ export const HeaderStyled = styled.header`
   color: ${({ theme }) => theme.primary};
   font-size: 18px;
   height: 70px;
-  min-width: 380px;
+  min-width: 590px;
   background-color: ${({ theme }) => theme.secondaryBackground};
   padding: 20px;
   display: flex;
@@ -13,6 +13,7 @@ export const HeaderStyled = styled.header`
   justify-content: space-between;
 
   @media (max-width: 767.98px) {
+    min-width: 380px;
     justify-content: center;
     height: 60px;
   }

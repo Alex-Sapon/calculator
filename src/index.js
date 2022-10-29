@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from '@components/app';
 import { GlobalStyles } from '@styles/global';
 import { Provider } from 'react-redux';
@@ -10,12 +10,12 @@ import { ErrorBoundary } from '@components/errorBoundary';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <HashRouter>
+  <BrowserRouter>
     <Provider store={store}>
       <ErrorBoundary>
         <GlobalStyles/>
         <App/>
       </ErrorBoundary>
     </Provider>
-  </HashRouter>,
+  </BrowserRouter>,
 )
