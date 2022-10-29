@@ -90,6 +90,17 @@ describe('check History module', () => {
       .get('[data-cy="historyContainer"]').should('be.empty')
       .get('[data-cy="rightSide"]').first().contains('Show history')
   })
+
+  it('should be add history expression', () => {
+    cy
+      .get('[data-cy="historyList"]').should('be.empty')
+      .get('[data-cy="keypad"]').contains('div', '9').click()
+      .get('[data-cy="keypad"]').contains('div', '+').click()
+      .get('[data-cy="keypad"]').contains('div', '9').click()
+      .get('[data-cy="keypad"]').contains('div', '=').click()
+      .get('[data-cy="historyList"]').should('not.be.empty')
+      .first().should('have.text', '9 + 9 = 18')
+  })
 })
 
 // describe('check arithmetic operations', () => {
