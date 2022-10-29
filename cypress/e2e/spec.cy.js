@@ -1,3 +1,5 @@
+import { operations } from '../../src/constants/operations';
+
 describe('visit pages of App', () => {
   it('should visit page after start App', () => {
     cy.visit('/')
@@ -29,11 +31,11 @@ describe('check Header module', () => {
     cy.visit('/')
   })
 
-  it('logo', () => {
+  it('should be text into logo', () => {
     cy.get('[data-cy="header"] span').contains('Calculator App')
   })
 
-  it('navigation', () => {
+  it('check navigation', () => {
     cy.get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
       .url().should('include', '/home-cc')
       .get('[data-cy="navList"] > *').its('length').should('eq', 3)
@@ -53,9 +55,26 @@ describe('check Display module', () => {
       .get('[data-cy="displayMain"]').should('have.text', '0')
       .get('[data-cy="keypad"]').contains('div', '9').click()
       .get('[data-cy="displayMain"]').should('have.text', '9')
+      .get('[data-cy="displayHistory"]').should('have.text', '')
       .get('[data-cy="keypad"]').contains('div', '+').click()
       .get('[data-cy="displayHistory"]').should('have.text', '9+')
       .get('[data-cy="displayMain"]').should('have.text', '0')
+  })
+})
+
+describe('check Keypad module', () => {
+  beforeEach(() => {
+    cy.visit('/home-fc')
+  })
+
+  it('should be correct length list the Keys', () => {
+    cy.get('[data-cy="keypad"] > div').its('length').should('eq', 22)
+  })
+
+  it('should be correct text into the Keys', () => {
+    cy.get('[data-cy="keypad"]').each((item, index) => {
+      cy.wrap(item).should('contain.text', operations[index].value)
+    })
   })
 })
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeypadContainer, Button } from '@components/calculator/keypad/styles';
+import { KeypadContainer, Key } from '@components/calculator/keypad/styles';
 import { operations } from '@constants/operations';
 import { connect } from 'react-redux';
 import { keypadHandler } from '@helpers';
@@ -19,7 +19,7 @@ class KeypadComponent extends React.Component {
   render() {
     return (
       <KeypadContainer>
-        {operations.map(({ id, value }) => <Button key={id} onClick={this.handleClick}>{value}</Button>)}
+        {operations.map(({ id, value }) => <Key key={id} onClick={this.handleClick}>{value}</Key>)}
       </KeypadContainer>
     )
   }

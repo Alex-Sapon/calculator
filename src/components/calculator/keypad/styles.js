@@ -14,7 +14,7 @@ export const KeypadContainer = styled.div`
   }
 `;
 
-export const Button = styled.div`
+export const Key = styled.div`
   font-size: 26px;
   border: 1px solid #cacaca;
   background-color: rgba(229, 229, 229, 0.7);

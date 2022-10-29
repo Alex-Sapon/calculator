@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeypadContainer, Button } from '@components/calculator/keypad/styles';
+import { KeypadContainer, Key } from '@components/calculator/keypad/styles';
 import { operations } from '@constants/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectValue, selectOperation, selectExpression, selectTempResult } from '@store/selectors';
@@ -20,7 +20,7 @@ export const Keypad = () => {
   return (
     <KeypadContainer data-cy="keypad">
       {operations.map(({ id, value }) =>
-        <Button key={id} onClick={handleClick}>{value}</Button>
+        <Key key={id} onClick={handleClick}>{value}</Key>,
       )}
     </KeypadContainer>
   )
