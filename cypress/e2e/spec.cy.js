@@ -48,17 +48,19 @@ describe('check Display module', () => {
     cy.visit('/home-fc')
   })
 
-  it('should input expression in DisplayHistory component', () => {
-
-  })
-
-  it('should input value in DisplayMain component', () => {
-
-  })
-})
-
-describe('check arithmetic operations', () => {
-  it('check arithmetic operations on the HomeFC page', () => {
-
+  it('should input value then input expression', () => {
+    cy
+      .get('[data-cy="displayMain"]').should('have.text', '0')
+      .get('[data-cy="keypad"]').contains('div', '9').click()
+      .get('[data-cy="displayMain"]').should('have.text', '9')
+      .get('[data-cy="keypad"]').contains('div', '+').click()
+      .get('[data-cy="displayHistory"]').should('have.text', '9+')
+      .get('[data-cy="displayMain"]').should('have.text', '0')
   })
 })
+
+// describe('check arithmetic operations', () => {
+//   it('check arithmetic operations on the HomeFC page', () => {
+//
+//   })
+// })

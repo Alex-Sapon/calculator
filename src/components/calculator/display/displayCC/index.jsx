@@ -1,6 +1,6 @@
 import React from 'react';
-import { DisplayHistory, DisplayMain } from '@components/calculator/display/styles';
 import { connect } from 'react-redux';
+import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/calculator/display/styles';
 import PropTypes from 'prop-types';
 import { numberWithCommas } from '@helpers';
 
@@ -13,7 +13,10 @@ class DisplayComponent extends React.Component {
 
     return (
       <React.Fragment>
-        <DisplayHistory>{`${expression} ${operation}`}</DisplayHistory>
+        <DisplayHistory>
+          <Expression>{expression}</Expression>
+          <Operator>{operation}</Operator>
+        </DisplayHistory>
         <DisplayMain>{value || result}</DisplayMain>
       </React.Fragment>
     )
