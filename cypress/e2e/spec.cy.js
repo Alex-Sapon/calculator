@@ -78,6 +78,20 @@ describe('check Keypad module', () => {
   })
 })
 
+describe('check History module', () => {
+  beforeEach(() => {
+    cy.visit('/home-fc')
+  })
+
+  it('should be show/close history', () => {
+    cy
+      .get('[data-cy="historyContainer"]').should('not.be.empty')
+      .get('[data-cy="rightSide"]').first().contains('Close history').click()
+      .get('[data-cy="historyContainer"]').should('be.empty')
+      .get('[data-cy="rightSide"]').first().contains('Show history')
+  })
+})
+
 // describe('check arithmetic operations', () => {
 //   it('check arithmetic operations on the HomeFC page', () => {
 //

@@ -17,7 +17,7 @@ export const RightSide = () => {
         title={`${isShow ? 'Close' : 'Show'} history`}
         onClick={onClickHandler}
       />
-      <HistoryContainer>
+      <HistoryContainer data-cy="historyContainer">
         {isShow ? <History/> : null}
       </HistoryContainer>
     </RightSideContainer>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { KeypadContainer, Key } from '@components/calculator/keypad/styles';
-import { operations } from '@constants/operations';
 import { connect } from 'react-redux';
+import { operations } from '@constants/operations';
+import { KeypadContainer, Key } from '@components/calculator/keypad/styles';
 import { keypadHandler } from '@helpers';
 import PropTypes from 'prop-types';
 
