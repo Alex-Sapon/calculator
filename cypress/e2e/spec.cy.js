@@ -24,7 +24,7 @@ describe('visit pages of App', () => {
   })
 })
 
-describe('check Header component', () => {
+describe('check Header module', () => {
   beforeEach(() => {
     cy.visit('/')
   })
@@ -36,15 +36,29 @@ describe('check Header component', () => {
   it('navigation', () => {
     cy.get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
       .url().should('include', '/home-cc')
-    cy.get('[data-cy="navList"] > *').its('length').should('eq', 3)
+      .get('[data-cy="navList"] > *').its('length').should('eq', 3)
       .get('[data-cy="navList"] *:first-child').contains('HomeFC')
       .get('[data-cy="navList"] *:nth-child(2)').contains('HomeCC')
       .get('[data-cy="navList"] *:last-child').contains('Settings')
   })
 })
 
+describe('check Display module', () => {
+  beforeEach(() => {
+    cy.visit('/home-fc')
+  })
+
+  it('should input expression in DisplayHistory component', () => {
+
+  })
+
+  it('should input value in DisplayMain component', () => {
+
+  })
+})
+
 describe('check arithmetic operations', () => {
-  it('', () => {
+  it('check arithmetic operations on the HomeFC page', () => {
 
   })
 })

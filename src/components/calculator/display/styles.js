@@ -20,3 +20,10 @@ export const DisplayHistory = styled.div`
   word-break: break-all;
   color: ${({ theme }) => theme.secondary};
 `;
+
+export const Expression = styled.span``;
+
+export const Operator = styled.span`
+  display: inline-block; 
+  width: 10px;
+`;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DisplayHistory, DisplayMain } from '@components/calculator/display/styles';
+import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/calculator/display/styles';
 import { useSelector } from 'react-redux';
 import { selectValue, selectExpression, selectResult, selectOperation } from '@store/selectors';
 import { numberWithCommas } from '@helpers';
@@ -13,7 +13,8 @@ export const Display = () => {
   return (
     <React.Fragment>
       <DisplayHistory data-cy="displayHistory">
-        {`${expression} ${operation}`}
+        <Expression>{expression}</Expression>
+        <Operator>{operation}</Operator>
       </DisplayHistory>
       <DisplayMain data-cy="displayMain">
         {value || result}
