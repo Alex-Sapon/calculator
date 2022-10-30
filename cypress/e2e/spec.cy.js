@@ -7,7 +7,7 @@ describe('visit pages of App', () => {
 
   it('should visit the HomeFC page', () => {
     cy
-      .visit('/home-fc')
+      .visit('/calculator')
       .get('[data-cy="header"]').should('be.visible')
       .get('[data-cy="leftSide"]').should('be.visible')
       .get('[data-cy="displayHistory"]').should('be.visible')
@@ -37,7 +37,7 @@ describe('check Header module', () => {
 
   it('check navigation', () => {
     cy.get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
-      .url().should('include', '/home-cc')
+      .url().should('include', '/calculator-cc')
       .get('[data-cy="navList"] > *').its('length').should('eq', 3)
       .get('[data-cy="navList"] *:first-child').contains('HomeFC')
       .get('[data-cy="navList"] *:nth-child(2)').contains('HomeCC')
@@ -47,7 +47,7 @@ describe('check Header module', () => {
 
 describe('check Display module', () => {
   beforeEach(() => {
-    cy.visit('/home-fc')
+    cy.visit('/calculator')
   })
 
   it('should input value then input expression', () => {
@@ -64,7 +64,7 @@ describe('check Display module', () => {
 
 describe('check Keypad module', () => {
   beforeEach(() => {
-    cy.visit('/home-fc')
+    cy.visit('/calculator')
   })
 
   it('should be correct length list the Keys', () => {
@@ -80,7 +80,7 @@ describe('check Keypad module', () => {
 
 describe('check History module', () => {
   beforeEach(() => {
-    cy.visit('/home-fc')
+    cy.visit('/calculator')
   })
 
   it('should be show/close history', () => {

@@ -139,9 +139,12 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
             const result = getResult(tempResult, expression, operation, value);
             dispatch(setExpression(operation, trimExpression(expression, operation, value).join(' ')));
             dispatch(setTempResult(result));
+            dispatch(changeOperator(key));
           }
 
-          dispatch(changeOperator(key));
+          if (expression.match(numbers)) {
+            dispatch(changeOperator(key));
+          }
         }
       } catch (error) {
         dispatch(setError(error.message));
