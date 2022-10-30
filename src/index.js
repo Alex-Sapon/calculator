@@ -10,12 +10,12 @@ import { ErrorBoundary } from '@components/errorBoundary';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter>
       <ErrorBoundary>
         <GlobalStyles/>
         <App/>
       </ErrorBoundary>
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>
 )

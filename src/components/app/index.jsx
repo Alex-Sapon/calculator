@@ -15,7 +15,11 @@ export const App = () => {
         <Header/>
         <Routes>
           {routes.map(({ id, path, page }) =>
-            <Route key={id} path={path} element={(page(currentTheme, setCurrentTheme))}/>
+            <Route
+              key={id}
+              path={path}
+              element={(page(currentTheme, setCurrentTheme))}
+            />
           )}
         </Routes>
       </Container>
