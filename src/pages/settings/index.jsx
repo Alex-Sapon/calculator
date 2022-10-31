@@ -21,7 +21,11 @@ export const ControlPanel = ({ theme, onThemeChange }) => {
     <SettingsContainer data-cy="settings">
       <Title>Settings</Title>
       <SettingsGroup>
-        <Select value={theme} onChange={handleChange}>
+        <Select
+          value={theme}
+          onChange={handleChange}
+          data-cy="selectTheme"
+        >
           {themeOptions.map(({ id, value, name }) => <option key={id} value={value}>{name}</option>)}
         </Select>
         <Button
@@ -35,5 +39,5 @@ export const ControlPanel = ({ theme, onThemeChange }) => {
 
 ControlPanel.propsType = {
   theme: PropTypes.string,
-  onThemeChange: PropTypes.string,
+  onThemeChange: PropTypes.string
 }

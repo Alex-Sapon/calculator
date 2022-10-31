@@ -1,5 +1,3 @@
-import { operations } from '../../src/constants/operations';
-
 describe('visit pages of App', () => {
   it('should visit page after start App', () => {
     cy.visit('/')
@@ -35,7 +33,7 @@ describe('check Header module', () => {
     cy.get('[data-cy="header"] span').contains('Calculator App')
   })
 
-  it('check navigation', () => {
+  it('should be a switch from page HomeFC to HomeCC', () => {
     cy.get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
       .url().should('include', '/calculator-cc')
       .get('[data-cy="navList"] > *').its('length').should('eq', 3)
@@ -72,6 +70,31 @@ describe('check Keypad module', () => {
   })
 
   it('should be correct text into the Keys', () => {
+    const operations = [
+      { id: 1, value: 'C' },
+      { id: 2, value: '7' },
+      { id: 3, value: '8' },
+      { id: 4, value: '9' },
+      { id: 5, value: '*' },
+      { id: 6, value: '-' },
+      { id: 7, value: '4' },
+      { id: 8, value: '5' },
+      { id: 9, value: '6' },
+      { id: 10, value: '/' },
+      { id: 11, value: '+' },
+      { id: 12, value: '1' },
+      { id: 13, value: '2' },
+      { id: 14, value: '3' },
+      { id: 15, value: '=' },
+      { id: 16, value: '.' },
+      { id: 17, value: '(' },
+      { id: 18, value: '0' },
+      { id: 19, value: ')' },
+      { id: 20, value: 'CE' },
+      { id: 21, value: '-/+' },
+      { id: 22, value: '%' }
+    ];
+
     cy.get('[data-cy="keypad"]').each((item, index) => {
       cy.wrap(item).should('contain.text', operations[index].value)
     })
@@ -100,6 +123,25 @@ describe('check History module', () => {
       .get('[data-cy="keypad"]').contains('div', '=').click()
       .get('[data-cy="historyList"]').should('not.be.empty')
       .first().should('have.text', '9 + 9 = 18')
+  })
+})
+
+describe('check switch theme module', () => {
+  beforeEach(() => {
+    cy.visit('/settings')
+  })
+
+
+  it('theme module should be have 3 options theme', () => {
+    const selectListThemes = ['Light theme', 'Colored theme', 'Dark theme'];
+
+    cy.get('[data-cy="selectTheme"] option').its('length').should('eq', 3);
+    selectListThemes.forEach(option => cy.contains('[data-cy="selectTheme"]', option));
+  })
+
+  it('should be switch theme from Light to Colored', () => {
+    cy.get('[data-cy="selectTheme"] option').should('contain.text', 'Light theme')
+    cy.get('[data-cy="selectTheme"]').select(1).should('contain.text', 'Colored theme')
   })
 })
 
