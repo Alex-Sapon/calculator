@@ -2,7 +2,7 @@ import React from 'react';
 import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/calculator/display/styles';
 import { useSelector } from 'react-redux';
 import { selectValue, selectExpression, selectResult, selectOperation } from '@store/selectors';
-import { numberWithCommas } from '@helpers';
+import { numberWithCommas } from '@helpers/numberWithCommas';
 
 export const Display = () => {
   const expression = numberWithCommas(useSelector(selectExpression));

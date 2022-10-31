@@ -1,4 +1,4 @@
-import { HeaderStyled, Logo, NavList, NavLinkStyled } from '@components/header/styles';
+import { HeaderStyled, Logo, NavLinkStyled, NavList } from '@components/header/styles';
 import { links } from '@constants/links';
 
 export const Header = () => (
@@ -6,7 +6,7 @@ export const Header = () => (
     <Logo>Calculator App</Logo>
     <NavList data-cy="navList">
       {links.map(({ path, value }) =>
-        <NavLinkStyled key={value} to={path}>{value}</NavLinkStyled>,
+        <NavLinkStyled key={value} to={path}>{value}</NavLinkStyled>
       )}
     </NavList>
   </HeaderStyled>

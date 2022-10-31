@@ -34,7 +34,8 @@ describe('check Header module', () => {
   })
 
   it('should be a switch from page HomeFC to HomeCC', () => {
-    cy.get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
+    cy
+      .get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
       .url().should('include', '/calculator-cc')
       .get('[data-cy="navList"] > *').its('length').should('eq', 3)
       .get('[data-cy="navList"] *:first-child').contains('HomeFC')
@@ -56,7 +57,7 @@ describe('check Display module', () => {
       .get('[data-cy="displayHistory"]').should('have.text', '')
       .get('[data-cy="keypad"]').contains('div', '+').click()
       .get('[data-cy="displayHistory"]').should('have.text', '9+')
-      .get('[data-cy="displayMain"]').should('have.text', '0');
+      .get('[data-cy="displayMain"]').should('have.text', '');
   })
 })
 
@@ -154,9 +155,12 @@ describe('check arithmetic operations', () => {
     cy
       .get('[data-cy="keypad"]').contains('div', '3').click()
       .get('[data-cy="keypad"]').contains('div', '+').click()
+      .get('[data-cy="keypad"]').contains('div', '6').click()
+      .get('[data-cy="keypad"]').contains('div', '-').click()
+      .get('[data-cy="displayMain"]').should('have.text', '9')
       .get('[data-cy="keypad"]').contains('div', '4').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '7')
+      .get('[data-cy="displayMain"]').should('have.text', '5')
   })
 
   it('check subtraction operation', () => {

@@ -10,7 +10,9 @@ class HistoryComponent extends React.Component {
       <React.Fragment>
         <Title>History</Title>
         <HistoryList>
-          {this.props.history.map((expression, index) => <HistoryItem key={index}>{expression}</HistoryItem>)}
+          {this.props.history.map((expression, index) =>
+            <HistoryItem key={index}>{expression}</HistoryItem>
+          )}
         </HistoryList>
       </React.Fragment>
     )
@@ -18,7 +20,7 @@ class HistoryComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  history: state.app.history,
+  history: state.appReducer.history,
 })
 
 export const History = connect(mapStateToProps, null)(HistoryComponent);

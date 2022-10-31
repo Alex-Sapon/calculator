@@ -1,11 +1,12 @@
 import {
+  CHANGE_OPERATOR,
   CLEAR_ALL,
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
-  CHANGE_OPERATOR,
   SET_ERROR,
   SET_EXPRESSION,
-  SET_RESULT_CALCULATION, SET_TEMP_RESULT
+  SET_RESULT_CALCULATION,
+  SET_TEMP_RESULT
 } from '@store/actions';
 
 const initialState = {
@@ -15,7 +16,7 @@ const initialState = {
   result: '',
   tempResult: '',
   history: [],
-  error: null,
+  error: null
 }
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -25,38 +26,39 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         result: '',
         value: payload.value,
-        error: null,
+        error: null
       }
     case SET_EXPRESSION:
       return {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        value: '0',
+        value: '0'
       }
     case SET_TEMP_RESULT:
       return {
         ...state,
         result: payload.value,
         tempResult: payload.value,
+        value: ''
       }
     case CHANGE_OPERATOR:
       return {
         ...state,
-        operation: payload.value,
+        operation: payload.value
       }
     case SET_RESULT_CALCULATION:
       return {
         ...state,
         history: [
           payload.history,
-          ...state.history,
+          ...state.history
         ],
         result: payload.value,
         operation: '',
         tempResult: '',
         value: '',
-        expression: '',
+        expression: ''
       }
     case CLEAR_DISPLAY:
       return {
@@ -66,7 +68,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         tempResult: '',
         operation: '',
         result: '',
-        error: null,
+        error: null
       }
     case CLEAR_ALL:
       return {
@@ -77,7 +79,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         result: '',
         tempResult: '',
         history: [],
-        error: null,
+        error: null
       }
     case SET_ERROR:
       return {
@@ -86,7 +88,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
         expression: '',
         operation: '',
         result: '',
-        error: payload.value,
+        error: payload.value
       }
     default:
       return state;

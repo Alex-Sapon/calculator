@@ -3,6 +3,10 @@ import styled from 'styled-components';
 export const HistoryContainer = styled.div`
   overflow: auto;
 
+  @media (max-width: 767.98px) {
+    height: 150px;
+  }
+
   &::-webkit-scrollbar {
     width: 7px;
   }

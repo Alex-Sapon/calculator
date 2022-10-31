@@ -12,7 +12,7 @@ export class RightSide extends React.Component {
   }
 
   onClickHandler() {
-    this.setState(state => ({ isShow: !state.isShow }))
+    this.setState(prevState => ({ isShow: !prevState.isShow }));
   }
 
   render() {

@@ -4,10 +4,13 @@ export const Calculator = styled.div`
   display: grid;
   grid-template-columns: 1fr 200px;
   gap: 10px;
+  height: 420px;
 
   @media (max-width: 767.98px) {
     grid-template-columns: 1fr;
     gap: 0;
+    height: auto;
+    max-height: 675px;
   }
 `;
 

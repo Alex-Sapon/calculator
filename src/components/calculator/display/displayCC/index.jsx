@@ -2,14 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/calculator/display/styles';
 import PropTypes from 'prop-types';
-import { numberWithCommas } from '@helpers';
+import { numberWithCommas } from '@helpers/numberWithCommas';
 
 class DisplayComponent extends React.Component {
   render() {
-    let expression = this.props.expression;
-    let operation = this.props.operation;
-    let value = this.props.value;
-    let result = this.props.result;
+    const { expression, operation, value, result } = this.props;
 
     return (
       <React.Fragment>
@@ -24,10 +21,10 @@ class DisplayComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: numberWithCommas(state.app.value),
-  expression: numberWithCommas(state.app.expression),
-  result: numberWithCommas(state.app.result),
-  operation: state.app.operation,
+  value: numberWithCommas(state.appReducer.value),
+  expression: numberWithCommas(state.appReducer.expression),
+  result: numberWithCommas(state.appReducer.result),
+  operation: state.appReducer.operation
 })
 
 export const Display = connect(mapStateToProps, null)(DisplayComponent);
@@ -36,5 +33,5 @@ DisplayComponent.propTypes = {
   value: PropTypes.string,
   expression: PropTypes.string,
   operation: PropTypes.string,
-  result: PropTypes.string,
+  result: PropTypes.string
 }

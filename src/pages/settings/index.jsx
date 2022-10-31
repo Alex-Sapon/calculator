@@ -1,7 +1,7 @@
 import React from 'react';
-import { clearAll } from '@store/actions';
 import { useDispatch } from 'react-redux';
 import { Button } from '@components/button/buttonFC';
+import { clearAll } from '@store/actions';
 import { SettingsGroup, Title, SettingsContainer, Select } from '@pages/settings/styles';
 import { themeOptions } from '@constants/themeOptions';
 import PropTypes from 'prop-types';
@@ -13,7 +13,7 @@ export const ControlPanel = ({ theme, onThemeChange }) => {
     dispatch(clearAll());
   }
 
-  const handleChange = event => {
+  const onChangeHandler = event => {
     onThemeChange(event.currentTarget.value);
   }
 
@@ -23,10 +23,12 @@ export const ControlPanel = ({ theme, onThemeChange }) => {
       <SettingsGroup>
         <Select
           value={theme}
-          onChange={handleChange}
+          onChange={onChangeHandler}
           data-cy="selectTheme"
         >
-          {themeOptions.map(({ id, value, name }) => <option key={id} value={value}>{name}</option>)}
+          {themeOptions.map(({ id, value, name }) =>
+            <option key={id} value={value}>{name}</option>
+          )}
         </Select>
         <Button
           onClick={onClickHandler}

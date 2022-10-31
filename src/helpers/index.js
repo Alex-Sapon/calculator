@@ -10,6 +10,7 @@ import {
 import { calculation } from '@utils/calculator';
 import { digits, mathOperators } from '@constants/operations';
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
+import { numberWithCommas } from '@helpers/numberWithCommas';
 
 const convertExpression = value => {
   if (value.indexOf('.') === 0) {
@@ -30,13 +31,6 @@ const convertExpression = value => {
 
   return value;
 };
-
-export const numberWithCommas = string => {
-  if (string) {
-    return string.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
-  }
-  return '';
-}
 
 const getResultExpression = (result, ...operands) => {
   let expression = operands.map(item => !isNaN(item) ? numberWithCommas(item) : item);
