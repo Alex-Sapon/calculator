@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/calculator/display/styles';
 import PropTypes from 'prop-types';
-import { numberWithCommas } from '@helpers/numberWithCommas';
+import { numberWithCommas } from '@helpers';
 
 class DisplayComponent extends React.Component {
   render() {
