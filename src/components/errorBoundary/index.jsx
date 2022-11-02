@@ -4,7 +4,14 @@ import { ErrorSubtitle, ErrorTitle, ErrorWrapper } from '@components/errorBounda
 export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: '' };
+    this.state = {
+      hasError: false,
+      error: ''
+    };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
   }
 
   componentDidCatch(error, errorInfo) {
@@ -12,7 +19,7 @@ export class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.error) {
+    if (this.state.hasError) {
       return (
         <ErrorWrapper>
           <ErrorTitle>Something went wrong!</ErrorTitle>
