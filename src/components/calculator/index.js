@@ -1,1 +1,1 @@
-export { Calculator, Title } from '@components/calculator/styles'
+export { Calculator, Title } from '@components/calculator/styles';

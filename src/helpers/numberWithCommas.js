@@ -3,4 +3,4 @@ export const numberWithCommas = string => {
     return string.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
   }
   return '';
-}
+};

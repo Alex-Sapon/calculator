@@ -1,9 +1,11 @@
 import React from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 import { KeypadContainer, Key } from '@components/calculator/keypad/styles';
 import { operations } from '@constants/operations';
-import { useDispatch, useSelector } from 'react-redux';
+import { keypadHandler } from '@helpers/keypadHandler';
 import { selectValue, selectOperation, selectExpression, selectTempResult } from '@store/selectors';
-import { keypadHandler } from '@helpers';
 
 export const Keypad = () => {
   const dispatch = useDispatch();
@@ -15,13 +17,13 @@ export const Keypad = () => {
 
   const handleClick = event => {
     keypadHandler(event, value, expression, operation, tempResult, dispatch);
-  }
+  };
 
   return (
     <KeypadContainer data-cy="keypad">
-      {operations.map(({ id, value }) =>
-        <Key key={id} onClick={handleClick}>{value}</Key>,
+      {operations.map(({ id, innerText }) =>
+        <Key key={id} onClick={handleClick}>{innerText}</Key>,
       )}
     </KeypadContainer>
-  )
-}
+  );
+};

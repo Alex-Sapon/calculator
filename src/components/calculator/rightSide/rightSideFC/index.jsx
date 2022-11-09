@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import { History } from '@components/calculator/history/historyFC';
+import React,  { useState } from 'react';
+
 import { Button } from '@components/button/buttonFC';
-import { RightSideContainer } from '@components/calculator/rightSide/styles';
+import { History } from '@components/calculator/history/historyFC';
 import { HistoryContainer } from '@components/calculator/history/styles';
+import { RightSideContainer } from '@components/calculator/rightSide/styles';
 
 export const RightSide = () => {
   const [isShow, setIsShow] = useState(true);
 
   const onClickHandler = () => {
     setIsShow(state => !state);
-  }
+  };
 
   return (
     <RightSideContainer data-cy="rightSide">
@@ -21,5 +22,5 @@ export const RightSide = () => {
         {isShow ? <History/> : null}
       </HistoryContainer>
     </RightSideContainer>
-  )
-}
+  );
+};

@@ -1,33 +1,41 @@
 import React from 'react';
-import { ErrorSubtitle, ErrorTitle, ErrorWrapper } from '@components/errorBoundary/styles';
+
+import {
+  ErrorSubtitle,
+  ErrorTitle,
+  ErrorWrapper,
+} from '@components/errorBoundary/styles';
 
 export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       hasError: false,
-      error: ''
+      error: '',
     };
   }
 
   static getDerivedStateFromError() {
-    return { hasError: true }
+    return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
-    this.setState({ error })
+  componentDidCatch(error) {
+    this.setState({ error });
   }
 
   render() {
-    if (this.state.hasError) {
+    const { children } = this.props;
+    const { hasError, error } = this.state;
+
+    if (hasError) {
       return (
         <ErrorWrapper>
           <ErrorTitle>Something went wrong!</ErrorTitle>
-          <ErrorSubtitle>Error reason: {this.state.error.toString()}</ErrorSubtitle>
+          <ErrorSubtitle>Error reason: {error.toString()}</ErrorSubtitle>
         </ErrorWrapper>
-      )
+      );
     }
 
-    return this.props.children;
+    return children;
   }
 }

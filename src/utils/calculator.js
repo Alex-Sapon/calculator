@@ -13,7 +13,7 @@ class Calculator {
     return {
       value: this.value,
       history: this.history,
-    }
+    };
   }
 
   reset() {
@@ -108,10 +108,13 @@ export const calculation = expression => {
           break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
+          break;
+        default:
+          return;
       }
 
       numberStack.push(calculator.getState().value);
-    }
+    };
 
     // если оператор не равен последнему оператору из operatorStack, то создать команду
     const runCommand = operator => {
@@ -119,17 +122,17 @@ export const calculation = expression => {
         createCommand();
       }
       operatorStack.pop();
-    }
+    };
 
     const runCalculation = () => {
       let i = 0;
 
       while (i !== tempStack.length) {
         // если value не число
-        while (isNaN(tempStack[i])) {
+        while (Number.isNaN(tempStack[i])) {
           if (tempStack[i] === ')') {
             runCommand('(');
-            i++;
+            i += 1;
             // проверить приоритет операции
             // если приоритет текущего оператора меньше последнего оператора в operatorStack, то выполнить команду
             while (priority[tempStack[i]] < priority[operatorStack[operatorStack.length - 1]]) {
@@ -137,12 +140,12 @@ export const calculation = expression => {
             }
           } else {
             operatorStack.push(tempStack[i]);
-            i++;
+            i += 1;
           }
         }
         // иначе value number
         numberStack.push(tempStack[i]);
-        i++;
+        i += 1;
 
         // если последний оператор в operatorStack не равен '('
         if (operatorStack[operatorStack.length - 1] !== '(') {
@@ -152,22 +155,23 @@ export const calculation = expression => {
           }
         } else if (tempStack[i] !== ')') {
           operatorStack.push(tempStack[i]);
-          i++;
+          i += 1;
         }
       }
 
       // остановить создание команд и извлечь результат выражения из numberStack
       runCommand(undefined);
       numberStack.pop();
-    }
+    };
 
     runCalculation();
-    const value = calculator.getState().value;
+    const { value } = calculator.getState();
 
     return {
       result: Number.isInteger(value) ? value.toString() : value.toFixed(3),
-    }
+    };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log('Error into core of calculator: ', error.message);
   }
-}
+};

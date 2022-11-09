@@ -1,5 +1,5 @@
-import { calculation } from '@utils/calculator';
 import { trimExpression } from '@helpers/trimExpression';
+import { calculation } from '@utils/calculator';
 
 export const getResultCalculation = (tempResult, expression, operation, value) => {
   let calculationValue;
@@ -14,4 +14,4 @@ export const getResultCalculation = (tempResult, expression, operation, value) =
   const { result } = calculation(calculationValue);
 
   return result;
-}
+};
