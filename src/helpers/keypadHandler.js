@@ -29,7 +29,7 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
       break;
     }
     case '-/+': {
-      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO ? value.slice(1, value.length) : `-${  value}`));
+      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO ? value.slice(1, value.length) : `-${value}`));
       break;
     }
     case '(': {

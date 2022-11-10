@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
-import { Button } from '@components/button/buttonFC';
-import { themeOptions } from '@constants/themeOptions';
-import { SettingsGroup, Title, SettingsContainer, Select } from '@pages/settings/styles';
-import { clearAll } from '@store/actions';
+import { Button } from "@components/button/buttonFC";
+import { themeOptions } from "@constants/themeOptions";
+import { SettingsGroup, Title, SettingsContainer, Select } from "@pages/settings/styles";
+import { clearAll } from "@store/actions";
 
-
-export const ControlPanel = ({ theme, onThemeChange }) => {
+const ControlPanel = ({ theme, onThemeChange }) => {
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
@@ -46,3 +45,5 @@ ControlPanel.propsType = {
   theme: PropTypes.string,
   onThemeChange: PropTypes.string,
 };
+
+export default ControlPanel;

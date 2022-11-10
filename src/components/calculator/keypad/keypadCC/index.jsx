@@ -21,8 +21,8 @@ class KeypadComponent extends React.Component {
   render() {
     return (
       <KeypadContainer>
-        {operations.map(({ id, value }) =>
-          <Key key={id} onClick={this.handleClick}>{value}</Key>,
+        {operations.map(({ id, innerText }) =>
+          <Key key={id} onClick={this.handleClick}>{innerText}</Key>,
         )}
       </KeypadContainer>
     );

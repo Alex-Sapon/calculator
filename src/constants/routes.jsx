@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { PATH } from '@constants/path';
-import { CalculatorCC } from '@pages/homeCC';
 import { CalculatorFC } from '@pages/homeFC';
-import { ControlPanel } from '@pages/settings';
+
+const CalculatorCC = React.lazy(() => import('@pages/homeCC'));
+const ControlPanel = React.lazy(() => import('@pages/settings'));
 
 const homePage = () => <CalculatorFC/>;
 const homeClassPage = () => <CalculatorCC/>;

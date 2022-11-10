@@ -84,7 +84,7 @@ export const calculation = expression => {
   const numberStack = [];
   const operatorStack = [];
 
-  const priority = { '*': 2, '/': 2, '%': 2, '+': 1, '-': 1 };
+  const priority = { '*': 2, '/': 2, '+': 1, '-': 1 };
 
   try {
     // создать команду со значениями из стека
@@ -93,6 +93,7 @@ export const calculation = expression => {
       const prevNumber = numberStack.pop();
       const operator = operatorStack.pop();
 
+      // eslint-disable-next-line default-case
       switch (operator) {
         case '+':
           calculator.execute(new AddCommand(prevNumber, nextNumber));
@@ -108,9 +109,6 @@ export const calculation = expression => {
           break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
-          break;
-        default:
-          return;
       }
 
       numberStack.push(calculator.getState().value);
@@ -129,10 +127,12 @@ export const calculation = expression => {
 
       while (i !== tempStack.length) {
         // если value не число
-        while (Number.isNaN(tempStack[i])) {
+        // eslint-disable-next-line no-restricted-globals
+        while (isNaN(tempStack[i])) {
           if (tempStack[i] === ')') {
             runCommand('(');
             i += 1;
+
             // проверить приоритет операции
             // если приоритет текущего оператора меньше последнего оператора в operatorStack, то выполнить команду
             while (priority[tempStack[i]] < priority[operatorStack[operatorStack.length - 1]]) {
