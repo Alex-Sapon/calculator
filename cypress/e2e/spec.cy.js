@@ -1,18 +1,18 @@
 describe('visit pages of App', () => {
   it('should visit page after start App', () => {
     cy.visit('/');
-  })
+  });
 
   it('should visit the HomeFC page', () => {
     cy
-      .visit('/calculator')
+      .visit('/calculatorFC')
       .get('[data-cy="header"]').should('be.visible')
       .get('[data-cy="leftSide"]').should('be.visible')
       .get('[data-cy="displayHistory"]').should('be.visible')
       .get('[data-cy="displayMain"]').should('be.visible').contains('0')
       .get('[data-cy="keypad"]').should('be.visible')
       .get('[data-cy="rightSide"]').should('be.visible');
-  })
+  });
 
   it('should visit the Settings page', () => {
     cy
@@ -21,33 +21,33 @@ describe('visit pages of App', () => {
       .get('h2').should('have.text', 'Settings')
       .get('select').should('be.visible')
       .get('select + div').should('be.visible');
-  })
-})
+  });
+});
 
 describe('check Header module', () => {
   beforeEach(() => {
     cy.visit('/');
-  })
+  });
 
   it('should be text into logo', () => {
     cy.get('[data-cy="header"] span').contains('Calculator App');
-  })
+  });
 
   it('should be a switch from page HomeFC to HomeCC', () => {
     cy
       .get('[data-cy="header"] ul:nth-child(2)').contains('HomeCC').click()
-      .url().should('include', '/calculator-cc')
+      .url().should('include', '/calculatorFC-cc')
       .get('[data-cy="navList"] > *').its('length').should('eq', 3)
       .get('[data-cy="navList"] *:first-child').contains('HomeFC')
       .get('[data-cy="navList"] *:nth-child(2)').contains('HomeCC')
       .get('[data-cy="navList"] *:last-child').contains('Settings');
-  })
-})
+  });
+});
 
 describe('check Display module', () => {
   beforeEach(() => {
-    cy.visit('/calculator');
-  })
+    cy.visit('/calculatorFC');
+  });
 
   it('should input value then input expression', () => {
     cy
@@ -58,17 +58,17 @@ describe('check Display module', () => {
       .get('[data-cy="keypad"]').contains('div', '+').click()
       .get('[data-cy="displayHistory"]').should('have.text', '9+')
       .get('[data-cy="displayMain"]').should('have.text', '');
-  })
-})
+  });
+});
 
 describe('check Keypad module', () => {
   beforeEach(() => {
-    cy.visit('/calculator');
-  })
+    cy.visit('/calculatorFC');
+  });
 
   it('should be correct length list the Keys', () => {
     cy.get('[data-cy="keypad"] > div').its('length').should('eq', 22);
-  })
+  });
 
   it('should be correct text into the Keys', () => {
     const operations = [
@@ -93,19 +93,19 @@ describe('check Keypad module', () => {
       { id: 19, value: ')' },
       { id: 20, value: 'CE' },
       { id: 21, value: '-/+' },
-      { id: 22, value: '%' }
+      { id: 22, value: '%' },
     ];
 
     cy.get('[data-cy="keypad"]').each((item, index) => {
       cy.wrap(item).should('contain.text', operations[index].value);
-    })
-  })
-})
+    });
+  });
+});
 
 describe('check History module', () => {
   beforeEach(() => {
-    cy.visit('/calculator');
-  })
+    cy.visit('/calculatorFC');
+  });
 
   it('should be show/close history', () => {
     cy
@@ -113,7 +113,7 @@ describe('check History module', () => {
       .get('[data-cy="rightSide"]').first().contains('Close history').click()
       .get('[data-cy="historyContainer"]').should('be.empty')
       .get('[data-cy="rightSide"]').first().contains('Show history');
-  })
+  });
 
   it('should be add history expression', () => {
     cy
@@ -124,13 +124,13 @@ describe('check History module', () => {
       .get('[data-cy="keypad"]').contains('div', '=').click()
       .get('[data-cy="historyList"]').should('not.be.empty')
       .first().should('have.text', '9 + 9 = 18');
-  })
-})
+  });
+});
 
 describe('check switch theme module', () => {
   beforeEach(() => {
     cy.visit('/settings');
-  })
+  });
 
 
   it('theme module should be have 3 options theme', () => {
@@ -138,18 +138,18 @@ describe('check switch theme module', () => {
 
     cy.get('[data-cy="selectTheme"] option').its('length').should('eq', 3);
     selectListThemes.forEach(option => cy.contains('[data-cy="selectTheme"]', option));
-  })
+  });
 
   it('should be switch theme from Light to Colored', () => {
     cy.get('[data-cy="selectTheme"] option').should('contain.text', 'Light theme');
     cy.get('[data-cy="selectTheme"]').select(1).should('contain.text', 'Colored theme');
-  })
-})
+  });
+});
 
 describe('check arithmetic operations', () => {
   beforeEach(() => {
-    cy.visit('/calculator');
-  })
+    cy.visit('/calculatorFC');
+  });
 
   it('check addition operation', () => {
     cy
@@ -160,8 +160,8 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="displayMain"]').should('have.text', '9')
       .get('[data-cy="keypad"]').contains('div', '4').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '5')
-  })
+      .get('[data-cy="displayMain"]').should('have.text', '5');
+  });
 
   it('check subtraction operation', () => {
     cy
@@ -169,8 +169,8 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="keypad"]').contains('div', '-').click()
       .get('[data-cy="keypad"]').contains('div', '5').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '3')
-  })
+      .get('[data-cy="displayMain"]').should('have.text', '3');
+  });
 
   it('check multiplication operation', () => {
     cy
@@ -178,8 +178,8 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="keypad"]').contains('div', '*').click()
       .get('[data-cy="keypad"]').contains('div', '3').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '27')
-  })
+      .get('[data-cy="displayMain"]').should('have.text', '27');
+  });
 
   it('check division operation', () => {
     cy
@@ -187,8 +187,8 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="keypad"]').contains('div', '/').click()
       .get('[data-cy="keypad"]').contains('div', '2').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '2')
-  })
+      .get('[data-cy="displayMain"]').should('have.text', '2');
+  });
 
   it('check operation remainder of division', () => {
     cy
@@ -198,8 +198,8 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="keypad"]').contains('div', '1').click()
       .get('[data-cy="keypad"]').contains('div', '3').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '9')
-  })
+      .get('[data-cy="displayMain"]').should('have.text', '9');
+  });
 
   it('checking adding a minus sign in front of a number', () => {
     cy
@@ -208,6 +208,6 @@ describe('check arithmetic operations', () => {
       .get('[data-cy="keypad"]').contains('div', '+').click()
       .get('[data-cy="keypad"]').contains('div', '2').click()
       .get('[data-cy="keypad"]').contains('div', '=').click()
-      .get('[data-cy="displayMain"]').should('have.text', '-6')
-  })
-})
+      .get('[data-cy="displayMain"]').should('have.text', '-6');
+  });
+});

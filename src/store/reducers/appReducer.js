@@ -7,7 +7,7 @@ import {
   SET_EXPRESSION,
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
-} from '@store/actions';
+} from '@store/constants';
 
 const initialState = {
   value: '0',

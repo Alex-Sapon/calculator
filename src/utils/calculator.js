@@ -93,7 +93,6 @@ export const calculation = expression => {
       const prevNumber = numberStack.pop();
       const operator = operatorStack.pop();
 
-      // eslint-disable-next-line default-case
       switch (operator) {
         case '+':
           calculator.execute(new AddCommand(prevNumber, nextNumber));
@@ -109,6 +108,9 @@ export const calculation = expression => {
           break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
+          break;
+        default:
+          break;
       }
 
       numberStack.push(calculator.getState().value);
@@ -127,8 +129,7 @@ export const calculation = expression => {
 
       while (i !== tempStack.length) {
         // если value не число
-        // eslint-disable-next-line no-restricted-globals
-        while (isNaN(tempStack[i])) {
+        while (Number.isNaN(Number(tempStack[i]))) {
           if (tempStack[i] === ')') {
             runCommand('(');
             i += 1;
@@ -172,6 +173,6 @@ export const calculation = expression => {
     };
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('Error into core of calculator: ', error.message);
+    console.log('Error into core of calculatorFC: ', error.message);
   }
 };

@@ -1,12 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import { Calculator } from '@components/calculator';
-import { LeftSide } from '@components/calculator/leftSide/leftSideFC';
-import { RightSide } from '@components/calculator/rightSide/rightSideFC';
+import { CalculatorFunction } from "@components/calculatorFC";
 
-export const CalculatorFC = () => (
-  <Calculator>
-    <LeftSide/>
-    <RightSide/>
-  </Calculator>
-);
+export const CalculatorFC = () => <CalculatorFunction />;
