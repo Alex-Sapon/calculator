@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers/display/styles';
 import { numberWithCommas } from '@helpers';
 
-class DisplayComponent extends React.PureComponent {
+class DisplayComponent extends React.Component {
   render() {
     const { expression, operation, value, result } = this.props;
 

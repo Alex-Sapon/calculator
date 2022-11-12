@@ -21,7 +21,7 @@ export const SpinnerStyled = styled.div`
     position: absolute;
     left: 8px;
     width: 16px;
-    background: ${({ theme }) => theme.secondaryBackground};
+    background: ${({ theme }) => theme.color.secondaryBackground};
     animation: spinner-animation 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -6,7 +6,7 @@ import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/c
 import { numberWithCommas } from '@helpers';
 import { selectValue, selectExpression, selectResult, selectOperation } from '@store/selectors';
 
-export const Display = () => {
+export const Display = memo(() => {
   const expression = numberWithCommas(useSelector(selectExpression));
   const value = numberWithCommas(useSelector(selectValue));
   const result = numberWithCommas(useSelector(selectResult));
@@ -21,4 +21,4 @@ export const Display = () => {
       <DisplayMain data-cy="displayMain">{value || result}</DisplayMain>
     </React.Fragment>
   );
-};
+});

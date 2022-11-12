@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 200px;
   gap: 10px;
-  height: 420px;
+  height: ${({ theme }) => theme.size.height}px;
 
   @media (max-width: 767.98px) {
     grid-template-columns: 1fr;
@@ -24,7 +24,7 @@ export const LeftSide = styled.div`
 
 export const RightSide = styled.div`
   padding: 20px;
-  border-left: ${({ theme }) => `2px solid ${theme.border}`};
+  border-left: ${({ theme }) => `2px solid ${theme.color.border}`};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -37,7 +37,7 @@ export const RightSide = styled.div`
 
 export const Title = styled.h2`
   text-align: center;
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.fontSize[2]}px;
   margin: 20px 0 10px 0;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.color.primary};
 `;

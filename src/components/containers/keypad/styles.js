@@ -10,14 +10,14 @@ export const KeypadContainer = styled.div`
 
   @media (max-width: 767.98px) {
     padding-bottom: 20px;
-    border-bottom: ${({ theme }) => `2px solid ${theme.border}`};
+    border-bottom: ${({ theme }) => `2px solid ${theme.color.border}`};
   }
 `;
 
 export const Key = styled.div`
-  font-size: 26px;
-  border: 1px solid #cacaca;
-  background-color: rgba(229, 229, 229, 0.7);
+  font-size: ${({ theme }) => theme.fontSize[5]}px;
+  border: ${({ theme }) => `1px solid ${theme.color.border}`};
+  background-color: ${({ theme }) => theme.color.secondaryWhite};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +25,7 @@ export const Key = styled.div`
   border-radius: 4px;
 
   &:hover {
-    background-color: rgba(242, 242, 242, 1);
+    background-color: ${({ theme }) => theme.color.secondaryWhite};
   }
 
   &:active {

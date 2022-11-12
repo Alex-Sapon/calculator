@@ -75,6 +75,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-closing-tag-location": 2,
     "react/jsx-closing-bracket-location": "off",
+    "react/prefer-stateless-function": "off",
     "react/jsx-max-props-per-line": [
       2,
       {

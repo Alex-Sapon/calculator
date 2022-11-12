@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,7 +7,7 @@ import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
 import { selectValue, selectOperation, selectExpression, selectTempResult } from '@store/selectors';
 
-export const Keypad = () => {
+export const Keypad = memo(() => {
   const dispatch = useDispatch();
 
   const expression = useSelector(selectExpression);
@@ -26,4 +26,4 @@ export const Keypad = () => {
       )}
     </KeypadContainer>
   );
-};
+});

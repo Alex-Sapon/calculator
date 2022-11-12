@@ -22,7 +22,7 @@ export const App = () => {
               <Route
                 key={id}
                 path={path}
-                element={(page(currentTheme, setCurrentTheme))}
+                element={page}
               />,
             )}
           </Routes>

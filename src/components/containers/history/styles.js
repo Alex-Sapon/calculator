@@ -16,14 +16,14 @@ export const HistoryContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.secondaryBackground};
+    background: ${({ theme }) => theme.color.secondaryBackground};
     border-radius: 6px;
   }
 `;
 
 export const HistoryList = styled.div`
   font-size: 16px;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.color.primary};
 `;
 
 export const HistoryItem = styled.div`

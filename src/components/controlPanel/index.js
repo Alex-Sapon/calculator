@@ -43,7 +43,7 @@ const ControlPanel = ({ theme, onThemeChange }) => {
 
 ControlPanel.propsType = {
   theme: PropTypes.string,
-  onThemeChange: PropTypes.string,
+  onThemeChange: PropTypes.func,
 };
 
 export default ControlPanel;

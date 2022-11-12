@@ -4,7 +4,7 @@ export const SettingsContainer = styled.div`
   width: 590px;
   padding: 20px;
   height: 420px;
-  background-color: ${({ theme }) => theme.background};
+  background-color: ${({ theme }) => theme.color.background};
 
   @media (max-width: 767.98px) {
     width: 380px;
@@ -13,7 +13,7 @@ export const SettingsContainer = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.fontSize[3]}px;
   text-align: left;
   margin-bottom: 20px;
 `;
@@ -29,10 +29,10 @@ export const SettingsGroup = styled.div`
 
 export const Select = styled.select`
   width: 180px;
-  border: ${({ theme }) => `2px solid ${theme.border}`};
+  border: ${({ theme }) => `2px solid ${theme.color.border}`};
   border-radius: 5px;
   margin-right: 40px;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSize[2]}px;
   padding: 7px;
 
   @media (max-width: 767.98px) {
@@ -42,7 +42,7 @@ export const Select = styled.select`
 
   @media (max-width: 767.98px) {
     option {
-      font-size: 16px;
+      font-size: ${({ theme }) => theme.fontSize[2]}px;
     }
   }
 `;

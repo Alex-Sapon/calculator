@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { HistoryList, HistoryItem } from "@components/containers/history/styles";
 import { Title } from "@components/containers/styles";
 
-class HistoryComponent extends React.PureComponent {
+class HistoryComponent extends React.Component {
   render() {
     const { history } = this.props;
 
