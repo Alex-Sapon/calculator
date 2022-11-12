@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { Button } from "@components/calculatorCC/buttonCC";
-import { Display } from "@components/calculatorCC/displayCC";
-import { History } from "@components/calculatorCC/historyCC";
-import { Keypad } from "@components/calculatorCC/keypadCC";
-import { Container, HistoryContainer, LeftSide, RightSide } from "@components/containers";
+import { Button } from '@components/calculatorCC/buttonCC';
+import { Display } from '@components/calculatorCC/displayCC';
+import { History } from '@components/calculatorCC/historyCC';
+import { Keypad } from '@components/calculatorCC/keypadCC';
+import { Container, HistoryContainer, LeftSide, RightSide } from '@components/containers';
 
 class CalculatorClass extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class CalculatorClass extends React.Component {
         </LeftSide>
         <RightSide>
           <Button
-            title={`${isShow ? "Close" : "Show"} history`}
+            title={`${isShow ? 'Close' : 'Show'} history`}
             handleClick={this.onClickHandler}
           />
           <HistoryContainer>

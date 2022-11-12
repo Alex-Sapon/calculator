@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Key, KeypadContainer } from '@components/containers/keypad/styles';
+import { Key } from '@components/calculatorCC/keyCC';
+import { KeypadContainer } from '@components/containers';
 import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
 
@@ -15,9 +16,12 @@ class KeypadComponent extends React.Component {
 
   render() {
     return (
-      <KeypadContainer>
+      <KeypadContainer onClick={this.handleClick}>
         {operations.map(({ id, innerText }) =>
-          <Key key={id} onClick={this.handleClick}>{innerText}</Key>,
+          <Key
+            key={id}
+            innerText={innerText}
+          />,
         )}
       </KeypadContainer>
     );
@@ -25,10 +29,10 @@ class KeypadComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.appReducer.value,
-  expression: state.appReducer.expression,
-  operation: state.appReducer.operation,
-  tempResult: state.appReducer.tempResult,
+  value: state.calculator.value,
+  expression: state.calculator.expression,
+  operation: state.calculator.operation,
+  tempResult: state.calculator.tempResult,
 });
 
 const mapDispatchToProps = dispatch => ({

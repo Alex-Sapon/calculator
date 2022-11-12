@@ -15,7 +15,7 @@ import {
 
  
 export const keypadHandler = (event, value, expression, operation, tempResult, dispatch) => {
-  const key = event.currentTarget.textContent;
+  const key = event.target.textContent;
   const numbers = /[0-9]/g;
 
   switch (key) {

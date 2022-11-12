@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { ButtonStyled } from '@components/containers/button/styles';
+import { ButtonStyled } from '@components/containers';
 
 export const Button = ({ title, handleClick }) => (
   <ButtonStyled onClick={handleClick}>
@@ -12,5 +12,5 @@ export const Button = ({ title, handleClick }) => (
 
 Button.propsType = {
   title: PropTypes.string,
-  onClick: PropTypes.func,
+  handleClick: PropTypes.func,
 };

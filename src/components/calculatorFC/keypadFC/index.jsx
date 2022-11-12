@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { KeypadContainer, Key } from '@components/containers/keypad/styles';
+import { Key } from '@components/calculatorFC/keyFC';
+import { KeypadContainer } from '@components/containers';
 import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
 import { selectValue, selectOperation, selectExpression, selectTempResult } from '@store/selectors';
@@ -15,14 +16,17 @@ export const Keypad = memo(() => {
   const operation = useSelector(selectOperation);
   const tempResult = useSelector(selectTempResult);
 
-  const handleClick = event => {
+  const handleClick = useCallback(event => {
     keypadHandler(event, value, expression, operation, tempResult, dispatch);
-  };
+  }, [value, expression, operation, tempResult, dispatch]);
 
   return (
-    <KeypadContainer data-cy="keypad">
+    <KeypadContainer data-cy="keypad" onClick={handleClick}>
       {operations.map(({ id, innerText }) =>
-        <Key key={id} onClick={handleClick}>{innerText}</Key>,
+        <Key
+          key={id}
+          innerText={innerText}
+        />,
       )}
     </KeypadContainer>
   );

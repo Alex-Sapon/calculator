@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers/display/styles';
+import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers';
 import { numberWithCommas } from '@helpers';
 import { selectValue, selectExpression, selectResult, selectOperation } from '@store/selectors';
 

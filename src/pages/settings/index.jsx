@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
-import ControlPanel from "@components/controlPanel";
+import ControlPanel from '@components/controlPanel';
 
 export default () => <ControlPanel />;

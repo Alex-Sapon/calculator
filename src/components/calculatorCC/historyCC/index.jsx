@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { HistoryList, HistoryItem } from "@components/containers/history/styles";
-import { Title } from "@components/containers/styles";
+import { HistoryList, HistoryItem } from '@components/containers/history/styles';
+import { Title } from '@components/containers/styles';
 
 class HistoryComponent extends React.Component {
   render() {
@@ -24,7 +24,7 @@ class HistoryComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  history: state.appReducer.history,
+  history: state.calculator.history,
 });
 
 export const History = connect(mapStateToProps, null)(HistoryComponent);

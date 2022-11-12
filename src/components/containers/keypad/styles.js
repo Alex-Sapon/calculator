@@ -14,7 +14,7 @@ export const KeypadContainer = styled.div`
   }
 `;
 
-export const Key = styled.div`
+export const KeyStyled = styled.div`
   font-size: ${({ theme }) => theme.fontSize[5]}px;
   border: ${({ theme }) => `1px solid ${theme.color.border}`};
   background-color: ${({ theme }) => theme.color.secondaryWhite};

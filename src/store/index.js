@@ -1,10 +1,11 @@
 import { combineReducers, legacy_createStore as createStore } from 'redux';
 
-import { appReducer } from '@store/reducers/appReducer';
+import { appReducer, calcReducer } from '@store/reducers';
 import { loadState, saveState } from '@utils/localStorage';
 
 const rootReducer = combineReducers({
-  appReducer,
+  application: appReducer,
+  calculator: calcReducer,
 });
 
 export const store = createStore(rootReducer, loadState());

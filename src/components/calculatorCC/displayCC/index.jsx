@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers/display/styles';
+import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers';
 import { numberWithCommas } from '@helpers';
 
 class DisplayComponent extends React.Component {
@@ -23,10 +23,10 @@ class DisplayComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: numberWithCommas(state.appReducer.value),
-  expression: numberWithCommas(state.appReducer.expression),
-  result: numberWithCommas(state.appReducer.result),
-  operation: state.appReducer.operation,
+  value: numberWithCommas(state.calculator.value),
+  expression: numberWithCommas(state.calculator.expression),
+  result: numberWithCommas(state.calculator.result),
+  operation: state.calculator.operation,
 });
 
 export const Display = connect(mapStateToProps, null)(DisplayComponent);

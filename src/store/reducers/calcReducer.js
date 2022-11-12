@@ -1,0 +1,82 @@
+import {
+  CHANGE_OPERATOR,
+  CLEAR_ALL,
+  CLEAR_DISPLAY,
+  SET_CURRENT_VALUE,
+  SET_EXPRESSION,
+  SET_RESULT_CALCULATION,
+  SET_TEMP_RESULT,
+} from '@store/constants';
+
+const initialState = {
+  value: '0',
+  expression: '',
+  operation: '',
+  result: '',
+  tempResult: '',
+  history: [],
+};
+
+export const calcReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case SET_CURRENT_VALUE:
+      return {
+        ...state,
+        result: '',
+        value: payload.value,
+      };
+    case SET_EXPRESSION:
+      return {
+        ...state,
+        operation: payload.operation,
+        expression: payload.expression,
+        value: '0',
+      };
+    case SET_TEMP_RESULT:
+      return {
+        ...state,
+        result: payload.value,
+        tempResult: payload.value,
+        value: '',
+      };
+    case CHANGE_OPERATOR:
+      return {
+        ...state,
+        operation: payload.value,
+      };
+    case SET_RESULT_CALCULATION:
+      return {
+        ...state,
+        history: [
+          { id: payload.id, historyItem: payload.history },
+          ...state.history,
+        ],
+        result: payload.value,
+        operation: '',
+        tempResult: '',
+        value: '',
+        expression: '',
+      };
+    case CLEAR_DISPLAY:
+      return {
+        ...state,
+        value: '0',
+        expression: '',
+        tempResult: '',
+        operation: '',
+        result: '',
+      };
+    case CLEAR_ALL:
+      return {
+        ...state,
+        value: '0',
+        expression: '',
+        operation: '',
+        result: '',
+        tempResult: '',
+        history: [],
+      };
+    default:
+      return state;
+  }
+};
