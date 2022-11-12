@@ -1,0 +1,119 @@
+{
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:cypress/recommended"
+  ],
+  "plugins": [
+    "react",
+    "prettier",
+    "react-hooks",
+    "cypress"
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
+  },
+  "env": {
+    "jest": true,
+    "es2021": true,
+    "browser": true
+  },
+  "rules": {
+    "consistent-return": "off",
+    "default-param-last": 0,
+    "max-classes-per-file": ["error", 7],
+    "import/prefer-default-export": "off",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["react"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ]
+      }
+    ],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "arrow-parens": ["error", "as-needed"],
+    "semi": "error",
+    "prefer-destructuring": "error",
+    "max-len": [
+      "warn",
+      {
+        "code": 150,
+        "ignoreUrls": true,
+        "ignorePattern": "import"
+      }
+    ],
+    "no-unused-vars": "warn",
+    "operator-linebreak": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-closing-tag-location": 2,
+    "react/jsx-closing-bracket-location": "off",
+    "react/jsx-max-props-per-line": [
+      2,
+      {
+        "maximum": 2,
+        "when": "always"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".jsx", ".js"]
+      }
+    ],
+    "jsx-quotes": ["error", "prefer-double"],
+    "comma-dangle": [2, "always-multiline"],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+      }
+    ],
+    "react/prop-types": "off",
+    "react/jsx-fragments": [1, "element"]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@components", "./src/components"],
+          ["@constants", "./src/constants"],
+          ["@pages", "./src/pages"],
+          ["@styles", "./src/styles"],
+          ["@store", "./src/store"],
+          ["@utils", "./src/utils"],
+          ["@helpers", "./src/helpers"]
+        ],
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    }
+  }
+}
