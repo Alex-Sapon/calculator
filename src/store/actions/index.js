@@ -8,6 +8,7 @@ import {
   SET_EXPRESSION,
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
+  CHANGE_VISIBLE_HISTORY,
 } from '@store/constants';
 
 export const setCurrentValue = value => ({ type: SET_CURRENT_VALUE, payload: { value } });
@@ -17,5 +18,6 @@ export const changeOperator = value => ({ type: CHANGE_OPERATOR, payload: { valu
 export const clearDisplay = () => ({ type: CLEAR_DISPLAY });
 export const clearAll = () => ({ type: CLEAR_ALL });
 export const setExpression = (operation, expression) => ({ type: SET_EXPRESSION, payload: { operation, expression } });
-export const setError = error => ({ type: SET_ERROR, payload: { error } });
+export const setError = value => ({ type: SET_ERROR, payload: { value } });
 export const setTheme = value => ({ type: CHANGE_THEME, payload: { value } });
+export const changeVisibleHistory = value => ({ type: CHANGE_VISIBLE_HISTORY, payload: { value } });

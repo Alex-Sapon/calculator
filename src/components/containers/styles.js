@@ -38,6 +38,6 @@ export const RightSide = styled.div`
 export const Title = styled.h2`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize[2]}px;
-  margin: 20px 0 10px 0;
+  margin-bottom: 10px;
   color: ${({ theme }) => theme.color.primary};
 `;

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { HistoryList, HistoryItem } from '@components/containers/history/styles';
-import { Title } from '@components/containers/styles';
+import { HistoryList, HistoryItem, Title } from '@components/containers';
 import { selectHistory } from '@store/selectors';
 
 export const History = () => {

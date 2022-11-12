@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { HistoryList, HistoryItem } from '@components/containers/history/styles';
-import { Title } from '@components/containers/styles';
+import { HistoryList, HistoryItem, Title } from '@components/containers';
 
 class HistoryComponent extends React.Component {
   render() {
@@ -23,12 +22,6 @@ class HistoryComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  history: state.calculator.history,
-});
-
-export const History = connect(mapStateToProps, null)(HistoryComponent);
-
 HistoryComponent.propTypes = {
   history: PropTypes.arrayOf(
     PropTypes.shape({
@@ -41,3 +34,9 @@ HistoryComponent.propTypes = {
 HistoryComponent.defaultProps = {
   history: [],
 };
+
+const mapStateToProps = state => ({
+  history: state.calculator.history,
+});
+
+export const History = connect(mapStateToProps, null)(HistoryComponent);

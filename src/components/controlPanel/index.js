@@ -1,52 +1,55 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@components/calculatorFC/buttonFC';
 import { Select, SettingsContainer, SettingsGroup, Title } from '@components/controlPanel/styles';
 import { themeOptions } from '@constants/themeOptions';
-import { clearAll, setTheme } from '@store/actions';
-import { selectTheme } from '@store/selectors';
+import { changeVisibleHistory, clearAll, setTheme } from '@store/actions';
+import { selectIsShow, selectTheme } from '@store/selectors';
 
 const ControlPanel = () => {
   const dispatch = useDispatch();
 
   const theme = useSelector(selectTheme);
+  const isShow = useSelector(selectIsShow);
 
-  const onClickHandler = () => {
+  const onClearAllHandler = () => {
     dispatch(clearAll());
   };
 
-  const onChangeHandler = event => {
+  const onChangeThemeHandler = event => {
     dispatch(setTheme(event.currentTarget.value));
+  };
+
+  const onIsShowHandler = () => {
+    dispatch(changeVisibleHistory(!isShow));
   };
 
   return (
     <SettingsContainer data-cy="settings">
       <Title>Settings</Title>
       <SettingsGroup>
+        <Button
+          title="Clear All History"
+          handleClick={onClearAllHandler}
+        />
+        <Button
+          title={`${isShow ? 'Close' : 'Show'} history`}
+          handleClick={onIsShowHandler}
+        />
         <Select
           value={theme}
-          onChange={onChangeHandler}
+          onChange={onChangeThemeHandler}
           data-cy="selectTheme"
         >
           {themeOptions.map(({ id, value, name }) =>
             <option key={id} value={value}>{name}</option>,
           )}
         </Select>
-        <Button
-          handleClick={onClickHandler}
-          title="Clear All History"
-        />
       </SettingsGroup>
     </SettingsContainer>
   );
-};
-
-ControlPanel.propsType = {
-  theme: PropTypes.string,
-  onThemeChange: PropTypes.func,
 };
 
 export default ControlPanel;
