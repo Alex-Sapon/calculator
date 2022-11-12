@@ -10,7 +10,7 @@ import {
 } from "@store/constants";
 
 export const setCurrentValue = value => ({ type: SET_CURRENT_VALUE, payload: { value } });
-export const setResultCalculation = (value, history) => ({ type: SET_RESULT_CALCULATION, payload: { value, history } });
+export const setResultCalculation = (value, history, id) => ({ type: SET_RESULT_CALCULATION, payload: { value, history, id } });
 export const setTempResult = value => ({ type: SET_TEMP_RESULT, payload: { value } });
 export const changeOperator = value => ({ type: CHANGE_OPERATOR, payload: { value } });
 export const clearDisplay = () => ({ type: CLEAR_DISPLAY });

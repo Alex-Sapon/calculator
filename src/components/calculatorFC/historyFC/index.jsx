@@ -13,8 +13,8 @@ export const History = () => {
     <React.Fragment>
       <Title>History</Title>
       <HistoryList data-cy="historyList">
-        {history.map(expression =>
-          <HistoryItem key={expression}>{expression}</HistoryItem>,
+        {history.map(({ id, historyItem }) =>
+          <HistoryItem key={id}>{historyItem}</HistoryItem>,
         )}
       </HistoryList>
     </React.Fragment>

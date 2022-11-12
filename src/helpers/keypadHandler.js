@@ -1,3 +1,5 @@
+import { v1 } from 'uuid';
+
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 import { digits, mathOperators } from '@constants/operations';
 import { getCorrectlyValue, getResultCalculation, getResultExpression, trimExpression } from '@helpers';
@@ -11,6 +13,7 @@ import {
   setTempResult,
 } from '@store/actions';
 
+ 
 export const keypadHandler = (event, value, expression, operation, tempResult, dispatch) => {
   const key = event.currentTarget.textContent;
   const numbers = /[0-9]/g;
@@ -45,7 +48,7 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
       try {
         if (expression !== EMPTY_STRING && value !== EMPTY_STRING && value.match(numbers)) {
           const result = getResultCalculation(tempResult, expression, operation, value);
-          dispatch(setResultCalculation(result, getResultExpression(result, expression, operation, value)));
+          dispatch(setResultCalculation(result, getResultExpression(result, expression, operation, value), v1()));
         }
       } catch (error) {
         dispatch(setError(error.message));
