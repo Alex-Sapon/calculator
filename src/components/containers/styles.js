@@ -9,8 +9,7 @@ export const Container = styled.div`
   @media (max-width: 767.98px) {
     grid-template-columns: 1fr;
     gap: 0;
-    height: auto;
-    max-height: 675px;
+    height: 651px;
   }
 `;
 
