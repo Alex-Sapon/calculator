@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { CalculatorFunction } from "@components/calculatorFC";
+import { CalculatorFunction } from '@components/calculatorFC';
 
 export const CalculatorFC = () => (
   <CalculatorFunction />

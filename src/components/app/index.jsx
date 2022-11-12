@@ -1,16 +1,18 @@
-import React, { useState, Suspense } from "react";
+import React, { Suspense } from 'react';
 
-import { Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+import { useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-import { Container } from "@components/app/styles";
-import { Header } from "@components/header";
-import { Spinner } from "@components/spinner";
-import { routes } from "@constants/routes";
-import { theme } from "@styles/theme";
+import { Container } from '@components/app/styles';
+import { Header } from '@components/header';
+import { Spinner } from '@components/spinner';
+import { routes } from '@constants/routes';
+import { selectTheme } from '@store/selectors';
+import { theme } from '@styles/theme';
 
 export const App = () => {
-  const [currentTheme, setCurrentTheme] = useState("light");
+  const currentTheme = useSelector(selectTheme);
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>

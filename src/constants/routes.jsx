@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { PATH } from "@constants/path";
-import { CalculatorFC } from "@pages/homeFC";
+import { PATH } from '@constants/path';
+import { CalculatorFC } from '@pages/homeFC';
 
-const CalculatorCC = React.lazy(() => import("@pages/homeCC"));
-const ControlPanel = React.lazy(() => import("@pages/settings"));
+const CalculatorCC = React.lazy(() => import('@pages/homeCC'));
+const ControlPanel = React.lazy(() => import('@pages/settings'));
 
 export const routes = [
   { id: 1, path: PATH.HOME, page: <CalculatorFC /> },

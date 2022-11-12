@@ -90,6 +90,7 @@
       }
     ],
     "jsx-quotes": ["error", "prefer-double"],
+    "quotes": ["error", "single"],
     "comma-dangle": [2, "always-multiline"],
     "prefer-const": [
       "error",

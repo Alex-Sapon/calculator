@@ -6,3 +6,4 @@ export const CHANGE_OPERATOR = 'CHANGE_OPERATOR';
 export const CLEAR_ALL = 'CLEAR_ALL';
 export const SET_EXPRESSION = 'SET_CURRENT_OPERATION';
 export const SET_ERROR = 'SET_ERROR';
+export const CHANGE_THEME = 'CHANGE_THEME';

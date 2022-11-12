@@ -7,16 +7,18 @@ import {
   SET_EXPRESSION,
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
-} from "@store/constants";
+  CHANGE_THEME,
+} from '@store/constants';
 
 const initialState = {
-  value: "0",
-  expression: "",
-  operation: "",
-  result: "",
-  tempResult: "",
+  value: '0',
+  expression: '',
+  operation: '',
+  result: '',
+  tempResult: '',
   history: [],
   error: null,
+  theme: 'light',
 };
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -24,7 +26,7 @@ export const appReducer = (state = initialState, { type, payload }) => {
     case SET_CURRENT_VALUE:
       return {
         ...state,
-        result: "",
+        result: '',
         value: payload.value,
         error: null,
       };
@@ -33,14 +35,14 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.operation,
         expression: payload.expression,
-        value: "0",
+        value: '0',
       };
     case SET_TEMP_RESULT:
       return {
         ...state,
         result: payload.value,
         tempResult: payload.value,
-        value: "",
+        value: '',
       };
     case CHANGE_OPERATOR:
       return {
@@ -55,39 +57,44 @@ export const appReducer = (state = initialState, { type, payload }) => {
           ...state.history,
         ],
         result: payload.value,
-        operation: "",
-        tempResult: "",
-        value: "",
-        expression: "",
+        operation: '',
+        tempResult: '',
+        value: '',
+        expression: '',
       };
     case CLEAR_DISPLAY:
       return {
         ...state,
-        value: "0",
-        expression: "",
-        tempResult: "",
-        operation: "",
-        result: "",
+        value: '0',
+        expression: '',
+        tempResult: '',
+        operation: '',
+        result: '',
         error: null,
       };
     case CLEAR_ALL:
       return {
         ...state,
-        value: "0",
-        expression: "",
-        operation: "",
-        result: "",
-        tempResult: "",
+        value: '0',
+        expression: '',
+        operation: '',
+        result: '',
+        tempResult: '',
         history: [],
         error: null,
+      };
+    case CHANGE_THEME:
+      return {
+        ...state,
+        theme: payload.value,
       };
     case SET_ERROR:
       return {
         ...state,
-        value: "0",
-        expression: "",
-        operation: "",
-        result: "",
+        value: '0',
+        expression: '',
+        operation: '',
+        result: '',
         error: payload.value,
       };
     default:

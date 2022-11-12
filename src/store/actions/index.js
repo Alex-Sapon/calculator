@@ -1,5 +1,6 @@
 import {
   CHANGE_OPERATOR,
+  CHANGE_THEME,
   CLEAR_ALL,
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
@@ -7,7 +8,7 @@ import {
   SET_EXPRESSION,
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
-} from "@store/constants";
+} from '@store/constants';
 
 export const setCurrentValue = value => ({ type: SET_CURRENT_VALUE, payload: { value } });
 export const setResultCalculation = (value, history, id) => ({ type: SET_RESULT_CALCULATION, payload: { value, history, id } });
@@ -17,3 +18,4 @@ export const clearDisplay = () => ({ type: CLEAR_DISPLAY });
 export const clearAll = () => ({ type: CLEAR_ALL });
 export const setExpression = (operation, expression) => ({ type: SET_EXPRESSION, payload: { operation, expression } });
 export const setError = error => ({ type: SET_ERROR, payload: { error } });
+export const setTheme = value => ({ type: CHANGE_THEME, payload: { value } });

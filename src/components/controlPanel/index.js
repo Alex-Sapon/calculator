@@ -1,22 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Button } from "@components/calculatorFC/buttonFC";
-import { SettingsGroup, Title, SettingsContainer, Select } from "@components/controlPanel/styles";
-import { themeOptions } from "@constants/themeOptions";
-import { clearAll } from "@store/actions";
+import { Button } from '@components/calculatorFC/buttonFC';
+import { Select, SettingsContainer, SettingsGroup, Title } from '@components/controlPanel/styles';
+import { themeOptions } from '@constants/themeOptions';
+import { clearAll, setTheme } from '@store/actions';
+import { selectTheme } from '@store/selectors';
 
-const ControlPanel = ({ theme, onThemeChange }) => {
+const ControlPanel = () => {
   const dispatch = useDispatch();
+
+  const theme = useSelector(selectTheme);
 
   const onClickHandler = () => {
     dispatch(clearAll());
   };
 
   const onChangeHandler = event => {
-    onThemeChange(event.currentTarget.value);
+    dispatch(setTheme(event.currentTarget.value));
   };
 
   return (
