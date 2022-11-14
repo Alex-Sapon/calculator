@@ -54,7 +54,7 @@ export const calcReducer = (state = initialState, { type, payload }) => {
         result: payload.value,
         operation: '',
         tempResult: '',
-        value: '',
+        value: payload.value,
         expression: '',
       };
     case CLEAR_DISPLAY:
