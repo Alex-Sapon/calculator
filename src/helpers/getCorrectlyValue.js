@@ -1,4 +1,8 @@
 export const getCorrectlyValue = value => {
+  if (value.indexOf('0') === 0 && value.length === 1) {
+    return '0';
+  }
+
   if (value.indexOf('.') === 0) {
     return `0${value}`;
   }

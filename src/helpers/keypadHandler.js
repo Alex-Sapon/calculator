@@ -68,8 +68,11 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
           if (value.match(numbers)) {
             const result = getResultCalculation(tempResult, expression, operation, value);
             dispatch(setExpression(operation, trimExpression(expression, operation, value).join(' ')));
-            dispatch(setTempResult(result));
             dispatch(changeOperator(key));
+
+            if (result) {
+              dispatch(setTempResult(result));
+            }
           }
 
           if (expression.match(numbers)) {
