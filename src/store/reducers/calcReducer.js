@@ -35,9 +35,9 @@ export const calcReducer = (state = initialState, { type, payload }) => {
     case SET_TEMP_RESULT:
       return {
         ...state,
+        value: '',
         result: payload.value,
         tempResult: payload.value,
-        value: '',
       };
     case CHANGE_OPERATOR:
       return {

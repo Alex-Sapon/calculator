@@ -5,14 +5,21 @@ import { connect } from 'react-redux';
 
 import { DisplayHistory, DisplayMain, Expression, Operator } from '@components/containers';
 import { numberWithCommas } from '@helpers';
+import { selectExpression, selectOperation, selectResult, selectValue, selectViewMode } from '@store/selectors';
 
 class DisplayComponent extends React.Component {
   render() {
-    const { expression, operation, value, result } = this.props;
+    const { value, expression, result, operation, viewMode } = this.props;
 
     return (
       <React.Fragment>
         <DisplayHistory>
+          {viewMode
+            && <React.Fragment>
+                <Expression>{expression}</Expression>
+                <Operator>{operation}</Operator>
+               </React.Fragment>
+          }
           <Expression>{expression}</Expression>
           <Operator>{operation}</Operator>
         </DisplayHistory>
@@ -23,10 +30,11 @@ class DisplayComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: numberWithCommas(state.calculator.value),
-  expression: numberWithCommas(state.calculator.expression),
-  result: numberWithCommas(state.calculator.result),
-  operation: state.calculator.operation,
+  value: numberWithCommas(selectValue(state)),
+  expression: numberWithCommas(selectExpression(state)),
+  result: numberWithCommas(selectResult(state)),
+  operation: selectOperation(state),
+  viewMode: selectViewMode(state),
 });
 
 export const Display = connect(mapStateToProps, null)(DisplayComponent);
@@ -36,4 +44,5 @@ DisplayComponent.propTypes = {
   expression: PropTypes.string.isRequired,
   operation: PropTypes.string.isRequired,
   result: PropTypes.string.isRequired,
+  viewMode: PropTypes.bool.isRequired,
 };

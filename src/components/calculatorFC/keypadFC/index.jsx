@@ -6,15 +6,19 @@ import { Key } from '@components/calculatorFC/keyFC';
 import { KeypadContainer } from '@components/containers';
 import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
-import { selectCalculator } from '@store/selectors';
+import { selectExpression, selectOperation, selectResult, selectTempResult, selectValue } from '@store/selectors';
 
 export const Keypad = memo(() => {
   const dispatch = useDispatch();
 
-  const calculator = useSelector(selectCalculator);
+  const value = useSelector(selectValue);
+  const expression = useSelector(selectExpression);
+  const operation = useSelector(selectOperation);
+  const tempResult = useSelector(selectTempResult);
+  const result = useSelector(selectResult);
 
   const handleClick = event => {
-    keypadHandler(event, calculator, dispatch);
+    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
   };
 
   return (

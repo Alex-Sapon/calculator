@@ -10,8 +10,8 @@ import { keypadHandler } from '@helpers/keypadHandler';
 
 class KeypadComponent extends React.Component {
   handleClick = event => {
-    const { onKeypadClick, value, expression, operation, tempResult } = this.props;
-    onKeypadClick(event, value, expression, operation, tempResult);
+    const { onKeypadClick, value, expression, operation, tempResult, result } = this.props;
+    onKeypadClick(event, value, expression, operation, tempResult, result);
   };
 
   render() {
@@ -33,11 +33,12 @@ const mapStateToProps = state => ({
   expression: state.calculator.expression,
   operation: state.calculator.operation,
   tempResult: state.calculator.tempResult,
+  result: state.calculator.result,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onKeypadClick: (event, value, expression, operation, tempResult) => {
-    keypadHandler(event, value, expression, operation, tempResult, dispatch);
+  onKeypadClick: (event, value, expression, operation, tempResult, result) => {
+    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
   },
 });
 
@@ -48,5 +49,6 @@ KeypadComponent.propsType = {
   expression: PropTypes.string,
   operation: PropTypes.string,
   tempResult: PropTypes.string,
+  result: PropTypes.string,
   onKeypadClick: PropTypes.func,
 };

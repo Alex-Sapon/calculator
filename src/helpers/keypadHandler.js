@@ -15,8 +15,7 @@ import {
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 
-export const keypadHandler = (event, calculatorState, dispatch) => {
-  const { value, expression, operation, tempResult, result } = calculatorState;
+export const keypadHandler = (event, value, expression, operation, tempResult, result, dispatch) => {
   const key = event.target.textContent;
   const numbers = /[0-9]/g;
 
