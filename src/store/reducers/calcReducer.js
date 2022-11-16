@@ -28,9 +28,9 @@ export const calcReducer = (state = initialState, { type, payload }) => {
     case SET_EXPRESSION:
       return {
         ...state,
+        value: '',
         operation: payload.operation,
         expression: payload.expression,
-        value: '0',
       };
     case SET_TEMP_RESULT:
       return {
@@ -52,29 +52,19 @@ export const calcReducer = (state = initialState, { type, payload }) => {
           ...state.history,
         ],
         result: payload.value,
-        operation: '',
-        tempResult: '',
-        value: payload.value,
-        expression: '',
       };
     case CLEAR_DISPLAY:
       return {
         ...state,
         value: '0',
         expression: '',
-        tempResult: '',
         operation: '',
         result: '',
+        tempResult: '',
       };
     case CLEAR_ALL:
       return {
-        ...state,
-        value: '0',
-        expression: '',
-        operation: '',
-        result: '',
-        tempResult: '',
-        history: [],
+        ...initialState,
       };
     default:
       return state;

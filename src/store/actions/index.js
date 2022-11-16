@@ -9,6 +9,7 @@ import {
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
   CHANGE_VISIBLE_HISTORY,
+  CHANGE_VIEW_MODE,
 } from '@store/constants';
 
 export const setCurrentValue = value => ({ type: SET_CURRENT_VALUE, payload: { value } });
@@ -21,3 +22,4 @@ export const setExpression = (operation, expression) => ({ type: SET_EXPRESSION,
 export const setError = value => ({ type: SET_ERROR, payload: { value } });
 export const setTheme = value => ({ type: CHANGE_THEME, payload: { value } });
 export const changeVisibleHistory = value => ({ type: CHANGE_VISIBLE_HISTORY, payload: { value } });
+export const changeViewMode = value => ({ type: CHANGE_VIEW_MODE, payload: { value } });

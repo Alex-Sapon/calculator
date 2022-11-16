@@ -5,6 +5,7 @@ import { digits, mathOperators } from '@constants/operations';
 import { getCorrectlyValue, getResultCalculation, getResultExpression, trimExpression } from '@helpers';
 import {
   changeOperator,
+  changeViewMode,
   clearDisplay,
   setCurrentValue,
   setError,
@@ -12,9 +13,10 @@ import {
   setResultCalculation,
   setTempResult,
 } from '@store/actions';
+import { calculation } from '@utils/calculator';
 
- 
-export const keypadHandler = (event, value, expression, operation, tempResult, dispatch) => {
+export const keypadHandler = (event, calculatorState, dispatch) => {
+  const { value, expression, operation, tempResult, result } = calculatorState;
   const key = event.target.textContent;
   const numbers = /[0-9]/g;
 
@@ -41,15 +43,28 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
     }
     case ')': {
       if (!expression.includes('(') || !value.match(numbers)) return;
+      dispatch(changeViewMode(true));
       dispatch(setExpression(key, `${expression} ${getCorrectlyValue(value + key)}`));
       break;
     }
     case '=': {
       try {
-        if (expression !== EMPTY_STRING && value !== EMPTY_STRING && value.match(numbers)) {
-          const result = getResultCalculation(tempResult, expression, operation, value);
-          dispatch(setResultCalculation(result, getResultExpression(result, expression, operation, value), v1()));
+        if (tempResult && result) {
+          const calc = calculation(trimExpression(tempResult, operation, result));
+          dispatch(setResultCalculation(calc.result, getResultExpression(calc.result, expression, value), v1()));
+          dispatch(setExpression(operation, trimExpression(calc.result, operation, tempResult).join(' ')));
         }
+
+        if (expression !== EMPTY_STRING && value.match(numbers)) {
+          const res = getResultCalculation(tempResult, expression, operation, value);
+          dispatch(setResultCalculation(res, getResultExpression(res, expression, operation, value), v1()));
+          dispatch(setExpression(operation, trimExpression(res, operation, tempResult).join(' ')));
+
+          if (res) {
+            dispatch(setTempResult(res));
+          }
+        }
+
       } catch (error) {
         dispatch(setError(error.message));
       }
@@ -66,12 +81,12 @@ export const keypadHandler = (event, value, expression, operation, tempResult, d
         // input operations
         if (mathOperators.includes(key)) {
           if (value.match(numbers)) {
-            const result = getResultCalculation(tempResult, expression, operation, value);
+            const res = getResultCalculation(tempResult, expression, operation, value);
             dispatch(setExpression(operation, trimExpression(expression, operation, value).join(' ')));
             dispatch(changeOperator(key));
 
-            if (result) {
-              dispatch(setTempResult(result));
+            if (res) {
+              dispatch(setTempResult(res));
             }
           }
 

@@ -1,7 +1,8 @@
-import { CHANGE_THEME, CHANGE_VISIBLE_HISTORY, SET_ERROR } from '@store/constants';
+import { CHANGE_THEME, CHANGE_VISIBLE_HISTORY, SET_ERROR, CHANGE_VIEW_MODE, CLEAR_ALL } from '@store/constants';
 
 const initialState = {
   isShow: true,
+  viewMode: false,
   theme: 'light',
   error: null,
 };
@@ -18,10 +19,20 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         theme: payload.value,
       };
+    case CHANGE_VIEW_MODE:
+      return {
+        ...state,
+        viewMode: payload.value,
+      };
     case SET_ERROR:
       return {
         ...state,
         error: payload.value,
+      };
+    case CLEAR_ALL:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
