@@ -20,6 +20,14 @@ const size = {
   height: 420,
 };
 
+const height = {
+  header: 200,
+};
+
+const width = {
+
+};
+
 const boxShadow = [
   '0 3px 9px 2px rgba(34, 60, 80, .1)',
 ];

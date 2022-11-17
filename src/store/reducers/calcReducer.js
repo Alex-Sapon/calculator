@@ -25,13 +25,6 @@ export const calcReducer = (state = initialState, { type, payload }) => {
         result: '',
         value: payload.value,
       };
-    case SET_EXPRESSION:
-      return {
-        ...state,
-        value: '',
-        operation: payload.operation,
-        expression: payload.expression,
-      };
     case SET_TEMP_RESULT:
       return {
         ...state,
@@ -39,11 +32,18 @@ export const calcReducer = (state = initialState, { type, payload }) => {
         result: payload.value,
         tempResult: payload.value,
       };
+    case SET_EXPRESSION:
+      return {
+        ...state,
+        value: '',
+        expression: payload.expression,
+      };
     case CHANGE_OPERATOR:
       return {
         ...state,
         operation: payload.value,
       };
+
     case SET_RESULT_CALCULATION:
       return {
         ...state,

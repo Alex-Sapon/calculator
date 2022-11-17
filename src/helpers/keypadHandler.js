@@ -37,33 +37,30 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
       break;
     }
     case '(': {
-      dispatch(setExpression(key, `${expression} ${getCorrectlyValue(value + key)}`));
+      dispatch(changeViewMode(true));
+      dispatch(setExpression(`${expression} ${getCorrectlyValue(value + key)}`));
       break;
     }
     case ')': {
       if (!expression.includes('(') || !value.match(numbers)) return;
-      dispatch(changeViewMode(true));
-      dispatch(setExpression(key, `${expression} ${getCorrectlyValue(value + key)}`));
+      dispatch(setExpression(`${expression} ${getCorrectlyValue(value + key)}`));
       break;
     }
     case '=': {
       try {
         if (tempResult && result) {
           const calc = calculation(trimExpression(tempResult, operation, result));
-          dispatch(setResultCalculation(calc.result, getResultExpression(calc.result, expression, value), v1()));
-          dispatch(setExpression(operation, trimExpression(calc.result, operation, tempResult).join(' ')));
+          dispatch(setExpression(trimExpression(calc.result, operation, tempResult).join(' ')));
+          dispatch(setResultCalculation(calc.result, getResultExpression(calc.result, expression), v1()));
         }
 
         if (expression !== EMPTY_STRING && value.match(numbers)) {
-          const res = getResultCalculation(tempResult, expression, operation, value);
-          dispatch(setResultCalculation(res, getResultExpression(res, expression, operation, value), v1()));
-          dispatch(setExpression(operation, trimExpression(res, operation, tempResult).join(' ')));
+          const expValue = getResultCalculation(tempResult, expression, operation, value);
 
-          if (res) {
-            dispatch(setTempResult(res));
-          }
+          dispatch(setExpression(trimExpression(expValue, operation, expValue).join(' ')));
+          dispatch(setResultCalculation(expValue, getResultExpression(expValue, expression, operation, value), v1()));
+          dispatch(setTempResult(expValue));
         }
-
       } catch (error) {
         dispatch(setError(error.message));
       }
@@ -81,7 +78,7 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
         if (mathOperators.includes(key)) {
           if (value.match(numbers)) {
             const res = getResultCalculation(tempResult, expression, operation, value);
-            dispatch(setExpression(operation, trimExpression(expression, operation, value).join(' ')));
+            dispatch(setExpression(trimExpression(expression, operation, value).join(' ')));
             dispatch(changeOperator(key));
 
             if (res) {
