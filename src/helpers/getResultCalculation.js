@@ -1,13 +1,13 @@
-import { trimExpression } from '@helpers/trimExpression';
+import { parsing } from '@helpers/parsing';
 import { calculation } from '@utils/calculator';
 
 export const getResultCalculation = (tempResult, expression, operation, value) => {
   let calculationValue;
 
   if (tempResult) {
-    calculationValue = trimExpression(tempResult, operation, value);
+    calculationValue = parsing(tempResult, operation, value);
   } else {
-    calculationValue = trimExpression(expression, operation, value);
+    calculationValue = parsing(expression, operation, value);
   }
 
   if (calculationValue.length < 3) return;

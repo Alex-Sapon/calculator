@@ -1,4 +1,11 @@
-import { CHANGE_THEME, CHANGE_VISIBLE_HISTORY, SET_ERROR, CHANGE_VIEW_MODE, CLEAR_ALL } from '@store/constants';
+import { 
+  CHANGE_THEME, 
+  CHANGE_VISIBLE_HISTORY, 
+  SET_ERROR, 
+  CHANGE_VIEW_MODE, 
+  CLEAR_ALL, 
+  CLEAR_DISPLAY, 
+} from '@store/constants';
 
 const initialState = {
   isShow: true,
@@ -30,8 +37,10 @@ export const appReducer = (state = initialState, { type, payload }) => {
         error: payload.value,
       };
     case CLEAR_ALL:
+    case CLEAR_DISPLAY:
       return {
         ...state,
+        viewMode: false,
         error: null,
       };
     default:

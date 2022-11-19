@@ -6,7 +6,14 @@ import { Key } from '@components/calculatorFC/keyFC';
 import { KeypadContainer } from '@components/containers';
 import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
-import { selectExpression, selectOperation, selectResult, selectTempResult, selectValue } from '@store/selectors';
+import { 
+  selectExpression, 
+  selectOperation, 
+  selectResult, 
+  selectTempResult, 
+  selectValue, 
+  selectViewMode, 
+} from '@store/selectors';
 
 export const Keypad = memo(() => {
   const dispatch = useDispatch();
@@ -16,9 +23,10 @@ export const Keypad = memo(() => {
   const operation = useSelector(selectOperation);
   const tempResult = useSelector(selectTempResult);
   const result = useSelector(selectResult);
+  const viewMode = useSelector(selectViewMode);
 
   const handleClick = event => {
-    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
+    keypadHandler(event, value, expression, operation, tempResult, result, viewMode, dispatch);
   };
 
   return (

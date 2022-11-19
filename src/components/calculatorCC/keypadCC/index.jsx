@@ -7,6 +7,14 @@ import { Key } from '@components/calculatorCC/keyCC';
 import { KeypadContainer } from '@components/containers';
 import { operations } from '@constants/operations';
 import { keypadHandler } from '@helpers/keypadHandler';
+import { 
+  selectExpression, 
+  selectOperation, 
+  selectResult, 
+  selectTempResult, 
+  selectValue, 
+  selectViewMode, 
+} from '@store/selectors';
 
 class KeypadComponent extends React.Component {
   handleClick = event => {
@@ -29,16 +37,17 @@ class KeypadComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  value: state.calculator.value,
-  expression: state.calculator.expression,
-  operation: state.calculator.operation,
-  tempResult: state.calculator.tempResult,
-  result: state.calculator.result,
+  value: selectValue(state),
+  expression: selectExpression(state),
+  operation: selectOperation(state),
+  tempResult: selectTempResult(state),
+  result: selectResult(state),
+  viewMode: selectViewMode(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onKeypadClick: (event, value, expression, operation, tempResult, result) => {
-    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
+  onKeypadClick: (event, value, expression, operation, tempResult, result, viewMode) => {
+    keypadHandler(event, value, expression, operation, tempResult, result, viewMode, dispatch);
   },
 });
 
@@ -50,5 +59,6 @@ KeypadComponent.propsType = {
   operation: PropTypes.string,
   tempResult: PropTypes.string,
   result: PropTypes.string,
+  viewMode: PropTypes.bool,
   onKeypadClick: PropTypes.func,
 };

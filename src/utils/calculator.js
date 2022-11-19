@@ -84,15 +84,25 @@ export const calculation = expression => {
   const numberStack = [];
   const operatorStack = [];
 
-  const priority = { '*': 2, '/': 2, '+': 1, '-': 1 };
+  const priority = { '*': 2, '/': 2, '%': 2, '+': 1, '-': 1 };
 
   try {
     // создать команду со значениями из стека
     const createCommand = () => {
-      const nextNumber = numberStack.pop();
-      const prevNumber = numberStack.pop();
+      let nextNumber;
+      let prevNumber;
       const operator = operatorStack.pop();
 
+      if (!numberStack[numberStack.length - 1]) {
+        numberStack.pop();
+        nextNumber = numberStack.pop();
+        prevNumber = numberStack.pop();
+      } else {
+        nextNumber = numberStack.pop();
+        prevNumber = numberStack.pop();
+      }
+
+      // eslint-disable-next-line default-case
       switch (operator) {
         case '+':
           calculator.execute(new AddCommand(prevNumber, nextNumber));
@@ -108,9 +118,6 @@ export const calculation = expression => {
           break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
-          break;
-        default:
-          break;
       }
 
       numberStack.push(calculator.getState().value);
@@ -127,9 +134,9 @@ export const calculation = expression => {
     const runCalculation = () => {
       let i = 0;
 
-      while (i !== tempStack.length) {
+      while (i < tempStack.length) {
         // если value не число
-        while (Number.isNaN(Number(tempStack[i]))) {
+        while (typeof tempStack[i] === 'string') {
           if (tempStack[i] === ')') {
             runCommand('(');
             i += 1;

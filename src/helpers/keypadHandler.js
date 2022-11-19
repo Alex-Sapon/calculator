@@ -2,7 +2,7 @@ import { v1 } from 'uuid';
 
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 import { digits, mathOperators } from '@constants/operations';
-import { getCorrectlyValue, getResultCalculation, getResultExpression, trimExpression } from '@helpers';
+import { checkBracketBalanced, getCorrectlyValue, getResultCalculation, getResultExpression, parsing } from '@helpers';
 import {
   changeOperator,
   changeViewMode,
@@ -15,7 +15,7 @@ import {
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 
-export const keypadHandler = (event, value, expression, operation, tempResult, result, dispatch) => {
+export const keypadHandler = (event, value, expression, operation, tempResult, result, viewMode, dispatch) => {
   const key = event.target.textContent;
   const numbers = /[0-9]/g;
 
@@ -38,29 +38,47 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
     }
     case '(': {
       dispatch(changeViewMode(true));
-      dispatch(setExpression(`${expression} ${getCorrectlyValue(value + key)}`));
+      dispatch(setExpression(`${expression} ${operation} ${key}`));
       break;
     }
     case ')': {
+      dispatch(changeViewMode(true));
       if (!expression.includes('(') || !value.match(numbers)) return;
-      dispatch(setExpression(`${expression} ${getCorrectlyValue(value + key)}`));
+      dispatch(setExpression(`${expression} ${value} ${key}`));
       break;
     }
     case '=': {
       try {
         if (tempResult && result) {
-          const calc = calculation(trimExpression(tempResult, operation, result));
-          dispatch(setExpression(trimExpression(calc.result, operation, tempResult).join(' ')));
-          dispatch(setResultCalculation(calc.result, getResultExpression(calc.result, expression), v1()));
+          const expValue = calculation(parsing(tempResult, operation, result));
+          dispatch(setExpression(parsing(expValue.result, operation, tempResult).join(' ')));
+          dispatch(setResultCalculation(expValue.result, getResultExpression(expValue.result, expression), v1()));
         }
 
-        if (expression !== EMPTY_STRING && value.match(numbers)) {
+        if (expression !== EMPTY_STRING && value.match(numbers) && !viewMode) {
           const expValue = getResultCalculation(tempResult, expression, operation, value);
 
-          dispatch(setExpression(trimExpression(expValue, operation, expValue).join(' ')));
-          dispatch(setResultCalculation(expValue, getResultExpression(expValue, expression, operation, value), v1()));
+          dispatch(setExpression(parsing(expValue, operation, expValue).join(' ')));
+          dispatch(setResultCalculation(
+            expValue,
+            getResultExpression(expValue, expression, operation, value), v1()),
+          );
           dispatch(setTempResult(expValue));
         }
+
+        // Режим viewMode - в выражении есть скобки. Произвести расчет и записать выражение с результатом
+        if (checkBracketBalanced(expression) && viewMode) {
+          const expValue = calculation(parsing(expression));
+
+          dispatch(setResultCalculation(
+            expValue.result,
+            getResultExpression(expValue.result, expression, value), v1()),
+          );
+          dispatch(setExpression(''));
+          dispatch(setTempResult(''));
+          dispatch(changeViewMode(false));
+        }
+
       } catch (error) {
         dispatch(setError(error.message));
       }
@@ -76,13 +94,20 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
         }
         // input operations
         if (mathOperators.includes(key)) {
-          if (value.match(numbers)) {
-            const res = getResultCalculation(tempResult, expression, operation, value);
-            dispatch(setExpression(trimExpression(expression, operation, value).join(' ')));
+          if (value.match(numbers) && !viewMode) {
+            const expValue = getResultCalculation(tempResult, expression, operation, value);
+            dispatch(setExpression(parsing(expression, operation, value).join(' ')));
             dispatch(changeOperator(key));
 
-            if (res) {
-              dispatch(setTempResult(res));
+            if (expValue) {
+              dispatch(setTempResult(expValue));
+            }
+          }
+
+          if (viewMode ) {
+            if (!Number.isNaN(Number(expression.trim()[expression.length - 1]))
+              || value.match(/[0-9]/g)) {
+              dispatch(setExpression(parsing(expression, value, key).join(' ')));
             }
           }
 

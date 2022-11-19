@@ -18,7 +18,7 @@ export const setTempResult = value => ({ type: SET_TEMP_RESULT, payload: { value
 export const changeOperator = value => ({ type: CHANGE_OPERATOR, payload: { value } });
 export const clearDisplay = () => ({ type: CLEAR_DISPLAY });
 export const clearAll = () => ({ type: CLEAR_ALL });
-export const setExpression = expression => ({ type: SET_EXPRESSION, payload: { expression } });
+export const setExpression = value => ({ type: SET_EXPRESSION, payload: { value } });
 export const setError = value => ({ type: SET_ERROR, payload: { value } });
 export const setTheme = value => ({ type: CHANGE_THEME, payload: { value } });
 export const changeVisibleHistory = value => ({ type: CHANGE_VISIBLE_HISTORY, payload: { value } });

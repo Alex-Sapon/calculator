@@ -36,7 +36,7 @@ export const calcReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         value: '',
-        expression: payload.expression,
+        expression: payload.value,
       };
     case CHANGE_OPERATOR:
       return {
