@@ -2,7 +2,13 @@ import { v1 } from 'uuid';
 
 import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 import { digits, mathOperators } from '@constants/operations';
-import { checkBracketBalanced, getCorrectlyValue, getResultCalculation, getResultExpression, parsing } from '@helpers';
+import {
+  checkBracketBalanced,
+  getCorrectlyValue,
+  getResultCalculation,
+  getResultExpression,
+  parsing,
+} from '@helpers';
 import {
   changeOperator,
   changeViewMode,
@@ -15,7 +21,17 @@ import {
 } from '@store/actions';
 import { calculation } from '@utils/calculator';
 
-export const keypadHandler = (event, value, expression, operation, tempResult, result, viewMode, dispatch) => {
+export const keypadHandler = (
+  event,
+  value,
+  expression,
+  operation,
+  tempResult,
+  result,
+  viewMode,
+  dispatch,
+) => {
+
   const key = event.target.textContent;
   const numbers = /[0-9]/g;
 
@@ -33,18 +49,22 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
       break;
     }
     case '-/+': {
-      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO ? value.slice(1, value.length) : `-${value}`));
+      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO 
+        ? value.slice(1, value.length) 
+        : `-${value}`,
+        ),
+      );
       break;
     }
     case '(': {
       dispatch(changeViewMode(true));
-      dispatch(setExpression(`${expression} ${operation} ${key}`));
+      dispatch(setExpression(parsing(expression, operation, key).join(' ')));
       break;
     }
     case ')': {
       dispatch(changeViewMode(true));
       if (!expression.includes('(') || !value.match(numbers)) return;
-      dispatch(setExpression(`${expression} ${value} ${key}`));
+      dispatch(setExpression(parsing(expression, value, key).join(' ')));
       break;
     }
     case '=': {
@@ -52,12 +72,14 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
         if (tempResult && result) {
           const expValue = calculation(parsing(tempResult, operation, result));
           dispatch(setExpression(parsing(expValue.result, operation, tempResult).join(' ')));
-          dispatch(setResultCalculation(expValue.result, getResultExpression(expValue.result, expression), v1()));
+          dispatch(setResultCalculation(
+            expValue.result,
+            getResultExpression(expValue.result, expression), v1()),
+          );
         }
 
         if (expression !== EMPTY_STRING && value.match(numbers) && !viewMode) {
           const expValue = getResultCalculation(tempResult, expression, operation, value);
-
           dispatch(setExpression(parsing(expValue, operation, expValue).join(' ')));
           dispatch(setResultCalculation(
             expValue,
@@ -70,15 +92,14 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
         if (checkBracketBalanced(expression) && viewMode) {
           const expValue = calculation(parsing(expression));
 
+          dispatch(clearDisplay());
+          dispatch(setCurrentValue(''));
           dispatch(setResultCalculation(
             expValue.result,
             getResultExpression(expValue.result, expression, value), v1()),
           );
-          dispatch(setExpression(''));
-          dispatch(setTempResult(''));
           dispatch(changeViewMode(false));
         }
-
       } catch (error) {
         dispatch(setError(error.message));
       }
@@ -98,19 +119,19 @@ export const keypadHandler = (event, value, expression, operation, tempResult, r
             const expValue = getResultCalculation(tempResult, expression, operation, value);
             dispatch(setExpression(parsing(expression, operation, value).join(' ')));
             dispatch(changeOperator(key));
-
-            if (expValue) {
-              dispatch(setTempResult(expValue));
-            }
+            dispatch(setTempResult(expValue || value));
           }
 
-          if (viewMode ) {
+          // Режим viewMode - в выражении есть скобки. Запись выражения
+          if (viewMode) {
             if (!Number.isNaN(Number(expression.trim()[expression.length - 1]))
               || value.match(/[0-9]/g)) {
+
               dispatch(setExpression(parsing(expression, value, key).join(' ')));
             }
           }
 
+          // изменение текущего оператора
           if (expression.match(numbers)) {
             dispatch(changeOperator(key));
           }

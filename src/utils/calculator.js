@@ -102,7 +102,6 @@ export const calculation = expression => {
         prevNumber = numberStack.pop();
       }
 
-      // eslint-disable-next-line default-case
       switch (operator) {
         case '+':
           calculator.execute(new AddCommand(prevNumber, nextNumber));
@@ -118,6 +117,9 @@ export const calculation = expression => {
           break;
         case '%':
           calculator.execute(new RemainderDivideCommand(prevNumber, nextNumber));
+          break;
+        default:
+          break;
       }
 
       numberStack.push(calculator.getState().value);

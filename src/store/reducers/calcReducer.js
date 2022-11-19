@@ -43,7 +43,6 @@ export const calcReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.value,
       };
-
     case SET_RESULT_CALCULATION:
       return {
         ...state,
