@@ -5,6 +5,7 @@ export const Container = styled.div`
   grid-template-columns: 1fr 200px;
   gap: 10px;
   height: ${({ theme }) => theme.size.height}px;
+  border: ${({ theme }) => `1px solid ${theme.color.border}`};
 
   @media (max-width: 767.98px) {
     grid-template-columns: 1fr;

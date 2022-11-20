@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 export const SettingsContainer = styled.div`
-  width: 590px;
   padding: 20px;
-  height: 420px;
+  height: 424px;
   background-color: ${({ theme }) => theme.color.background};
+  border: ${({ theme }) => `1px solid ${theme.color.border}`};
 
   @media (max-width: 767.98px) {
-    width: 380px;
     height: 651px;
   }
 `;
@@ -19,27 +18,20 @@ export const Title = styled.h2`
 `;
 
 export const SettingsGroup = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 
   @media (max-width: 767.98px) {
-    justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
 export const Select = styled.select`
-  width: 180px;
   border: ${({ theme }) => `2px solid ${theme.color.border}`};
   border-radius: 5px;
   font-size: ${({ theme }) => theme.fontSize[2]}px;
   padding: 7px;
-
-  @media (max-width: 767.98px) {
-    max-width: 150px;
-    margin-top: 40px;
-  }
 
   @media (max-width: 767.98px) {
     option {

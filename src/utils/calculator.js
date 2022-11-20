@@ -89,18 +89,13 @@ export const calculation = expression => {
   try {
     // создать команду со значениями из стека
     const createCommand = () => {
-      let nextNumber;
-      let prevNumber;
-      const operator = operatorStack.pop();
-
-      if (!numberStack[numberStack.length - 1]) {
+      while (typeof numberStack[numberStack.length - 1] === 'undefined') {
         numberStack.pop();
-        nextNumber = numberStack.pop();
-        prevNumber = numberStack.pop();
-      } else {
-        nextNumber = numberStack.pop();
-        prevNumber = numberStack.pop();
       }
+
+      const nextNumber = numberStack.pop();
+      const prevNumber = numberStack.pop();
+      const operator = operatorStack.pop();
 
       switch (operator) {
         case '+':
