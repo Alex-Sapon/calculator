@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { fontSize, border, height } from '@styles/theme';
+
 export const HeaderStyled = styled.header`
   color: ${({ theme }) => theme.color.primary};
-  font-size: 18px;
-  height: 70px;
+  font-size: ${fontSize.fz18}px;
+  height: ${height.header.basic}px;
   background-color: ${({ theme }) => theme.color.secondaryBackground};
   padding: 20px;
   display: flex;
@@ -13,7 +15,7 @@ export const HeaderStyled = styled.header`
 
   @media (max-width: 767.98px) {
     justify-content: center;
-    height: 60px;
+    height: ${height.header.small}px;
   }
 `;
 
@@ -32,12 +34,12 @@ export const NavList = styled.ul`
 
 export const NavLinkStyled = styled(NavLink)`
   padding: 3px 0;
-  border-bottom: ${({ theme }) => `2px solid ${theme.color.transparent}`};
+  border-bottom: ${border.b2}px solid transparent;
   cursor: pointer;
   color: ${({ theme }) => theme.color.primary};
 
   &:hover {
-    border-bottom: ${({ theme }) => `2px solid ${theme.color.white}`};
+    border-bottom: ${({ theme }) => `${border.b2}px solid ${theme.color.white}`};
   }
 
   &:nth-child(2) {
@@ -46,6 +48,6 @@ export const NavLinkStyled = styled(NavLink)`
 
   &.active {
     color: ${({ theme }) => theme.color.white};
-    border-bottom: ${({ theme }) => `2px solid ${theme.color.white}`};
+    border-bottom: ${({ theme }) => `${border.b2}px solid ${theme.color.white}`};
   }
 `;

@@ -1,28 +1,30 @@
 import styled from 'styled-components';
 
+import { height, width, animation } from '@styles/theme';
+
 export const SpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 420px;
+  height: ${height.calculator.basic}px;
 
   @media (max-width: 767.98px) {
-    height: 651px;
+    height: ${height.calculator.small}px;
   }
 `;
 
 export const SpinnerStyled = styled.div`
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: ${width.spinner.wrapper}px;
+  height: ${height.spinner}px;
 
   div {
     display: inline-block;
     position: absolute;
     left: 8px;
-    width: 16px;
+    width: ${width.spinner.element}px;
     background: ${({ theme }) => theme.color.secondaryBackground};
-    animation: spinner-animation 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    animation: spinner-animation ${animation.spinner};
   }
 
   div:nth-child(1) {

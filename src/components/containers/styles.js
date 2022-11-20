@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 
+import { fontSize, border, height, column } from '@styles/theme';
+
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: ${column.calculator.basic};
   gap: 10px;
-  height: ${({ theme }) => theme.size.height}px;
-  border: ${({ theme }) => `1px solid ${theme.color.border}`};
+  height: ${height.calculator.basic}px;
+  border: ${({ theme }) => `${border.b1}px solid ${theme.color.border}`};
 
   @media (max-width: 767.98px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: ${column.calculator.small};
     gap: 0;
-    height: 651px;
+    height: ${height.calculator.small}px;
   }
 `;
 
@@ -25,7 +27,7 @@ export const LeftSide = styled.div`
 
 export const RightSide = styled.div`
   padding: 20px;
-  border-left: ${({ theme }) => `2px solid ${theme.color.border}`};
+  border-left: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -38,7 +40,7 @@ export const RightSide = styled.div`
 
 export const Title = styled.h2`
   text-align: center;
-  font-size: ${({ theme }) => theme.fontSize[2]}px;
+  font-size: ${fontSize.fz16}px;
   margin-bottom: 10px;
   color: ${({ theme }) => theme.color.primary};
 `;

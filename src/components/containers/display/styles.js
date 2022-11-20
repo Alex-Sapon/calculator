@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 
+import { fontSize, border, height, width } from '@styles/theme';
+
 export const DisplayMain = styled.div`
   position: relative;
   padding: 10px;
   margin-bottom: 20px;
-  border-bottom: ${({ theme }) => `2px solid ${theme.color.border}`};
+  border-bottom: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   text-align: right;
-  font-size: ${({ theme }) => theme.fontSize[5]}px;
-  height: 50px;
+  font-size: ${fontSize.fz26}px;
+  height: ${height.displayMain}px;
   color: ${({ theme }) => theme.color.primary};
 `;
 
 export const DisplayHistory = styled.div`
   padding: 0 10px;
-  height: 20px;
+  height: ${height.displayHistory}px;
   text-align: right;
-  font-size: ${({ theme }) => theme.fontSize[1]}px;
+  font-size: ${fontSize.fz14}px;
   word-wrap: break-word;
   word-break: break-all;
   color: ${({ theme }) => theme.color.secondary};
@@ -25,5 +27,5 @@ export const Expression = styled.span``;
 
 export const Operator = styled.span`
   display: inline-block; 
-  width: 10px;
+  width: ${width.operator}px;
 `;

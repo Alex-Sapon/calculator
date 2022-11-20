@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
+import { border, width, radius } from '@styles/theme';
+
 export const ButtonStyled = styled.div`
-  min-width: 150px;
+  min-width: ${width.button}px;
   padding: 8px 15px;
-  background-color: #f2f2f2;
-  border: ${({ theme }) => `2px solid ${theme.color.border}`};
+  background-color: ${({ theme }) => theme.color.lightGrey};
+  border: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   display: flex;
   justify-content: center;
   align-self: center;
-  border-radius: 5px;
+  border-radius: ${radius.r5}px;
   cursor: pointer;
   transition: all ease 0.3s;
 
