@@ -23,7 +23,7 @@ export const height = {
   displayHistory: 20,
   history: { small: 150 },
   settings: { basic: 424, small: 651 },
-  error: 505,
+  error: { basic: 495, small: 711 },
   spinner: 80,
 };
 
@@ -32,7 +32,6 @@ export const width = {
   app: { basic: 595, small: 385 },
   operator: 10,
   button: 150,
-  error: 590,
   spinner: { wrapper: 80, element: 16 },
   scrollbar: 7,
 };

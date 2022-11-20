@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { fontSize, border, height, width, boxShadow } from '@styles/theme';
 
 export const ErrorWrapper = styled.div`
-  max-width: ${width.error}px;
-  height: ${height.error}px;
+  min-width: ${width.app.basic}px;
+  height: ${height.error.basic}px;
   padding: 40px;
   background-color: ${({ theme }) => theme.color.white};
   border: ${({ theme }) => `${border.b1}px solid ${theme.color.error}`};
@@ -13,6 +13,8 @@ export const ErrorWrapper = styled.div`
   -webkit-box-shadow: ${boxShadow[0]};
 
   @media (max-width: 767.98px) {
+    min-width: ${width.app.small}px;
+    height: ${height.error.small}px;
     padding: 20px;
   }
 `;
