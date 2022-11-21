@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { border, width, radius } from '@styles/theme';
 
 export const ButtonStyled = styled.div`
-  min-width: ${width.button}px;
+  //width: ${width.button}px;
+  width: fit-content;
   padding: 8px 15px;
   background-color: ${({ theme }) => theme.color.lightGrey};
   border: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};

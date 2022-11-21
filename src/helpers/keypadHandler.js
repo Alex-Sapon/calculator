@@ -93,18 +93,19 @@ export const keypadHandler = (
         }
 
         // Режим viewMode - в выражении есть скобки. Произвести расчет и записать выражение с результатом
-        if (checkBracketBalanced(expression) && viewMode) {
-          const expValue = calculation(parsing(expression));
-
-          dispatch(clearDisplay());
-          dispatch(setCurrentValue(''));
-          dispatch(setResultCalculation(
-            expValue.result,
-            getResultExpression(expValue.result, expression, value), v1()),
-          );
-          dispatch(changeViewMode(false));
-        } else {
-          dispatch(setError('Check out the closing brackets!'));
+        if (viewMode) {
+          if (checkBracketBalanced(expression)) {
+            const expValue = calculation(parsing(expression));
+            dispatch(clearDisplay());
+            dispatch(setCurrentValue(''));
+            dispatch(setResultCalculation(
+              expValue.result,
+              getResultExpression(expValue.result, expression, value), v1()),
+            );
+            dispatch(changeViewMode(false));
+          }  else {
+            dispatch(setError('Check out the closing brackets!'));
+          }
         }
       } catch (error) {
         dispatch(setError(error.message));
