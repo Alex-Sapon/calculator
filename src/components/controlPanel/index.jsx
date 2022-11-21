@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,16 +14,16 @@ const ControlPanel = () => {
   const theme = useSelector(selectTheme);
   const isShow = useSelector(selectIsShow);
 
-  const onClearAllHandler = () => {
+  const onClearAllHandler = useCallback(() => {
     dispatch(clearAll());
-  };
+  }, [clearAll]);
+
+  const onIsShowHandler = useCallback(() => {
+    dispatch(changeVisibleHistory(!isShow));
+  }, [changeVisibleHistory, isShow]);
 
   const onChangeThemeHandler = event => {
     dispatch(setTheme(event.currentTarget.value));
-  };
-
-  const onIsShowHandler = () => {
-    dispatch(changeVisibleHistory(!isShow));
   };
 
   return (

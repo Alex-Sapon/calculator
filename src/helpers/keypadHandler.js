@@ -52,18 +52,22 @@ export const keypadHandler = (
       dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO 
         ? value.slice(1, value.length) 
         : `-${value}`,
-        ),
-      );
+        ));
       break;
     }
     case '(': {
+      const splitExpression = expression.split(' ');
       dispatch(changeViewMode(true));
-      dispatch(setExpression(parsing(expression, operation, key).join(' ')));
+      dispatch(setExpression(parsing(
+        expression, 
+        splitExpression[splitExpression.length - 1] !== operation ? operation : EMPTY_STRING,
+        key,
+        ).join(' ')));
       break;
     }
     case ')': {
       dispatch(changeViewMode(true));
-      if (!expression.includes('(') || !value.match(numbers)) return;
+      if (!expression.includes('(')) return;
       dispatch(setExpression(parsing(expression, value, key).join(' ')));
       break;
     }
@@ -74,8 +78,8 @@ export const keypadHandler = (
           dispatch(setExpression(parsing(expValue.result, operation, tempResult).join(' ')));
           dispatch(setResultCalculation(
             expValue.result,
-            getResultExpression(expValue.result, expression), v1()),
-          );
+            getResultExpression(expValue.result, expression), v1(),
+            ));
         }
 
         if (expression !== EMPTY_STRING && value.match(numbers) && !viewMode) {
@@ -83,8 +87,8 @@ export const keypadHandler = (
           dispatch(setExpression(parsing(expValue, operation, expValue).join(' ')));
           dispatch(setResultCalculation(
             expValue,
-            getResultExpression(expValue, expression, operation, value), v1()),
-          );
+            getResultExpression(expValue, expression, operation, value), v1(),
+            ));
           dispatch(setTempResult(expValue));
         }
 
@@ -99,6 +103,8 @@ export const keypadHandler = (
             getResultExpression(expValue.result, expression, value), v1()),
           );
           dispatch(changeViewMode(false));
+        } else {
+          dispatch(setError('Check out the closing brackets!'));
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -116,10 +122,12 @@ export const keypadHandler = (
         // input operations
         if (mathOperators.includes(key)) {
           if (value.match(numbers) && !viewMode) {
-            const expValue = getResultCalculation(tempResult, expression, operation, value);
             dispatch(setExpression(parsing(expression, operation, value).join(' ')));
             dispatch(changeOperator(key));
-            dispatch(setTempResult(expValue || value));
+            dispatch(setTempResult(
+              getResultCalculation(tempResult, expression, operation, value) 
+              || value,
+              ));
           }
 
           // Режим viewMode - в выражении есть скобки. Запись выражения
