@@ -20,7 +20,7 @@ export const App = () => {
   const error = useSelector(state => state.application.error);
   const currentTheme = useSelector(selectTheme);
 
-  const onCloseClick = useCallback(() => dispatch(setError(null)), [setError]);
+  const onCloseClick = useCallback(() => dispatch(setError(null)), []);
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>

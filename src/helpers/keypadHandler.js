@@ -103,7 +103,7 @@ export const keypadHandler = (
               getResultExpression(expValue.result, expression, value), v1()),
             );
             dispatch(changeViewMode(false));
-          }  else {
+          } else {
             dispatch(setError('Check out the closing brackets!'));
           }
         }
