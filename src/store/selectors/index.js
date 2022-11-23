@@ -7,4 +7,3 @@ export const selectTempResult = state => state.calculator.tempResult;
 
 export const selectTheme = state => state.application.theme;
 export const selectIsShow = state => state.application.isShow;
-export const selectViewMode = state => state.application.viewMode;

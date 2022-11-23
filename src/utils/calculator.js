@@ -96,7 +96,7 @@ export const calculation = expression => {
       const nextNumber = numberStack.pop();
       const prevNumber = numberStack.pop();
       const operator = operatorStack.pop();
-
+      
       switch (operator) {
         case '+':
           calculator.execute(new AddCommand(prevNumber, nextNumber));
@@ -176,7 +176,6 @@ export const calculation = expression => {
       result: Number.isInteger(value) ? value.toString() : value.toFixed(3),
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log('Error into core of calculatorFC: ', error.message);
   }
 };

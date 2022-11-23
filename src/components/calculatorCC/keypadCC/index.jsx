@@ -12,8 +12,7 @@ import {
   selectOperation, 
   selectResult, 
   selectTempResult, 
-  selectValue, 
-  selectViewMode, 
+  selectValue,
 } from '@store/selectors';
 
 class KeypadComponent extends React.Component {
@@ -42,12 +41,11 @@ const mapStateToProps = state => ({
   operation: selectOperation(state),
   tempResult: selectTempResult(state),
   result: selectResult(state),
-  viewMode: selectViewMode(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onKeypadClick: (event, value, expression, operation, tempResult, result, viewMode) => {
-    keypadHandler(event, value, expression, operation, tempResult, result, viewMode, dispatch);
+  onKeypadClick: (event, value, expression, operation, tempResult, result) => {
+    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
   },
 });
 
@@ -59,6 +57,5 @@ KeypadComponent.propsType = {
   operation: PropTypes.string,
   tempResult: PropTypes.string,
   result: PropTypes.string,
-  viewMode: PropTypes.bool,
   onKeypadClick: PropTypes.func,
 };

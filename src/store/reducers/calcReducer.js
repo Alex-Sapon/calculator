@@ -4,6 +4,7 @@ import {
   CLEAR_DISPLAY,
   SET_CURRENT_VALUE,
   SET_EXPRESSION,
+  SET_RESULT_VALUE,
   SET_RESULT_CALCULATION,
   SET_TEMP_RESULT,
 } from '@store/constants';
@@ -43,6 +44,11 @@ export const calcReducer = (state = initialState, { type, payload }) => {
         ...state,
         operation: payload.value,
       };
+    case SET_RESULT_VALUE:
+      return {
+        ...state,
+        result: payload.value,
+      };
     case SET_RESULT_CALCULATION:
       return {
         ...state,
@@ -51,6 +57,7 @@ export const calcReducer = (state = initialState, { type, payload }) => {
           ...state.history,
         ],
         result: payload.value,
+        expression: '',
       };
     case CLEAR_DISPLAY:
       return {

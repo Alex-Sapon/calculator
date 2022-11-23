@@ -4,18 +4,19 @@ import { EMPTY_STRING, VALUE_ONE, VALUE_ZERO } from '@constants/empty';
 import { digits, mathOperators } from '@constants/operations';
 import {
   checkBracketBalanced,
+  expressionBuilder,
   getCorrectlyValue,
-  getResultCalculation,
-  getResultExpression,
+  finallyExpression,
+  getAnotherOperator,
   parsing,
 } from '@helpers';
 import {
   changeOperator,
-  changeViewMode,
   clearDisplay,
   setCurrentValue,
   setError,
   setExpression,
+  setResultValue,
   setResultCalculation,
   setTempResult,
 } from '@store/actions';
@@ -28,7 +29,6 @@ export const keypadHandler = (
   operation,
   tempResult,
   result,
-  viewMode,
   dispatch,
 ) => {
 
@@ -49,63 +49,45 @@ export const keypadHandler = (
       break;
     }
     case '-/+': {
-      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO 
-        ? value.slice(1, value.length) 
+      dispatch(setCurrentValue(value.indexOf('-') === VALUE_ZERO
+        ? value.slice(1, value.length)
         : `-${value}`,
-        ));
+      ));
       break;
     }
     case '(': {
       const splitExpression = expression.split(' ');
-      dispatch(changeViewMode(true));
       dispatch(setExpression(parsing(
-        expression, 
+        expression,
         splitExpression[splitExpression.length - 1] !== operation ? operation : EMPTY_STRING,
         key,
-        ).join(' ')));
+      ).join(' ')));
       break;
     }
     case ')': {
-      dispatch(changeViewMode(true));
       if (!expression.includes('(')) return;
       dispatch(setExpression(parsing(expression, value, key).join(' ')));
       break;
     }
     case '=': {
       try {
+        if (expression.match(numbers) && value.match(numbers) && !expression.includes('(')) {
+          const { result: finallyVal } = calculation(parsing(expression, value));
+          dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, expression, value), v1()));
+          dispatch(setTempResult(finallyVal));
+        }
+
         if (tempResult && result) {
-          const expValue = calculation(parsing(tempResult, operation, result));
-          dispatch(setExpression(parsing(expValue.result, operation, tempResult).join(' ')));
-          dispatch(setResultCalculation(
-            expValue.result,
-            getResultExpression(expValue.result, expression), v1(),
-            ));
+          const { result: finallyVal } = calculation(parsing(tempResult, operation, result));  
+          dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, result, operation, tempResult), v1()));
         }
 
-        if (expression !== EMPTY_STRING && value.match(numbers) && !viewMode) {
-          const expValue = getResultCalculation(tempResult, expression, operation, value);
-          dispatch(setExpression(parsing(expValue, operation, expValue).join(' ')));
-          dispatch(setResultCalculation(
-            expValue,
-            getResultExpression(expValue, expression, operation, value), v1(),
-            ));
-          dispatch(setTempResult(expValue));
-        }
-
-        // Режим viewMode - в выражении есть скобки. Произвести расчет и записать выражение с результатом
-        if (viewMode) {
-          if (checkBracketBalanced(expression)) {
-            const expValue = calculation(parsing(expression));
-            dispatch(clearDisplay());
-            dispatch(setCurrentValue(''));
-            dispatch(setResultCalculation(
-              expValue.result,
-              getResultExpression(expValue.result, expression, value), v1()),
-            );
-            dispatch(changeViewMode(false));
-          } else {
-            dispatch(setError('Check out the closing brackets!'));
-          }
+        if (expression.includes('(') 
+          && expression.includes(')') 
+          && checkBracketBalanced(expression) 
+          && value === EMPTY_STRING) {    
+          const { result: finallyVal } = calculation(parsing(expression));
+          dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, expression, value), v1()));
         }
       } catch (error) {
         dispatch(setError(error.message));
@@ -120,28 +102,17 @@ export const keypadHandler = (
           if (key === '.' && value.includes('.')) return;
           dispatch(setCurrentValue(getCorrectlyValue(value + key)));
         }
+
         // input operations
         if (mathOperators.includes(key)) {
-          if (value.match(numbers) && !viewMode) {
-            dispatch(setExpression(parsing(expression, operation, value).join(' ')));
-            dispatch(changeOperator(key));
-            dispatch(setTempResult(
-              getResultCalculation(tempResult, expression, operation, value) 
-              || value,
-              ));
-          }
-
-          // Режим viewMode - в выражении есть скобки. Запись выражения
-          if (viewMode) {
-            if (!Number.isNaN(Number(expression.trim()[expression.length - 1]))
-              || value.match(/[0-9]/g)) {
-
-              dispatch(setExpression(parsing(expression, value, key).join(' ')));
+          if (value.match(numbers)) {
+            dispatch(setExpression(parsing(expression, value, key).join(' ')));
+            if (!expression.includes('(')) {
+              dispatch(setResultValue(expressionBuilder(tempResult, expression, operation, value)));
             }
-          }
-
-          // изменение текущего оператора
-          if (expression.match(numbers)) {
+            dispatch(changeOperator(key));
+          } else {
+            dispatch(setExpression(getAnotherOperator(expression, operation, key)));
             dispatch(changeOperator(key));
           }
         }

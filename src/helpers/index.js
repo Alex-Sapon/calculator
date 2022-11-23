@@ -1,6 +1,7 @@
 export { parsing } from '@helpers/parsing';
 export { checkBracketBalanced } from '@helpers/checkBracketBalanced';
 export { getCorrectlyValue } from '@helpers/getCorrectlyValue';
-export { getResultCalculation } from '@helpers/getResultCalculation';
-export { getResultExpression } from '@helpers/getResultExpression';
+export { expressionBuilder } from '@helpers/expressionBuilder';
+export { finallyExpression } from '@helpers/finallyExpression';
 export { numberWithCommas } from '@helpers/numberWithCommas';
+export { getAnotherOperator } from '@helpers/getAnotherOperator';

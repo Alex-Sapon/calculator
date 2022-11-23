@@ -11,8 +11,7 @@ import {
   selectOperation, 
   selectResult, 
   selectTempResult, 
-  selectValue, 
-  selectViewMode, 
+  selectValue,
 } from '@store/selectors';
 
 export const Keypad = memo(() => {
@@ -23,10 +22,9 @@ export const Keypad = memo(() => {
   const operation = useSelector(selectOperation);
   const tempResult = useSelector(selectTempResult);
   const result = useSelector(selectResult);
-  const viewMode = useSelector(selectViewMode);
 
   const handleClick = event => {
-    keypadHandler(event, value, expression, operation, tempResult, result, viewMode, dispatch);
+    keypadHandler(event, value, expression, operation, tempResult, result, dispatch);
   };
 
   return (

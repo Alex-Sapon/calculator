@@ -23,10 +23,12 @@
     "browser": true
   },
   "rules": {
+    "no-console": "off",
     "consistent-return": "off",
     "default-param-last": 0,
     "max-classes-per-file": ["error", 7],
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "import/order": [
       "error",
       {
