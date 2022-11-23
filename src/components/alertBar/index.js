@@ -2,10 +2,10 @@ import React, { memo, useEffect } from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { AlertBarContainer, AlertBarContent } from '@components/alertBar/styles';
+import { AlertBarContainer, AlertBarContent, AlertBarSubtitle, AlertBarTitle } from '@components/alertBar/styles';
 import { ButtonStyled } from '@components/containers';
 
-export const AlertBar = memo(({error, onClickHandler, seconds}) => {
+export const AlertBar = memo(({ error, onClickHandler, seconds }) => {
   useEffect(() => {
     if (error) {
       const idTimeout = setTimeout(
@@ -25,7 +25,8 @@ export const AlertBar = memo(({error, onClickHandler, seconds}) => {
     <AlertBarContainer>
       <ButtonStyled onClick={onClickHandler}>✕</ButtonStyled>
       <AlertBarContent>
-        {error}
+        <AlertBarTitle>Error</AlertBarTitle>
+        <AlertBarSubtitle>{error}</AlertBarSubtitle>
       </AlertBarContent>
     </AlertBarContainer>,
     document.body,

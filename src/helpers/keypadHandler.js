@@ -75,19 +75,17 @@ export const keypadHandler = (
           const { result: finallyVal } = calculation(parsing(expression, value));
           dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, expression, value), v1()));
           dispatch(setTempResult(finallyVal));
-        }
-
-        if (tempResult && result) {
+        } else if (tempResult && result) {
           const { result: finallyVal } = calculation(parsing(tempResult, operation, result));  
           dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, result, operation, tempResult), v1()));
-        }
-
-        if (expression.includes('(') 
+        } else if (expression.includes('(')
           && expression.includes(')') 
           && checkBracketBalanced(expression) 
           && value === EMPTY_STRING) {    
           const { result: finallyVal } = calculation(parsing(expression));
           dispatch(setResultCalculation(finallyVal, finallyExpression(finallyVal, expression, value), v1()));
+        } else {
+          dispatch(setError('Invalid expression!'));
         }
       } catch (error) {
         dispatch(setError(error.message));

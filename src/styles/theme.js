@@ -13,7 +13,8 @@ const color = {
   lightOrange: '#E1D7C7',
   green: '#7DA11A',
   error: '#ea5d5d',
-  errorBar: '#fdeded',
+  errorBarBG: '#fdeded',
+  errorBarText: '#5f2120',
 };
 
 // ----- height -----
@@ -26,7 +27,7 @@ export const height = {
   settings: { basic: 424, small: 651 },
   error: { basic: 495, small: 711 },
   spinner: 80,
-  errorBar: 180,
+  errorBar: 150,
 };
 
 // ----- width -----
@@ -36,7 +37,7 @@ export const width = {
   button: 150,
   spinner: { wrapper: 80, element: 16 },
   scrollbar: 7,
-  errorBar: 400,
+  errorBar: 40,
 };
 
 // ----- grid-column -----

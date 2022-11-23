@@ -1,22 +1,30 @@
 import styled from 'styled-components';
 
-import { border, width, height, fontSize } from '@styles/theme';
+import { width, fontSize, boxShadow } from '@styles/theme';
 
 export const AlertBarContainer = styled.div`
   position: absolute; 
   overflow: hidden;
+  display: grid;
+  align-content: flex-start;
+  column-gap: 15px;
+  grid-template-columns: auto 1fr;
   z-index: 900;
   font-size: ${fontSize.fz20};
-  max-width: ${width.errorBar}px;
-  height: ${height.errorBar}px;
-  background-color: ${({ theme }) => theme.color.errorBar}; 
+  width: ${width.errorBar}%;
+  background-color: ${({ theme }) => theme.color.errorBarBG};
+  color: ${({ theme }) => theme.color.errorBarText};
   left: 5%;
   bottom: 5%;
-  padding: 10px;
-  border: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
+  padding: 15px 10px;
+  -webkit-box-shadow: ${boxShadow.appContainer};
 `;
 
-export const AlertBarContent = styled.div`
-  margin-top: 15px;
-  padding: 0 15px 0;
+export const AlertBarContent = styled.div``;
+
+export const AlertBarTitle = styled.div`
+  font-weight: bold;
+  margin-bottom: 10px;
 `;
+
+export const AlertBarSubtitle = styled.div``;
