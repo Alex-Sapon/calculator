@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { fontSize, border, height, radius, column } from '@styles/theme';
+import { fontSize, border, height, radius, column, padding, margin, gap } from '@styles/theme';
 
 export const SettingsContainer = styled.div`
-  padding: 20px;
+  padding: ${padding.settings.basic}px;
   height: ${height.settings.basic}px;
   background-color: ${({ theme }) => theme.color.background};
   border: ${({ theme }) => `${border.b1}px solid ${theme.color.border}`};
@@ -16,13 +16,13 @@ export const SettingsContainer = styled.div`
 export const Title = styled.h2`
   font-size: ${fontSize.fz20}px;
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: ${margin.controlTitle}px;
 `;
 
 export const SettingsGroup = styled.div`
   display: grid;
   grid-template-columns: ${column.settings.basic};
-  gap: 30px;
+  gap: ${gap.settingsGroup}px;
 
   @media (max-width: 767.98px) {
     grid-template-columns: ${column.settings.small};
@@ -33,7 +33,7 @@ export const Select = styled.select`
   border: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   border-radius: ${radius.r5}px;
   font-size: ${fontSize.fz16}px;
-  padding: 7px;
+  padding: ${padding.select.basic}px;
 
   @media (max-width: 767.98px) {
     option {

@@ -33,11 +33,49 @@ export const height = {
 // ----- width -----
 export const width = {
   app: { basic: 595, small: 385 },
-  operator: 10,
-  button: 150,
   spinner: { wrapper: 80, element: 16 },
   scrollbar: 7,
   errorBar: 40,
+};
+
+// ----- padding -----
+export const padding = {
+  header: { basic: 20 },
+  link: { basic: 3 },
+  leftSide: { basic: 20, small: { t: 20, r: 20, b: 0, l: 20 } },
+  rightSide: { basic: 20 },
+  displayHistory: { tb: 0, rl: 10 },
+  displayMain: { basic: 10 },
+  button: { tb: 8, rl: 15 },
+  keypad: { basic: 0, small: 20 },
+  settings: { basic: 20 },
+  select: { basic: 7 },
+  errorWrap: { basic: 40, small: 20 },
+  errorBoundary: { basic: 40, small: 20 },
+  alertBar: { tb: 15, rl: 10 }, 
+};
+
+// ----- margin -----
+export const margin = {
+  appContainer: 10,
+  linkChildTwo: 20,
+  calculator: 10,
+  displayMain: 20,
+  historyItem: 5,
+  controlTitle: 20,
+  errorWrap: 10,
+  errorTitle: 10,
+  logo: 30,
+  alertBar: 10, 
+};
+
+// ----- position -----
+export const position = {
+  alertBar: { t: 0, r: 0, b: 5, l: 5 },
+  elemSpinner: { t: 0, r: 0, b: 0, l: 8 },
+  elemSpinnerF: { t: 0, r: 0, b: 0, l: 8 },
+  elemSpinnerS: { t: 0, r: 0, b: 0, l: 32 },
+  elemSpinnerT: { t: 0, r: 0, b: 0, l: 56 },
 };
 
 // ----- grid-column -----
@@ -45,11 +83,20 @@ export const column = {
   calculator: { basic: '1fr 200px', small: '1fr' },
   keypad: { basic: 'repeat(5, 60px)' },
   settings: { basic: 'repeat(3, 1fr)', small: 'repeat(2, 1fr)' },
+  alertBar: { basic: 'auto 1fr' },
 };
 
 // ----- grid-row -----
 export const row = {
   keypad: { basic: 'repeat(5, 50px)' },
+};
+
+// ----- gap -----
+export const gap = {
+  calculator: 10,
+  keypad: 10,
+  settingsGroup: 30,
+  alertBar: 15,
 };
 
 // ----- border -----

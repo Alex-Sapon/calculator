@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { height, width, animation } from '@styles/theme';
+import { height, width, animation, position } from '@styles/theme';
 
 export const SpinnerContainer = styled.div`
   display: flex;
@@ -21,24 +21,24 @@ export const SpinnerStyled = styled.div`
   div {
     display: inline-block;
     position: absolute;
-    left: 8px;
+    left: ${position.elemSpinner.l}px;
     width: ${width.spinner.element}px;
     background: ${({ theme }) => theme.color.secondaryBackground};
     animation: spinner-animation ${animation.spinner};
   }
 
   div:nth-child(1) {
-    left: 8px;
+    left: ${position.elemSpinnerF.l}px;
     animation-delay: -0.24s;
   }
 
   div:nth-child(2) {
-    left: 32px;
+    left:  ${position.elemSpinnerS.l}px;
     animation-delay: -0.12s;
   }
 
   div:nth-child(3) {
-    left: 56px;
+    left:  ${position.elemSpinnerT.l}px;
     animation-delay: 0s;
   }
 

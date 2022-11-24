@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-import { fontSize, border, height, width } from '@styles/theme';
+import { fontSize, border, height, padding, margin } from '@styles/theme';
 
 export const DisplayMain = styled.div`
   position: relative;
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: ${padding.displayMain.basic}px;
+  margin-bottom: ${margin.displayMain}px;
   border-bottom: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   text-align: right;
   font-size: ${fontSize.fz26}px;
@@ -14,7 +14,7 @@ export const DisplayMain = styled.div`
 `;
 
 export const DisplayHistory = styled.div`
-  padding: 0 10px;
+  padding: ${padding.displayHistory.tb}px ${padding.displayHistory.rl}px;
   height: ${height.displayHistory}px;
   text-align: right;
   font-size: ${fontSize.fz14}px;
@@ -24,8 +24,3 @@ export const DisplayHistory = styled.div`
 `;
 
 export const Expression = styled.span``;
-
-export const Operator = styled.span`
-  display: inline-block; 
-  width: ${width.operator}px;
-`;

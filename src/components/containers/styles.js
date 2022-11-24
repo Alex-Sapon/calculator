@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-import { fontSize, border, height, column } from '@styles/theme';
+import { fontSize, border, height, column, gap, padding, margin } from '@styles/theme';
 
 export const Container = styled.div`
   display: grid;
   grid-template-columns: ${column.calculator.basic};
-  gap: 10px;
+  gap: ${gap.calculator}px;
   height: ${height.calculator.basic}px;
   border: ${({ theme }) => `${border.b1}px solid ${theme.color.border}`};
 
@@ -18,15 +18,19 @@ export const Container = styled.div`
 
 export const LeftSide = styled.div`
   position: relative;
-  padding: 20px;
+  padding: ${padding.leftSide.basic}px;
 
   @media (max-width: 767.98px) {
-    padding: 20px 20px 0 20px;
+    padding: 
+    ${padding.leftSide.small.t}px 
+    ${padding.leftSide.small.r}px 
+    ${padding.leftSide.small.b}px 
+    ${padding.leftSide.small.l}px;
   }
 `;
 
 export const RightSide = styled.div`
-  padding: 20px;
+  padding: ${padding.rightSide.basic}px;
   border-left: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   display: flex;
   flex-direction: column;
@@ -41,6 +45,6 @@ export const RightSide = styled.div`
 export const Title = styled.h2`
   text-align: center;
   font-size: ${fontSize.fz16}px;
-  margin-bottom: 10px;
+  margin-bottom: ${margin.calculator}px;
   color: ${({ theme }) => theme.color.primary};
 `;

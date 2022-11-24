@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-import { border, width, radius } from '@styles/theme';
+import { border, radius, padding } from '@styles/theme';
 
 export const ButtonStyled = styled.div`
-  //width: ${width.button}px;
   width: fit-content;
-  padding: 8px 15px;
+  padding: ${padding.button.tb}px ${padding.button.rl}px;
   background-color: ${({ theme }) => theme.color.lightGrey};
   border: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   display: flex;

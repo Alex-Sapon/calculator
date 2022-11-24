@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fontSize, radius, height, width } from '@styles/theme';
+import { fontSize, radius, height, width, margin } from '@styles/theme';
 
 export const HistoryContainer = styled.div`
   overflow: auto;
@@ -29,5 +29,5 @@ export const HistoryList = styled.div`
 `;
 
 export const HistoryItem = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: ${margin.historyItem}px;
 `;

@@ -108,11 +108,10 @@ export const keypadHandler = (
             if (!expression.includes('(')) {
               dispatch(setResultValue(expressionBuilder(tempResult, expression, operation, value)));
             }
-            dispatch(changeOperator(key));
           } else {
             dispatch(setExpression(getAnotherOperator(expression, operation, key)));
-            dispatch(changeOperator(key));
           }
+          dispatch(changeOperator(key));
         }
       } catch (error) {
         dispatch(setError(error.message));

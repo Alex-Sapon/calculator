@@ -176,6 +176,6 @@ export const calculation = expression => {
       result: Number.isInteger(value) ? value.toString() : value.toFixed(3),
     };
   } catch (error) {
-    console.log('Error into core of calculatorFC: ', error.message);
+    console.log('Error into core of calculator: ', error.message);
   }
 };

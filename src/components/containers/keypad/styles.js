@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-import { fontSize, radius, border, column, row } from '@styles/theme';
+import { fontSize, radius, border, column, row, gap, padding } from '@styles/theme';
 
 export const KeypadContainer = styled.div`
   display: grid;
   grid-template-columns: ${column.keypad.basic};
   grid-template-rows: ${row.keypad.basic};
-  gap: 10px;
+  gap: ${gap.keypad}px;
   justify-content: center;
   align-content: center;
 
   @media (max-width: 767.98px) {
-    padding-bottom: 20px;
+    padding-bottom: ${padding.keypad.small}px;
     border-bottom: ${({ theme }) => `${border.b2}px solid ${theme.color.border}`};
   }
 `;
